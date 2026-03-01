@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aiden's Mission — Q2 Week 3: Loops & Repetition</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ─────────────────────────────────── */
+:root {
+  --bg:     #080c18;
+  --surf:   #0e1526;
+  --surf2:  #141e35;
+  --bdr:    #1e2d4a;
+  --text:   #e0ecff;
+  --muted:  #4a6080;
+  --accent: #b060ff;   /* Q2 purple */
+  --gold:   #ffcc44;
+  --green:  #00ff99;
+  --white:  #f0f8ff;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+/* Starfield */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(1px 1px at 5%  15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25%  5%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(2px 2px at 75%  8%, rgba(176,96,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 25%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 70%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 85%, rgba(176,96,255,0.3)  0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 65%, rgba(255,255,255,0.2) 0%, transparent 100%);
+  pointer-events: none; z-index: 0;
+}
+
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+  position: relative; z-index: 1;
+}
+
+/* ── HEADER ─────────────────────────────────── */
+header {
+  padding: 28px 0 24px;
+  border-bottom: 1px solid var(--bdr);
+}
+
+.header-grid {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 580px) {
+  .header-grid { grid-template-columns: 1fr; }
+  .robo-header-wrap { order: -1; display: flex; justify-content: center; }
+}
+
+.quarter-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(176,96,255,0.08); border: 1px solid rgba(176,96,255,0.25);
+  border-radius: 24px; padding: 6px 16px 6px 10px; margin-bottom: 12px;
+}
+.q-icon {
+  width: 26px; height: 26px; background: rgba(176,96,255,0.15);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+}
+.q-label {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  color: var(--accent); letter-spacing: 2px; text-transform: uppercase;
+}
+
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(26px, 5vw, 46px);
+  font-weight: 900; color: var(--white);
+  line-height: 1.1; margin-bottom: 8px;
+}
+h1 em { color: var(--accent); font-style: normal; }
+
+.header-sub {
+  font-family: 'Space Mono', monospace; font-size: 12px;
+  color: var(--muted); margin-bottom: 14px;
+}
+
+.time-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,204,68,0.1); border: 1px solid rgba(255,204,68,0.3);
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 13px; font-weight: 700; color: var(--gold);
+  margin-bottom: 14px;
+}
+
+.nav-links { display: flex; gap: 16px; font-size: 14px; }
+.nav-links a {
+  color: var(--accent); text-decoration: none;
+  border-bottom: 1px dashed rgba(176,96,255,0.3); transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+
+/* ── ROBO HEADER CHARACTER ───────────────────── */
+.robo-header-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+}
+.robo-svg { width: 150px; height: auto; display: block; }
+
+/* Eye state control */
+.eye-state { display: none; }
+.robo-thinking    .eye-thinking    { display: block; }
+.robo-excited     .eye-excited     { display: block; }
+.robo-celebrating .eye-celebrating { display: block; }
+
+@keyframes roboDance {
+  0%   { transform: rotate(0deg) translateY(0); }
+  25%  { transform: rotate(-5deg) translateY(-5px); }
+  75%  { transform: rotate(5deg) translateY(-5px); }
+  100% { transform: rotate(0deg) translateY(0); }
+}
+.robo-celebrating .robo-svg { animation: roboDance 0.45s infinite; }
+
+@keyframes roboThink {
+  0%,100% { transform: rotate(0deg); }
+  50%     { transform: rotate(-2deg); }
+}
+.robo-thinking .robo-svg { animation: roboThink 1.4s ease-in-out infinite; }
+
+@keyframes antBlink {
+  0%,80%  { opacity: 1; }
+  90%     { opacity: 0.15; }
+  100%    { opacity: 1; }
+}
+.ant-dot { animation: antBlink 2.4s infinite; }
+
+.robo-bubble {
+  margin-top: 10px;
+  background: var(--surf2); border: 1px solid var(--bdr);
+  border-radius: 10px; padding: 9px 12px;
+  font-size: 12px; font-weight: 700; line-height: 1.4;
+  color: var(--accent); text-align: center;
+  position: relative; min-height: 44px;
+}
+.robo-bubble::before {
+  content: '';
+  position: absolute; top: -7px; left: 50%;
+  transform: translateX(-50%);
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid var(--bdr);
+}
+
+/* ── MISSION PROGRESS BAR ───────────────────── */
+.mission-progress {
+  display: flex; align-items: center;
+  background: var(--surf); border: 1px solid var(--bdr);
+  border-radius: 12px; padding: 14px 20px;
+  margin: 22px 0 20px; gap: 4px;
+}
+.mp-step {
+  display: flex; align-items: center; gap: 8px; flex: 1;
+}
+.mp-dot {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 2px solid var(--bdr);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 900;
+  color: var(--muted); flex-shrink: 0; transition: all 0.35s;
+}
+.mp-step.active  .mp-dot { border-color: var(--accent); background: rgba(176,96,255,0.12); color: var(--accent); }
+.mp-step.done    .mp-dot { border-color: var(--green);  background: rgba(0,255,153,0.12); color: var(--green);  }
+.mp-info { flex: 1; }
+.mp-sub  { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+.mp-step.active .mp-sub { color: var(--accent); }
+.mp-step.done   .mp-sub { color: var(--green); }
+.mp-name { font-size: 14px; font-weight: 900; color: var(--muted); transition: color 0.35s; }
+.mp-step.active .mp-name, .mp-step.done .mp-name { color: var(--white); }
+.mp-connector {
+  width: 28px; height: 2px; background: var(--bdr); flex-shrink: 0; transition: background 0.35s;
+}
+.mp-connector.lit { background: var(--accent); }
+
+/* ── MISSION CARDS ──────────────────────────── */
+.mission-card {
+  border: 1.5px solid var(--bdr);
+  border-radius: 16px; overflow: hidden;
+  margin-bottom: 16px; transition: all 0.35s;
+}
+.mission-card.locked {
+  opacity: 0.4; filter: blur(1.5px); pointer-events: none;
+}
+.mission-card.active  { border-color: var(--accent); opacity: 1; filter: none; }
+.mission-card.done    { border-color: var(--green);  opacity: 1; filter: none; }
+
+.mc-header {
+  padding: 13px 20px;
+  background: var(--surf2);
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.mc-label {
+  font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; color: var(--muted); transition: color 0.35s;
+}
+.mission-card.active .mc-label { color: var(--accent); }
+.mission-card.done   .mc-label { color: var(--green); }
+.mc-badge {
+  font-size: 11px; font-weight: 700; padding: 3px 10px;
+  border-radius: 20px; border: 1px solid var(--bdr);
+  color: var(--muted); background: transparent; transition: all 0.35s;
+}
+.mission-card.active .mc-badge { color: var(--accent); border-color: rgba(176,96,255,0.4); background: rgba(176,96,255,0.08); }
+.mission-card.done   .mc-badge { color: var(--green);  border-color: rgba(0,255,153,0.4); background: rgba(0,255,153,0.08); }
+
+.mc-body { padding: 22px 24px; background: var(--surf); }
+
+/* Time mini-badge inside card */
+.mc-time {
+  display: inline-block; font-size: 12px; font-weight: 700;
+  color: var(--gold); background: rgba(255,204,68,0.1);
+  border: 1px solid rgba(255,204,68,0.25); border-radius: 20px;
+  padding: 3px 12px; margin-bottom: 16px;
+}
+
+/* ── COMIC PANEL (ROBO story) ───────────────── */
+.comic-panel {
+  display: flex; gap: 14px; align-items: flex-start;
+  background: var(--surf2); border: 1px solid var(--bdr);
+  border-radius: 12px; padding: 16px 18px; margin-bottom: 18px;
+}
+.comic-robo { font-size: 42px; flex-shrink: 0; }
+.comic-text { flex: 1; }
+.comic-caption {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  letter-spacing: 2px; color: var(--accent); text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.comic-story { font-size: 15px; line-height: 1.6; }
+.comic-story strong { color: var(--white); }
+
+/* ── MISSION BRIEF ──────────────────────────── */
+.mission-brief {
+  background: linear-gradient(135deg, rgba(176,96,255,0.06), rgba(176,96,255,0.06));
+  border: 1px solid rgba(176,96,255,0.2); border-radius: 12px;
+  padding: 18px 22px; margin-bottom: 18px;
+}
+.mission-brief::before {
+  content: '🌌  YOUR MISSION, AIDEN!';
+  display: block; font-family: 'Space Mono', monospace;
+  font-size: 10px; color: var(--accent); letter-spacing: 3px; margin-bottom: 8px;
+}
+.mission-brief p { font-size: 16px; line-height: 1.7; }
+.mission-brief strong { color: var(--white); }
+
+/* ── LEARN SECTION ──────────────────────────── */
+.learn-section {
+  background: var(--surf2); border: 1px solid var(--bdr);
+  border-radius: 12px; padding: 18px 22px; margin-bottom: 18px;
+}
+.learn-title {
+  font-family: 'Orbitron', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--bdr);
+}
+.learn-items { display: flex; flex-direction: column; gap: 12px; }
+.learn-item { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; line-height: 1.5; }
+.learn-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.learn-text strong { color: var(--white); }
+
+/* SPIKE Block styling */
+.spike-block {
+  display: inline-block;
+  background: #2a0050;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin: 3px;
+  border-left: 4px solid var(--accent);
+}
+
+.spk-motion  { border-color: #b060ff; background: #2a0050; }
+.spk-event   { border-color: #ffd700; background: #2a1800; }
+.spk-control { border-color: #ff8800; background: #2a1000; }
+.spk-sensor  { border-color: #00cfff; background: #002a30; }
+.spk-sound   { border-color: #ff66cc; background: #2a0020; }
+.spk-light   { border-color: #00ff99; background: #002a15; }
+.spk-motor   { border-color: #ff4444; background: #2a0000; }
+
+/* Unlock button */
+.unlock-btn {
+  display: inline-block; margin-top: 18px;
+  padding: 13px 28px; background: var(--accent); color: #000;
+  font-family: 'Nunito', sans-serif; font-size: 15px; font-weight: 900;
+  border: none; border-radius: 10px; cursor: pointer;
+  transition: all 0.18s; letter-spacing: 0.3px;
+}
+.unlock-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(176,96,255,0.35); }
+.unlock-btn.green { background: var(--green); }
+.unlock-btn.green:hover { box-shadow: 0 6px 20px rgba(0,255,153,0.35); }
+
+/* ── TWO-COL TRY THIS ───────────────────────── */
+.two-col {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;
+}
+@media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+.box {
+  background: var(--surf2); border: 1px solid var(--bdr);
+  border-radius: 12px; padding: 18px 22px;
+}
+
+.box-title {
+  font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700;
+  letter-spacing: 1px; color: var(--accent); margin-bottom: 12px;
+}
+
+.instructions { font-size: 15px; line-height: 1.6; }
+.instructions ol { margin-left: 20px; }
+.instructions li { margin-bottom: 8px; }
+.instructions strong { color: var(--white); }
+
+.code-label {
+  font-family: 'Space Mono', monospace; font-size: 11px;
+  color: var(--gold); letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 8px; margin-top: 12px;
+}
+.code-demo {
+  background: #0a0f1a; border: 1px solid #1e2d4a;
+  border-radius: 8px; padding: 12px; font-family: 'Space Mono', monospace;
+  font-size: 13px; overflow-x: auto;
+}
+.sb-line { display: block; margin: 4px 0; color: #b0c4de; }
+.sb-indent { margin-left: 24px; }
+
+/* ── CHECK SECTION ──────────────────────────── */
+.check-section {
+  background: var(--surf); border: 1px solid var(--bdr);
+  border-radius: 12px; padding: 16px 20px; margin: 20px 0;
+}
+.check-title {
+  font-family: 'Orbitron', sans-serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 2px; color: var(--accent); text-transform: uppercase;
+  margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--bdr);
+}
+.check-list { display: flex; flex-direction: column; gap: 12px; }
+.cl-item {
+  display: flex; gap: 12px; align-items: flex-start; cursor: pointer;
+  transition: opacity 0.2s;
+}
+.cl-item:hover { opacity: 0.75; }
+.cl-item.done .cl-box { background: var(--green); border-color: var(--green); }
+.cl-item.done .cl-box::after { content: '✓'; position: absolute; top: 1px; left: 4px; color: #000; font-weight: 900; font-size: 13px; }
+.cl-item.done .cl-main { color: var(--white); text-decoration: line-through; opacity: 0.7; }
+.cl-box {
+  width: 24px; height: 24px; border: 2px solid var(--muted);
+  border-radius: 6px; flex-shrink: 0; position: relative;
+  background: transparent; transition: all 0.2s;
+}
+.cl-text { flex: 1; }
+.cl-main { font-size: 15px; font-weight: 700; color: var(--text); }
+.cl-sub { font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+/* ── PATCH REVEAL ───────────────────────────– */
+.patch-reveal { display: none; }
+.patch-reveal.show { display: block; }
+
+.patch-card {
+  background: linear-gradient(135deg, #2a1a4a 0%, #1a2a4a 100%);
+  border: 2px solid var(--accent); border-radius: 16px;
+  padding: 24px; text-align: center; position: relative;
+  margin: 20px 0;
+}
+.patch-corner {
+  position: absolute; font-size: 28px;
+  top: 6px; opacity: 0.5;
+}
+.patch-corner:first-of-type { left: 6px; }
+.patch-corner:last-of-type { right: 6px; }
+
+.patch-header {
+  font-family: 'Space Mono', monospace; font-size: 10px;
+  letter-spacing: 2px; color: var(--gold); text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.patch-title {
+  font-family: 'Orbitron', sans-serif; font-size: 24px; font-weight: 900;
+  color: var(--white); margin-bottom: 12px; line-height: 1.2;
+}
+.patch-robo { font-size: 48px; margin: 12px 0; }
+.patch-skill {
+  font-size: 13px; color: var(--muted); margin-bottom: 12px;
+  font-family: 'Space Mono', monospace; letter-spacing: 1px;
+}
+.patch-name {
+  font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 900;
+  color: var(--accent); margin-bottom: 8px;
+}
+.patch-week {
+  font-size: 11px; color: var(--muted); letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+.patch-stars { font-size: 20px; margin-bottom: 12px; }
+.patch-print-btn {
+  display: inline-block; margin-top: 12px;
+  padding: 10px 20px; background: var(--green); color: #000;
+  font-weight: 900; border: none; border-radius: 8px; cursor: pointer;
+  font-size: 13px; transition: all 0.18s;
+}
+.patch-print-btn:hover { transform: scale(1.05); }
+@media print {
+  .patch-print-btn { display: none; }
+}
+
+/* ── HINT ZONE ──────────────────────────────– */
+.hint-zone { margin: 20px 0; }
+.hint-btn {
+  display: block; width: 100%; margin-bottom: 8px;
+  padding: 12px; background: var(--surf2); border: 1px solid var(--bdr);
+  border-radius: 8px; color: var(--accent); font-weight: 700; cursor: pointer;
+  transition: all 0.2s; text-align: left;
+}
+.hint-btn:hover { background: var(--surf); border-color: var(--accent); }
+.hint-text {
+  display: none; background: var(--surf); border-left: 3px solid var(--accent);
+  padding: 12px 16px; border-radius: 6px; margin-bottom: 12px;
+  color: var(--text); font-size: 14px; line-height: 1.6;
+}
+.hint-text.show { display: block; }
+
+/* ── BREAK PROMPT ───────────────────────────– */
+.break-prompt {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(135deg, rgba(176,96,255,0.2), rgba(0,255,153,0.1));
+  border-top: 2px solid var(--accent); padding: 18px; text-align: center;
+  font-size: 16px; font-weight: 700; z-index: 999;
+}
+.break-prompt.show { display: block; animation: slideUp 0.3s ease-out; }
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* ── FOOTER ─────────────────────────────────── */
+.fun-fact {
+  background: linear-gradient(135deg, rgba(176,96,255,0.06), rgba(0,255,153,0.06));
+  border: 1px solid rgba(176,96,255,0.2); border-radius: 12px;
+  padding: 18px 22px; margin: 28px 0; font-size: 15px; line-height: 1.7;
+}
+.fun-fact strong { color: var(--accent); }
+
+.nav-footer {
+  display: flex; gap: 12px; margin: 28px 0 0;
+}
+.nav-btn {
+  flex: 1; padding: 14px; background: var(--surf);
+  border: 1px solid var(--bdr); border-radius: 10px;
+  color: var(--text); font-weight: 700; cursor: pointer;
+  text-decoration: none; text-align: center; transition: all 0.2s;
+  font-size: 15px;
+}
+.nav-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+.nav-btn.active:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(176,96,255,0.3); }
+.nav-btn:disabled { opacity: 0.3; cursor: default; }
+
+footer {
+  text-align: center; padding: 20px; color: var(--muted);
+  font-size: 13px; font-family: 'Space Mono', monospace;
+  border-top: 1px solid var(--bdr); margin-top: 40px;
+}
+
+/* ── CONFETTI ───────────────────────────────– */
+#confetti { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 998; }
+.cf-dot {
+  position: absolute; animation: fallConfetti ease-out forwards;
+}
+@keyframes fallConfetti {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* ── Video Reward ── */
+.video-reward { display:none; margin:28px 0 8px; border:2px solid var(--accent); border-radius:16px; padding:26px 24px; text-align:center; background:rgba(0,0,0,0.32); }
+.video-reward.show { display:block; animation:vr-in 0.6s ease both; }
+@keyframes vr-in { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+.vr-label { font-family:'Orbitron',sans-serif; font-size:11px; letter-spacing:3px; color:var(--accent); margin-bottom:10px; text-transform:uppercase; }
+.vr-icon  { font-size:54px; display:block; margin-bottom:10px; }
+.vr-title { font-size:16px; font-weight:900; color:var(--white); margin-bottom:20px; line-height:1.4; }
+.vr-btn   { display:inline-block; padding:13px 28px; background:var(--accent); color:#000; font-family:'Nunito',sans-serif; font-size:15px; font-weight:900; border-radius:10px; text-decoration:none; transition:all 0.2s; }
+.vr-btn:hover { transform:translateY(-2px); filter:brightness(1.12); }
+.vr-note  { font-size:11px; color:var(--muted); margin-top:12px; font-family:'Space Mono',monospace; }
+</style>
+</head>
+
+<body>
+
+<div id="confetti"></div>
+
+<div class="wrap">
+
+  <!-- ══════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════ -->
+  <header>
+    <div class="header-grid">
+      <div>
+        <div class="quarter-pill">
+          <div class="q-icon">🤖</div>
+          <div class="q-label">Q2 · SPIKE PRIME · WEEK 3 OF 10</div>
+        </div>
+        <h1><em>Loops & Repetition</em></h1>
+        <div class="header-sub">SPIKE Valley Sector</div>
+        <div class="time-badge">⏱ About 45 minutes</div>
+        <div class="nav-links">
+          <a href="aiden_q2_lessons.html">📚 Parent Guide</a>
+          <a href="aiden_curriculum.html">← Mission Control</a>
+        </div>
+      </div>
+
+      <div class="robo-header-wrap">
+      <div id="robo-wrap" class="robo-thinking">
+        <svg class="robo-svg" id="robo-svg" viewBox="0 0 160 210" xmlns="http://www.w3.org/2000/svg">
+          <line x1="80" y1="18" x2="80" y2="42" stroke="#3a5580" stroke-width="3" stroke-linecap="round"/>
+          <circle class="ant-dot" cx="80" cy="12" r="7" fill="#b060ff"/>
+          <circle cx="80" cy="12" r="3.5" fill="white" opacity="0.5"/>
+          <rect x="4" y="62" width="30" height="11" rx="3" fill="#0d1630" stroke="#1a3060" stroke-width="1.5"/>
+          <line x1="14" y1="62" x2="14" y2="73" stroke="#1a3060" stroke-width="1"/>
+          <line x1="24" y1="62" x2="24" y2="73" stroke="#1a3060" stroke-width="1"/>
+          <line x1="4"  y1="67.5" x2="34" y2="67.5" stroke="#1a3060" stroke-width="1"/>
+          <rect x="34" y="65" width="12" height="3" rx="1.5" fill="#243a60"/>
+          <rect x="126" y="62" width="30" height="11" rx="3" fill="#0d1630" stroke="#1a3060" stroke-width="1.5"/>
+          <line x1="136" y1="62" x2="136" y2="73" stroke="#1a3060" stroke-width="1"/>
+          <line x1="146" y1="62" x2="146" y2="73" stroke="#1a3060" stroke-width="1"/>
+          <line x1="126" y1="67.5" x2="156" y2="67.5" stroke="#1a3060" stroke-width="1"/>
+          <rect x="114" y="65" width="12" height="3" rx="1.5" fill="#243a60"/>
+          <rect x="38" y="42" width="84" height="88" rx="14" fill="#162040" stroke="#2a4070" stroke-width="2"/>
+          <rect x="68" y="28" width="24" height="22" rx="5" fill="#1a2a50" stroke="#2a4070" stroke-width="1.5"/>
+
+          <!-- THINKING EYE -->
+          <g class="eye-state eye-thinking">
+            <circle cx="80" cy="80" r="26" fill="#060c1a" stroke="#1e3060" stroke-width="2"/>
+            <circle cx="80" cy="80" r="18" fill="#b060ff" opacity="0.9"/>
+            <circle cx="74" cy="80" r="11" fill="#040810"/>
+            <circle cx="79" cy="74" r="4" fill="white" opacity="0.4"/>
+            <path d="M57 60 Q80 53 103 60" stroke="#b060ff" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <text x="51" y="76" font-size="13" fill="#b060ff" opacity="0.7">?</text>
+            <text x="103" y="73" font-size="10" fill="#b060ff" opacity="0.5">?</text>
+          </g>
+
+          <!-- EXCITED EYE -->
+          <g class="eye-state eye-excited">
+            <circle cx="80" cy="80" r="26" fill="#060c1a" stroke="#1e3060" stroke-width="2"/>
+            <circle cx="80" cy="80" r="22" fill="#ffcc44" opacity="0.95"/>
+            <circle cx="80" cy="77" r="8" fill="#040810"/>
+            <circle cx="84" cy="73" r="5" fill="white" opacity="0.55"/>
+            <text x="54" y="62" font-size="13" fill="#ffcc44" opacity="0.9">✦</text>
+            <text x="100" y="62" font-size="13" fill="#ffcc44" opacity="0.9">✦</text>
+          </g>
+
+          <!-- CELEBRATING EYE -->
+          <g class="eye-state eye-celebrating">
+            <circle cx="80" cy="80" r="26" fill="#060c1a" stroke="#1e3060" stroke-width="2"/>
+            <polygon points="80,59 83,72 96,74 87,83 90,96 80,89 70,96 73,83 64,74 77,72" fill="#00ff99" opacity="0.95"/>
+            <polygon points="80,65 82,75 91,76 85,82 87,91 80,87 73,91 75,82 69,76 78,75" fill="#040810"/>
+            <circle cx="83" cy="72" r="3" fill="white" opacity="0.6"/>
+            <text x="48" y="64" font-size="14" fill="#ffcc44">⭐</text>
+            <text x="104" y="64" font-size="14" fill="#ffcc44">⭐</text>
+            <text x="52" y="106" font-size="11" fill="#ff8844">✨</text>
+            <text x="102" y="106" font-size="11" fill="#ff8844">✨</text>
+          </g>
+
+          <rect x="52" y="114" width="56" height="11" rx="4" fill="#0d1530" stroke="#1a2a50" stroke-width="1"/>
+          <circle cx="65"  cy="119.5" r="3" fill="#00ff99"/>
+          <circle cx="77"  cy="119.5" r="3" fill="#ffcc44"/>
+          <circle cx="89"  cy="119.5" r="3" fill="#1a3060"/>
+          <circle cx="101" cy="119.5" r="3" fill="#1a3060"/>
+          <rect x="38" y="125" width="84" height="5" rx="0" fill="#1a2a50"/>
+          <ellipse cx="50" cy="150" rx="15" ry="11" fill="#0e1a30" stroke="#2a3a5a" stroke-width="2"/>
+          <ellipse cx="50" cy="150" rx="8"  ry="6"  fill="#152030"/>
+          <line x1="35" y1="150" x2="65" y2="150" stroke="#2a3a5a" stroke-width="1.5"/>
+          <line x1="50" y1="139" x2="50" y2="161" stroke="#2a3a5a" stroke-width="1.5"/>
+          <ellipse cx="50" cy="175" rx="15" ry="11" fill="#0e1a30" stroke="#2a3a5a" stroke-width="2"/>
+          <ellipse cx="50" cy="175" rx="8"  ry="6"  fill="#152030"/>
+          <line x1="35" y1="175" x2="65" y2="175" stroke="#2a3a5a" stroke-width="1.5"/>
+          <line x1="50" y1="164" x2="50" y2="186" stroke="#2a3a5a" stroke-width="1.5"/>
+          <ellipse cx="110" cy="150" rx="15" ry="11" fill="#0e1a30" stroke="#2a3a5a" stroke-width="2"/>
+          <ellipse cx="110" cy="150" rx="8"  ry="6"  fill="#152030"/>
+          <line x1="95"  y1="150" x2="125" y2="150" stroke="#2a3a5a" stroke-width="1.5"/>
+          <line x1="110" y1="139" x2="110" y2="161" stroke="#2a3a5a" stroke-width="1.5"/>
+          <ellipse cx="110" cy="175" rx="15" ry="11" fill="#0e1a30" stroke="#2a3a5a" stroke-width="2"/>
+          <ellipse cx="110" cy="175" rx="8"  ry="6"  fill="#152030"/>
+          <line x1="95"  y1="175" x2="125" y2="175" stroke="#2a3a5a" stroke-width="1.5"/>
+          <line x1="110" y1="164" x2="110" y2="186" stroke="#2a3a5a" stroke-width="1.5"/>
+          <rect x="38" y="130" width="12" height="26" rx="3" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
+          <rect x="110" y="130" width="12" height="26" rx="3" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
+          <ellipse cx="80" cy="200" rx="55" ry="5" fill="#000" opacity="0.25"/>
+        </svg>
+        <div class="robo-bubble" id="robo-bubble">Cameras online!</div>
+      </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mission progress bar -->
+  <div class="mission-progress">
+    <div class="mp-step active" id="mpstep1">
+      <div class="mp-dot">1</div>
+      <div class="mp-info">
+        <div class="mp-sub">Mission 1</div>
+        <div class="mp-name">Learn</div>
+      </div>
+    </div>
+    <div class="mp-connector" id="mpconn1"></div>
+    <div class="mp-step locked" id="mpstep2">
+      <div class="mp-dot">2</div>
+      <div class="mp-info">
+        <div class="mp-sub">Mission 2</div>
+        <div class="mp-name">Build</div>
+      </div>
+    </div>
+    <div class="mp-connector" id="mpconn2"></div>
+    <div class="mp-step locked" id="mpstep3">
+      <div class="mp-dot">3</div>
+      <div class="mp-info">
+        <div class="mp-sub">Mission 3</div>
+        <div class="mp-name">Prove It</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       MISSION 1: LEARN
+  ══════════════════════════════════════ -->
+  <div class="mission-card active" id="mc1">
+    <div class="mc-header">
+      <div class="mc-label">🟡 MISSION 1 · LEARN</div>
+      <div class="mc-badge" id="badge1">🎬 ACTIVE</div>
+    </div>
+    <div class="mc-body">
+      <div class="mc-time">⏱ About 15 minutes</div>
+
+      <!-- ROBO's Story -->
+      <div class="comic-panel">
+        <div class="comic-robo">🤖</div>
+        <div class="comic-text">
+          <div class="comic-caption">⚡ ROBO's Transmission</div>
+          <div class="comic-story">ROBO needs to patrol SPIKE Valley but keeps forgetting to repeat its route! Loop commands will keep ROBO moving in perfect patrol patterns all day long.</div>
+        </div>
+      </div>
+
+      <!-- Your Mission! -->
+      <div class="mission-brief">
+        <p>Learn 'repeat [] times' block, 'loop forever' block, 'repeat until <>' block, nesting actions inside loops.</p>
+      </div>
+
+      <!-- Learn section -->
+      <div class="learn-section">
+        <div class="learn-title">🎓 Let's Learn!</div>
+        <div class="learn-items">
+          <div class="learn-item">
+            <div class="learn-icon">🧩</div>
+            <div class="learn-text">Understand <strong>SPIKE Prime blocks</strong> and how they control motors, sensors, and more.</div>
+          </div>
+          <div class="learn-item">
+            <div class="learn-icon">⚙️</div>
+            <div class="learn-text">See how <strong>block types work together</strong> to make SPIKE move and respond.</div>
+          </div>
+          <div class="learn-item">
+            <div class="learn-icon">🎯</div>
+            <div class="learn-text">Know what to look for when <strong>building your program</strong> in Mission 2.</div>
+          </div>
+        </div>
+      </div>
+
+      <button class="unlock-btn" onclick="unlockM2()">✓ Got It! Unlock Mission 2 →</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       MISSION 2: BUILD
+  ══════════════════════════════════════ -->
+  <div class="mission-card locked" id="mc2">
+    <div class="mc-header">
+      <div class="mc-label">🟠 MISSION 2 · BUILD</div>
+      <div class="mc-badge" id="badge2">🔒 LOCKED</div>
+    </div>
+    <div class="mc-body">
+      <div class="mc-time">⏱ About 20 minutes</div>
+      <p style="margin-bottom:16px;">Make SPIKE drive a square: repeat 4 times — move forward 3 rotations, turn right 90 degrees.</p>
+
+      <div class="two-col">
+        <div class="box">
+          <div class="box-title">⚡ Try This!</div>
+          <div class="instructions">
+            <p style="margin-bottom:12px;">Build this in LEGO Education SPIKE App:</p>
+            <ol>
+              <li>Connect your SPIKE Prime robot to the SPIKE app</li>
+              <li>Start a new project</li>
+              <li>Drag the blocks you learned into the coding area</li>
+              <li>Click the green play button to run your code</li>
+              <li>Did SPIKE do what you expected? Try tweaking the numbers!</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="box-title">🎬 Block Sequence</div>
+          <div class="code-label">Sample: Motor Forward</div>
+          <div class="code-demo">
+            <div class="sb-line"><span class="spike-block spk-event">when started</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-control">repeat 4</span></div>
+            <div class="sb-line sb-indent sb-indent"><span class="spike-block spk-motor">Motor A run for 2 rotations</span></div>
+            <div class="sb-line sb-indent sb-indent"><span class="spike-block spk-motor">Motor A turn right 90°</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-control">end repeat</span></div>
+          </div>
+          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Repeat 4 times to drive a square!</p>
+        </div>
+      </div>
+
+      <!-- Hints -->
+      <div class="hint-zone">
+        <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
+        <div class="hint-text" id="htxt1">
+          🌟 <strong>Hint 1:</strong> Motor blocks are usually <strong>red/orange</strong> in the SPIKE app. Look for the "Motor" section in the block palette!
+        </div>
+        <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
+        <div class="hint-text" id="htxt2">
+          🌟 <strong>Hint 2:</strong> You need to <strong>specify the motor port</strong> (usually A, B, C, D, E, or F) and the <strong>action</strong> (run for rotations, run for seconds, run at speed, etc.).
+        </div>
+        <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
+        <div class="hint-text" id="htxt3">
+          🌟 <strong>Full answer:</strong> No shame — ROBO needed help learning too!<br>
+          Use: <em>Motor [port] run for [X] rotations</em> to move, and <em>wait [X] seconds</em> to pause.<br>
+          Click ▶️ and watch SPIKE go!
+        </div>
+      </div>
+
+      <button class="unlock-btn" id="m2btn" style="margin-top:18px;" onclick="unlockM3()">✓ Done! Unlock Mission 3 →</button>
+    </div>
+  </div>
+
+  <!-- Break prompt -->
+  <div class="break-prompt" id="break-prompt">
+    🌟 ROBO says: <strong>"Excellent work, Aiden!"</strong><br>
+    Stand up, do 5 big jumps, then come back for your final mission! 🚀
+  </div>
+
+  <!-- ══════════════════════════════════════
+       MISSION 3: PROVE IT
+  ══════════════════════════════════════ -->
+  <div class="mission-card locked" id="mc3">
+    <div class="mc-header">
+      <div class="mc-label">🟢 MISSION 3 · PROVE IT</div>
+      <div class="mc-badge" id="badge3">🔒 LOCKED</div>
+    </div>
+    <div class="mc-body">
+      <div class="mc-time">⏱ About 10 minutes</div>
+      <p style="margin-bottom:16px;">Tick each box as you do it — ROBO will celebrate when you finish! 🎉</p>
+
+      <div class="check-section">
+        <div class="check-title">✅ Did I Do It?</div>
+        <div class="check-list" id="checks">
+        <div class="cl-item" onclick="tickCl(this)">
+          <div class="cl-box"></div>
+          <div class="cl-text">
+            <div class="cl-main">Used a repeat loop</div>
+            <div class="cl-sub">Loops are awesome!</div>
+          </div>
+        </div>
+        <div class="cl-item" onclick="tickCl(this)">
+          <div class="cl-box"></div>
+          <div class="cl-text">
+            <div class="cl-main">Robot completes a repeating pattern</div>
+            <div class="cl-sub">Pattern complete!</div>
+          </div>
+        </div>
+        <div class="cl-item" onclick="tickCl(this)">
+          <div class="cl-box"></div>
+          <div class="cl-text">
+            <div class="cl-main">Loop runs at least 3 times</div>
+            <div class="cl-sub">Repetition mastered!</div>
+          </div>
+        </div>
+        <div class="cl-item" onclick="tickCl(this)">
+          <div class="cl-box"></div>
+          <div class="cl-text">
+            <div class="cl-main">Pattern makes a recognizable shape</div>
+            <div class="cl-sub">Geometry unlocked!</div>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <!-- Mission Patch (hidden until all checked) -->
+      <div class="patch-reveal" id="patch-reveal">
+        <div style="text-align:center;margin-bottom:16px;">
+          <div style="font-family:'Orbitron',sans-serif;font-size:14px;color:var(--green);margin-bottom:4px;">🎉 MISSION COMPLETE!</div>
+          <div style="font-size:14px;color:var(--muted);">ROBO is proud of you! Here's your mission patch:</div>
+        </div>
+        <div class="patch-card" id="print-patch">
+          <span class="patch-corner">⭐</span>
+          <span class="patch-corner">⭐</span>
+          <div class="patch-header">MARS MISSION · CERTIFIED</div>
+          <div class="patch-title">Loops & Repetition</div>
+          <span class="patch-robo">🤖</span>
+          <div class="patch-skill">SPIKE Prime Coding · Week 3</div>
+          <div class="patch-name">AIDEN</div>
+          <div class="patch-week">Q2 · SPIKE VALLEY · WEEK 3 OF 10</div>
+          <div class="patch-stars">⭐⭐⭐</div>
+          <button class="patch-print-btn" onclick="window.print()">🖨️ Print This Patch</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       FUN FACT (always visible)
+  ══════════════════════════════════════ -->
+  <div class="video-reward" id="video-reward">
+  <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
+  <span class="vr-icon">🔄</span>
+  <div class="vr-title">ROBO found a special<br><strong>SPIKE loops</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=lego+spike+prime+loops+repeat+coding+robot+kids" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
+</div>
+<div class="fun-fact">
+    <strong>Fun Fact:</strong> Real rovers run patrol loops to survey the same area multiple times to track changes over time!
+  </div>
+
+  <!-- ══════════════════════════════════════
+       FOOTER NAVIGATION
+  ══════════════════════════════════════ -->
+  <div class="nav-footer">
+    <a href="aiden_q2_w2.html" class="nav-btn">← Previous Week</a>
+    <a href="aiden_q2_w4.html" class="nav-btn active">Next Week →</a>
+  </div>
+
+</div><!-- /wrap -->
+
+<footer>WEEK 3 · LOOPS & REPETITION · Q2 SPIKE VALLEY · MISSION 3 OF 40</footer>
+
+<script>
+// ── Audio Context ──────────────────────────────
+let _ac = null;
+function ac() {
+  if (!_ac) _ac = new (window.AudioContext || window.webkitAudioContext)();
+  return _ac;
+}
+
+function blip() {
+  try {
+    const c = ac(), o = c.createOscillator(), g = c.createGain();
+    o.connect(g); g.connect(c.destination);
+    o.type = 'sine';
+    o.frequency.setValueAtTime(1047, c.currentTime);
+    o.frequency.exponentialRampToValueAtTime(880, c.currentTime + 0.08);
+    g.gain.setValueAtTime(0.22, c.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + 0.12);
+    o.start(); o.stop(c.currentTime + 0.12);
+  } catch(e) {}
+}
+
+function chime() {
+  try {
+    const c = ac();
+    [[523,0],[659,0.12],[784,0.24],[1047,0.36]].forEach(([f,d]) => {
+      const o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination); o.type = 'sine';
+      o.frequency.setValueAtTime(f, c.currentTime + d);
+      g.gain.setValueAtTime(0.16, c.currentTime + d);
+      g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + d + 0.5);
+      o.start(c.currentTime + d); o.stop(c.currentTime + d + 0.5);
+    });
+  } catch(e) {}
+}
+
+function fanfare() {
+  try {
+    const c = ac();
+    [[523,0,'square'],[659,0.1,'square'],[784,0.2,'square'],
+     [1047,0.35,'square'],[1047,0.5,'sine'],[784,0.62,'sine']].forEach(([f,d,t]) => {
+      const o = c.createOscillator(), g = c.createGain();
+      o.connect(g); g.connect(c.destination); o.type = t;
+      o.frequency.setValueAtTime(f, c.currentTime + d);
+      g.gain.setValueAtTime(0.1, c.currentTime + d);
+      g.gain.exponentialRampToValueAtTime(0.001, c.currentTime + d + 0.4);
+      o.start(c.currentTime + d); o.stop(c.currentTime + d + 0.4);
+    });
+  } catch(e) {}
+}
+
+// ── ROBO moods ─────────────────────────────────
+const roboWrap = document.getElementById('robo-wrap');
+const roboBubble = document.getElementById('robo-bubble');
+const roboMoods = {
+  thinking:    { cls:'robo-thinking',    msg:'Hmm… systems down!\nCan you help? 🤔' },
+  excited:     { cls:'robo-excited',     msg:'OOH! Code incoming!\nLet\'s build! 🤩' },
+  celebrating: { cls:'robo-celebrating', msg:'WE DID IT! Systems\nONLINE! Amazing! ⭐' },
+};
+function setRobo(mood) {
+  roboWrap.className = roboMoods[mood].cls;
+  roboBubble.textContent = roboMoods[mood].msg;
+}
+
+// ── Mission progress bar ───────────────────────
+function setStep(n, state) {
+  // state: 'active' | 'done' | 'locked'
+  const el = document.getElementById('mpstep' + n);
+  el.className = 'mp-step ' + state;
+  const dot = el.querySelector('.mp-dot');
+  if (state === 'done') dot.textContent = '✓';
+}
+function litConn(n) {
+  document.getElementById('mpconn' + n).classList.add('lit');
+}
+
+// ── Mission card helpers ───────────────────────
+function setCard(n, state) {
+  // state: 'active' | 'done' | 'locked'
+  document.getElementById('mc' + n).className = 'mission-card ' + state;
+}
+function setBadge(n, text) {
+  document.getElementById('badge' + n).textContent = text;
+}
+
+// ── Unlock Mission 2 ───────────────────────────
+function unlockM2() {
+  setStep(1, 'done'); litConn(1); setCard(1, 'done');
+  setStep(2, 'active'); setCard(2, 'active');
+  setBadge(2, '✓ UNLOCKED');
+  setRobo('excited'); chime();
+  document.getElementById('mc2').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ── Unlock Mission 3 ───────────────────────────
+function unlockM3() {
+  setStep(2, 'done'); litConn(2); setCard(2, 'done');
+  setStep(3, 'active'); setCard(3, 'active');
+  setBadge(3, '✓ UNLOCKED');
+  document.getElementById('break-prompt').classList.add('show');
+  chime();
+  document.getElementById('break-prompt').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ── Checklist ─────────────────────────────────
+let checked = 0;
+function tickCl(el) {
+  const wasDone = el.classList.contains('done');
+  el.classList.toggle('done');
+  if (!wasDone) { checked++; blip(); }
+  else          { checked = Math.max(0, checked - 1); }
+  if (checked >= 4) allDone();
+}
+
+function allDone() {
+  // Mission 3 done
+  setStep(3, 'done'); setCard(3, 'done'); setBadge(3, '✓ COMPLETE');
+  setRobo('celebrating'); fanfare();
+  triggerConfetti();
+  // Show patch
+  document.getElementById('patch-reveal').classList.add('show');
+  document.getElementById('patch-reveal').scrollIntoView({behavior:'smooth', block:'start'});
+  setTimeout(function(){ var vr=document.getElementById('video-reward'); if(vr){ vr.classList.add('show'); setTimeout(function(){vr.scrollIntoView({behavior:'smooth',block:'nearest'});},300); } },1800);
+
+  // Mark week done in dashboard
+  try {
+    const key = 'aidenDoneWeeks';
+    const done = JSON.parse(localStorage.getItem(key)) || [];
+    if (!done.includes('q2w3')) { done.push('q2w3'); localStorage.setItem(key, JSON.stringify(done)); }
+  } catch(e) {}
+}
+
+// ── Confetti ───────────────────────────────────
+function triggerConfetti() {
+  const wrap = document.getElementById('confetti');
+  wrap.innerHTML = '';
+  const cols = ['#b060ff','#00ff99','#ffd700','#ff8844','#ffcc44','#ff6688','#fff'];
+  for (let i = 0; i < 70; i++) {
+    const d = document.createElement('div');
+    d.className = 'cf-dot';
+    const sz = Math.random() * 10 + 4;
+    d.style.cssText = `left:${Math.random()*100}%;width:${Math.random()>.5?sz*.5:sz}px;height:${sz}px;
+      border-radius:${Math.random()>.5?'2px':'50%'};background:${cols[Math.floor(Math.random()*cols.length)]};
+      animation-delay:${Math.random()*.4}s;animation-duration:${Math.random()*1.8+1.2}s;`;
+    wrap.appendChild(d);
+  }
+  setTimeout(() => wrap.innerHTML = '', 3500);
+}
+
+// ── Hints ──────────────────────────────────────
+let hintsShown = 0;
+function showHint(n) {
+  document.getElementById('htxt' + n).classList.add('show');
+  if (n === 1 && hintsShown < 1) { document.getElementById('hbtn2').style.display = 'block'; }
+  if (n === 2 && hintsShown < 2) { document.getElementById('hbtn3').style.display = 'block'; }
+  hintsShown = Math.max(hintsShown, n);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aiden — Quarter 2: Surface Deployment</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c18;
+    --deep: #0b1022;
+    --panel: #0e1628;
+    --card: #111d35;
+    --border: #1a3050;
+    --accent: #b060ff;
+    --gold: #ffcc44;
+    --green: #00ff99;
+    --red: #ff4466;
+    --blue: #00cfff;
+    --orange: #ff8844;
+    --text: #c0d4f0;
+    --muted: #3d5575;
+    --white: #e8f2ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(1px 1px at 5% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 5%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(2px 2px at 75% 8%, rgba(176,96,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 25%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 70%, rgba(255,255,255,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 85%, rgba(0,207,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 65%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(2px 2px at 40% 45%, rgba(255,204,68,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,0.3) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+  /* ── HEADER ── */
+  header {
+    padding: 44px 0 32px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .quarter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(176,96,255,0.08);
+    border: 1px solid rgba(176,96,255,0.25);
+    border-radius: 24px;
+    padding: 6px 16px 6px 10px;
+    margin-bottom: 14px;
+  }
+  .q-icon {
+    width: 28px; height: 28px;
+    background: rgba(176,96,255,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .q-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(26px, 4.5vw, 48px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  h1 em { color: var(--accent); font-style: normal; }
+  .header-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .header-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 2px; }
+  .meta-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .meta-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* ── NAV ── */
+  .week-nav {
+    display: flex;
+    gap: 6px;
+    padding: 20px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .week-nav::-webkit-scrollbar { display: none; }
+  .wn-btn {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .wn-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .wn-btn.active { background: rgba(176,96,255,0.12); border-color: var(--accent); color: var(--accent); box-shadow: 0 0 12px rgba(176,96,255,0.2); }
+  .wn-btn.done { background: rgba(0,255,153,0.06); border-color: rgba(0,255,153,0.3); color: var(--green); }
+
+  /* ── LESSON ── */
+  .lesson { display: none; }
+  .lesson.active { display: block; animation: fadeUp 0.3s ease; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  .lesson-hero {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .lesson-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .stripe-purple::before { background: linear-gradient(90deg, var(--accent), transparent); }
+  .stripe-blue::before   { background: linear-gradient(90deg, var(--blue), transparent); }
+  .stripe-green::before  { background: linear-gradient(90deg, var(--green), transparent); }
+  .stripe-gold::before   { background: linear-gradient(90deg, var(--gold), transparent); }
+  .stripe-red::before    { background: linear-gradient(90deg, var(--red), transparent); }
+  .stripe-orange::before { background: linear-gradient(90deg, var(--orange), transparent); }
+
+  .hero-top { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px; }
+  .hero-number {
+    font-family: 'Orbitron', monospace;
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.08;
+    position: absolute;
+    top: 16px; right: 24px;
+    color: var(--white);
+  }
+  .hero-emoji { font-size: 40px; }
+  .hero-info { flex: 1; }
+  .hero-week {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .hero-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .hero-concept { font-size: 14px; color: var(--muted); }
+  .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    letter-spacing: 1px;
+  }
+  .tag-p  { background: rgba(176,96,255,0.1);  color: var(--accent); border: 1px solid rgba(176,96,255,0.2); }
+  .tag-b  { background: rgba(0,207,255,0.1);   color: var(--blue);   border: 1px solid rgba(0,207,255,0.2); }
+  .tag-g  { background: rgba(0,255,153,0.1);   color: var(--green);  border: 1px solid rgba(0,255,153,0.2); }
+  .tag-gd { background: rgba(255,204,68,0.1);  color: var(--gold);   border: 1px solid rgba(255,204,68,0.2); }
+  .tag-r  { background: rgba(255,68,102,0.1);  color: var(--red);    border: 1px solid rgba(255,68,102,0.2); }
+  .tag-o  { background: rgba(255,136,68,0.1);  color: var(--orange); border: 1px solid rgba(255,136,68,0.2); }
+
+  .hero-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media(max-width: 600px) { .hero-grid { grid-template-columns: 1fr; } }
+  .hero-stat {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .hs-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .hs-value { font-weight: 700; color: var(--white); font-size: 13px; }
+
+  /* ── LAYOUT ── */
+  .two-col   { display: grid; grid-template-columns: 1fr 1fr;     gap: 16px; margin-bottom: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  @media(max-width: 640px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 20px;
+  }
+  .box-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .box-title.purple { color: var(--accent); }
+  .box-title.blue   { color: var(--blue); }
+  .box-title.gold   { color: var(--gold); }
+  .box-title.green  { color: var(--green); }
+  .box-title.red    { color: var(--red); }
+  .box-title.orange { color: var(--orange); }
+
+  /* Timeline */
+  .mini-timeline { display: flex; flex-direction: column; gap: 12px; }
+  .mt-row { display: flex; gap: 10px; }
+  .mt-time {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    min-width: 55px;
+    padding-top: 1px;
+    flex-shrink: 0;
+  }
+  .mt-name { font-weight: 700; color: var(--white); font-size: 13px; }
+  .mt-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* Lists */
+  .li-list { display: flex; flex-direction: column; gap: 8px; }
+  .li-item { display: flex; gap: 8px; font-size: 13px; line-height: 1.45; }
+  .li-dot         { color: var(--accent); flex-shrink: 0; margin-top: 2px; font-size: 10px; }
+  .li-dot.gold    { color: var(--gold); }
+  .li-dot.green   { color: var(--green); }
+  .li-dot.red     { color: var(--red); }
+  .li-dot.blue    { color: var(--blue); }
+  .li-dot.orange  { color: var(--orange); }
+
+  /* Script blocks */
+  .script-block {
+    background: rgba(176,96,255,0.04);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    margin: 8px 0;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text);
+  }
+  .script-block.gold   { border-color: var(--gold);   background: rgba(255,204,68,0.04); }
+  .script-block.green  { border-color: var(--green);  background: rgba(0,255,153,0.04); }
+  .script-block.red    { border-color: var(--red);    background: rgba(255,68,102,0.04); }
+  .script-block.blue   { border-color: var(--blue);   background: rgba(0,207,255,0.04); }
+  .script-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  /* Checklist */
+  .check-list { display: flex; flex-direction: column; gap: 6px; }
+  .cl-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.02);
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.15s;
+    user-select: none;
+  }
+  .cl-item:hover { background: rgba(255,255,255,0.04); }
+  .cl-item.done  { background: rgba(0,255,153,0.04); }
+  .cl-box {
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    transition: all 0.15s;
+  }
+  .cl-item.done .cl-box { background: var(--green); border-color: var(--green); color: #000; }
+
+  /* Mission brief */
+  .mission-brief {
+    background: linear-gradient(135deg, rgba(176,96,255,0.06), rgba(0,207,255,0.06));
+    border: 1px solid rgba(176,96,255,0.2);
+    border-radius: 13px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .mission-brief::before {
+    content: '🤖 MISSION BRIEF';
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  .mission-brief p { font-size: 14px; line-height: 1.6; color: var(--text); }
+  .mission-brief strong { color: var(--white); }
+
+  /* SPIKE block visual (mimics LEGO SPIKE color scheme) */
+  .spike-block {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    margin: 3px;
+  }
+  .spk-move    { background: #005ea8; color: white; }
+  .spk-motor   { background: #0076d4; color: white; }
+  .spk-sense   { background: #7a3dba; color: white; }
+  .spk-control { background: #d4820a; color: white; }
+  .spk-event   { background: #c47f17; color: white; }
+  .spk-sound   { background: #c25fa3; color: white; }
+  .spk-light   { background: #e63b2e; color: white; }
+
+  .spike-demo {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin: 10px 0;
+    font-size: 12px;
+  }
+  .spike-demo-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  /* Hardware callout */
+  .hw-callout {
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(176,96,255,0.05);
+    border: 1px solid rgba(176,96,255,0.2);
+    border-radius: 10px;
+    margin: 10px 0;
+    align-items: flex-start;
+    font-size: 13px;
+  }
+  .hw-callout .hw-icon { font-size: 22px; flex-shrink: 0; }
+  .hw-callout strong { color: var(--white); }
+
+  /* Success bar */
+  .success-bar {
+    display: flex;
+    gap: 10px;
+    padding: 14px 18px;
+    background: rgba(0,255,153,0.05);
+    border: 1px solid rgba(0,255,153,0.2);
+    border-radius: 10px;
+    align-items: center;
+    font-size: 13px;
+    margin: 8px 0;
+  }
+  .success-bar .sb-icon { font-size: 18px; flex-shrink: 0; }
+
+  /* Progress */
+  .q-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+  }
+  .qp-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .qp-bar { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .qp-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+  .qp-pct {
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 36px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 36px 0 28px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+  }
+  /* ── TOP NAV BAR ── */
+  .top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,12,24,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+    margin-bottom: 0;
+  }
+  .top-bar-inner {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 14px;
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+  }
+  .back-btn:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .top-bar-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  /* ── ROBO PARENT GUIDE ── */
+  .robo-welcome { display:flex; align-items:flex-start; gap:20px; background:rgba(176,96,255,0.05); border:1px solid rgba(176,96,255,0.2); border-radius:16px; padding:20px 24px; margin:24px 0 0; }
+  .robo-svg-sm { flex-shrink:0; width:72px; height:72px; }
+  .robo-parent-bubble { background:rgba(176,96,255,0.08); border:1px solid rgba(176,96,255,0.25); border-radius:12px; padding:14px 18px; font-size:15px; line-height:1.6; color:#c0d4f0; flex:1; position:relative; }
+  .robo-parent-bubble::before { content:''; position:absolute; left:-10px; top:20px; border:5px solid transparent; border-right-color:rgba(176,96,255,0.25); }
+  .robo-bubble-name { font-family:'Space Mono',monospace; font-size:11px; color:#b060ff; letter-spacing:.08em; margin-bottom:6px; }
+  .convos-panel { background:rgba(176,96,255,0.04); border:1px solid rgba(176,96,255,0.18); border-radius:16px; padding:24px 28px; margin:28px 0; }
+  .convos-title { font-family:'Orbitron',sans-serif; font-size:13px; letter-spacing:.1em; color:#b060ff; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .convo-list { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  @media(max-width:640px) { .convo-list { grid-template-columns:1fr; } }
+  .convo-item { background:rgba(255,255,255,0.03); border:1px solid rgba(176,96,255,0.12); border-radius:10px; padding:12px 14px; font-size:14px; color:#c0d4f0; line-height:1.5; }
+  .convo-item::before { content:'"'; color:#b060ff; font-size:20px; font-weight:900; line-height:0.8; display:block; margin-bottom:4px; }
+  @media print {
+    body::before, .top-bar, .week-nav, .back-btn, .robo-welcome, .print-btn { display:none !important; }
+    body { background:#fff !important; color:#000 !important; }
+    .lesson { display:block !important; page-break-before:always; border:none; }
+    .lesson:first-of-type { page-break-before:avoid; }
+    .box, .lesson-hero, .convos-panel { background:#f5f5f5 !important; border:1px solid #ccc !important; color:#000 !important; break-inside:avoid; }
+    .box-title, .hero-title, .hero-week, .convos-title { color:#000 !important; }
+    .script-block { background:#f0f0f0 !important; color:#000 !important; border-left:3px solid #999 !important; }
+    a { color:#000 !important; }
+    .tag { background:#eee !important; color:#333 !important; border:1px solid #ccc !important; }
+  }
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <a href="aiden_curriculum.html" class="back-btn">← Mission Control</a>
+    <span class="top-bar-title">Q2 · LEGO SPIKE · Surface Deployment</span>
+    <button class="print-btn" onclick="window.print()" style="background:rgba(176,96,255,0.1);border:1px solid rgba(176,96,255,0.3);color:#b060ff;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.05em;">🖨 PRINT GUIDE</button>
+
+  </div>
+</div>
+
+<div class="wrap">
+
+<header>
+  <div class="quarter-pill">
+    <div class="q-icon">🤖</div>
+    <span class="q-label">Quarter 2 · Weeks 1–10 · LEGO SPIKE Essential</span>
+  </div>
+  <h1>Surface <em>Deployment</em></h1>
+  <p class="header-sub">PHYSICAL ROBOTICS · MARS ROVER NARRATIVE · AGE 7–8</p>
+  <div class="header-meta">
+    <div class="meta-item"><div class="meta-label">Platform</div><div class="meta-value">LEGO SPIKE</div></div>
+    <div class="meta-item"><div class="meta-label">Weeks</div><div class="meta-value">10</div></div>
+    <div class="meta-item"><div class="meta-label">Session</div><div class="meta-value">60–75 min</div></div>
+    <div class="meta-item"><div class="meta-label">Mission Phase</div><div class="meta-value">Phase 2</div></div>
+    <div class="meta-item"><div class="meta-label">Capstone</div><div class="meta-value">Week 9–10</div></div>
+  </div>
+</header>
+  <!-- ROBO WELCOME -->
+  <div class="robo-welcome">
+    <svg class="robo-svg-sm" viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="15" y="30" width="50" height="38" rx="10" fill="#1a0030" stroke="#b060ff" stroke-width="2"/>
+      <rect x="22" y="38" width="36" height="22" rx="6" fill="#200040"/>
+      <circle cx="31" cy="49" r="5" fill="#b060ff" opacity="0.9"/>
+      <circle cx="49" cy="49" r="5" fill="#b060ff" opacity="0.9"/>
+      <circle cx="31" cy="49" r="2.5" fill="#0d0018"/>
+      <circle cx="49" cy="49" r="2.5" fill="#0d0018"/>
+      <rect x="33" y="20" width="14" height="12" rx="4" fill="#1a0030" stroke="#b060ff" stroke-width="1.5"/>
+      <circle cx="40" cy="16" r="4" fill="#b060ff" opacity="0.8"/>
+      <circle cx="40" cy="16" r="2" fill="#0d0018"/>
+      <rect x="20" y="68" width="40" height="6" rx="3" fill="#1a0030" stroke="#b060ff" stroke-width="1.5"/>
+      <rect x="10" y="42" width="8" height="16" rx="4" fill="#1a0030" stroke="#b060ff" stroke-width="1.5"/>
+      <rect x="62" y="42" width="8" height="16" rx="4" fill="#1a0030" stroke="#b060ff" stroke-width="1.5"/>
+      <rect x="26" y="74" width="10" height="16" rx="5" fill="#1a0030" stroke="#b060ff" stroke-width="1.5"/>
+      <rect x="44" y="74" width="10" height="16" rx="5" fill="#1a0030" stroke="#b060ff" stroke-width="1.5"/>
+    </svg>
+    <div class="robo-parent-bubble">
+      <div class="robo-bubble-name">ROBO · PARENT BRIEFING</div>
+      Welcome to Q2 — SPIKE Valley! This quarter Aiden moves from screen to <strong>physical robotics</strong> with LEGO SPIKE Prime. The concepts stay the same (loops, conditions, variables) but now they control real motors and sensors. Don't worry if you don't know LEGO robotics — follow Aiden's curiosity and let the missions guide you both. 🤖
+    </div>
+  </div>
+
+  <!-- CONVERSATION STARTERS -->
+  <div class="convos-panel">
+    <div class="convos-title">💬 CONVERSATION STARTERS · USE ANY TIME</div>
+    <div class="convo-list">
+      <div class="convo-item">What does this sensor actually feel or see?</div>
+      <div class="convo-item">What would happen if we changed the motor speed?</div>
+      <div class="convo-item">How is this LEGO program like Scratch from last quarter?</div>
+      <div class="convo-item">Can you make ROBO do something surprising?</div>
+      <div class="convo-item">What happens if the sensor doesn't detect anything?</div>
+      <div class="convo-item">If this were a real Mars rover, what would go wrong?</div>
+      <div class="convo-item">How many times does that loop run? How do you know?</div>
+      <div class="convo-item">What was the trickiest part to wire up today?</div>
+    </div>
+  </div>
+
+
+<div class="week-nav">
+  <button class="wn-btn" onclick="showWeek(1,this)">W1</button>
+  <button class="wn-btn" onclick="showWeek(2,this)">W2</button>
+  <button class="wn-btn" onclick="showWeek(3,this)">W3</button>
+  <button class="wn-btn" onclick="showWeek(4,this)">W4</button>
+  <button class="wn-btn" onclick="showWeek(5,this)">W5</button>
+  <button class="wn-btn" onclick="showWeek(6,this)">W6</button>
+  <button class="wn-btn" onclick="showWeek(7,this)">W7</button>
+  <button class="wn-btn" onclick="showWeek(8,this)">W8</button>
+  <button class="wn-btn" onclick="showWeek(9,this)">W9</button>
+  <button class="wn-btn" onclick="showWeek(10,this)">W10</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 1 ══ -->
+<div class="lesson" id="w1">
+  <div class="lesson-hero stripe-purple">
+    <div class="hero-number">01</div>
+    <div class="hero-top">
+      <div class="hero-emoji">📦</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 1 · Physical Robotics</div>
+        <div class="hero-title">Unbox, Meet the Hub</div>
+        <div class="hero-concept">Aiden meets his first real robot — unbox SPIKE, identify every part, and power it on for the first time</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">HARDWARE</span>
+          <span class="tag tag-p">HUB</span>
+          <span class="tag tag-p">ORIENTATION</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Physical computing</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Rover arrives on Mars</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Hub powered on, ports named</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover has landed on Mars. The descent pod just opened — and inside is your SPIKE Kit. This is a <strong>real computer</strong> with real motors and real sensors. Everything you learned in Scratch still works here — loops, conditionals, variables — but now when the code runs, the rover actually <strong>moves in the physical world</strong>."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title purple">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:10</div><div class="mt-content"><div class="mt-name">Unboxing Ritual</div><div class="mt-desc">Aiden opens the box. No instructions yet — just "tell me what you see." Lay every piece on the table and sort by type together.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:10–0:20</div><div class="mt-content"><div class="mt-name">Name the Parts</div><div class="mt-desc">Hub (the brain), motors (the muscles), distance sensor (the eyes), color sensor (another set of eyes), cables, and bricks. Aiden assigns rover names to each.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:35</div><div class="mt-content"><div class="mt-name">Hub Exploration</div><div class="mt-desc">Power on the Hub. Explore the 6 ports (A–F) — press the central button, watch the light matrix. Connect one motor to Port A. What happens?</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:35–0:55</div><div class="mt-content"><div class="mt-name">First Program — Light Matrix</div><div class="mt-desc">Open SPIKE app → new project → Word Blocks. Make the Hub's light matrix display Aiden's initials or a rocket emoji. Run it. First real hardware program.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:55–1:10</div><div class="mt-content"><div class="mt-name">Hub vs. Scratch Compare</div><div class="mt-desc">"In Scratch, when the flag was clicked, the sprite moved on screen. Here, what happens when we press the Hub button?" Aiden sees the connection.</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 SPIKE Kit Anatomy</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Hub</strong> — the brain. 6 ports (A–F), light matrix display, speaker, gyro sensor built in</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Large Motor</strong> — the main drive wheels. Ports A or B</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Small Motor</strong> — for arms, grabbers, precise movement</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Distance Sensor</strong> — measures how far away objects are (ultrasonic)</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Color Sensor</strong> — detects color and light intensity on surfaces</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Cables</strong> — connect sensors and motors to Hub ports. Short = tight fit, Long = flexible routing</div></div>
+      </div>
+      <div class="hw-callout" style="margin-top:14px;">
+        <div class="hw-icon">⚡</div>
+        <div>Hub charges via USB-C. Always charge after each session. A fully drained Hub takes ~2 hours to charge.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">During unboxing</div>
+      <div class="script-block">"Before you touch anything — what do you think this piece does? How is it like something we used in Scratch?"</div>
+      <div class="script-label">First program runs</div>
+      <div class="script-block gold">"You just made real hardware do something. The code lived on the Hub, not on a screen. What's different about that?"</div>
+      <div class="script-label">Connecting Scratch to SPIKE</div>
+      <div class="script-block blue">"In Scratch, the green flag was an event. What's the event on this Hub? What does pressing the button trigger?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can name Hub, motor, distance sensor, color sensor without looking at labels</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Powered on Hub and opened SPIKE app independently</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Made the light matrix display something custom (not just default)</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Explains one similarity between SPIKE blocks and Scratch blocks</div></div>
+      </div>
+      <div class="success-bar" style="margin-top:14px;">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Make the Hub play a sound and change light color when the button is pressed — two events, two reactions.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🏠 Between Sessions</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Aiden gives the Hub a rover name. Write it on a sticky note attached to the Hub.</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Watch: NASA Perseverance rover landing footage (YouTube, 5 min). "What sensors do you think it uses?"</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Charge the Hub. Aiden plugs it in himself — good habit from day one.</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w1">
+    <span class="qp-label">Week 1 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 2 ══ -->
+<div class="lesson" id="w2">
+  <div class="lesson-hero stripe-purple">
+    <div class="hero-number">02</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🏗️</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 2 · Physical Robotics</div>
+        <div class="hero-title">Build the Rover Chassis</div>
+        <div class="hero-concept">Assemble the base rover body — two drive motors, wheels, and Hub mount. First mechanical engineering session.</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">BUILD</span>
+          <span class="tag tag-p">MOTORS</span>
+          <span class="tag tag-p">CHASSIS</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Motor = controlled rotation</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Rover assembly complete</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Rover drives forward on command</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover brain is ready. Now it needs a body. Today we build the chassis — the physical structure that holds the wheels, motors, and Hub. <strong>No instructions at first</strong> — try to figure out how two motors need to be positioned to make the rover go straight. Then we'll check. Engineering is designing before building."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title purple">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:10</div><div class="mt-content"><div class="mt-name">Design First (Paper)</div><div class="mt-desc">Aiden sketches a top-down rover drawing. Where should wheels go? Where does the Hub sit? How do wires route? Plan before building.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:10–0:40</div><div class="mt-content"><div class="mt-name">Chassis Build</div><div class="mt-desc">Use LEGO bricks to mount both large motors mirrored on either side. Attach wheels. Mount Hub on top. Cable management: route cables neatly so they don't catch wheels.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:40–0:55</div><div class="mt-content"><div class="mt-name">First Drive Test</div><div class="mt-desc">Open SPIKE app → Motor block → run Left Motor (Port A) forward. Does the rover go straight? Then run both motors. Discover differential drive.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:55–1:05</div><div class="mt-content"><div class="mt-name">Debug: Rover Curves</div><div class="mt-desc">If it curves, why? One motor faster? Motor directions reversed? Aiden investigates using 5-step debug protocol from Q1.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"What's the difference between a motor and a wheel? Which one is the input and which is the output?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Engineering Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Motor</strong> — converts electrical energy into rotational motion. The wheels are outputs of the motor.</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Differential drive</strong> — two independently controlled motors. Speed difference = turning. Both equal = straight.</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Port assignment</strong> — SPIKE needs to know which port each motor is on. Wrong port = wrong motor moves.</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Cable management</strong> — a real engineering discipline. Messy cables catch on wheels and cause bugs.</div></div>
+      </div>
+      <div class="spike-demo" style="margin-top:12px;">
+        <div class="spike-demo-title">First Drive Blocks</div>
+        <span class="spike-block spk-event">when Hub button pressed</span>
+        <div style="margin-top:4px;"><span class="spike-block spk-motor">run motor A for (2) seconds</span></div>
+        <div style="margin-top:4px;"><span class="spike-block spk-motor">run motor B for (2) seconds</span></div>
+        <div style="font-size:12px;color:var(--muted);margin-top:6px;">→ Does it go straight? If not — which motor is the problem?</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Before building</div>
+      <div class="script-block">"Before we snap any bricks — draw me where you think the motors should go. If both motors push the same direction, what happens? What if one pushes forward and one pushes backward?"</div>
+      <div class="script-label">When rover curves</div>
+      <div class="script-block gold">"The rover found a bug. What data is it giving us? Which side is spinning faster? How do we test just one motor at a time?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Rover chassis is built with Hub mounted and both motors connected to correct ports</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Rover drives forward at least 30cm in a straight line</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can explain differential drive: "If left motor is faster, the rover turns right"</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Cables are routed away from wheels (no snag points)</div></div>
+      </div>
+      <div class="success-bar" style="margin-top:14px;">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Make the rover drive forward, stop, reverse back to start — a full out-and-back mission.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w2">
+    <span class="qp-label">Week 2 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 3 ══ -->
+<div class="lesson" id="w3">
+  <div class="lesson-hero stripe-blue">
+    <div class="hero-number">03</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🧭</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 3 · Physical Robotics</div>
+        <div class="hero-title">Motor Control — Drive & Turn</div>
+        <div class="hero-concept">Precision navigation: move exact distances, turn exact angles. The rover learns to follow a planned route.</div>
+        <div class="hero-tags">
+          <span class="tag tag-b">MOTOR CONTROL</span>
+          <span class="tag tag-b">DISTANCE</span>
+          <span class="tag tag-b">TURNING</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Rotations = distance</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Navigate grid terrain</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Rover traces a square path</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Mars Mission Control needs the rover to drive to exact waypoints — not just 'go forward' but '<strong>go forward exactly 50cm, then turn 90° right</strong>.' Today we calibrate the rover's movement so we can trust its position on the surface. This is how real rover navigation works."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:10</div><div class="mt-content"><div class="mt-name">Calibration Challenge</div><div class="mt-desc">Place a piece of tape 30cm from the rover. Aiden codes it to stop exactly on the tape. Trial and error — how many rotations = 30cm on this surface?</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:10–0:25</div><div class="mt-content"><div class="mt-name">Turning Calibration</div><div class="mt-desc">How many rotations on one motor = 90° turn? Place tape markers. Aiden experiments — too much, too little, just right. Log the numbers.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:25–0:55</div><div class="mt-content"><div class="mt-name">Build: Square Path</div><div class="mt-desc">Using calibrated values, program the rover to trace a 30cm × 30cm square on the floor. Callback to Q1 Week 3–4: loops make this elegant — repeat(4) { forward + turn }.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:55–1:05</div><div class="mt-content"><div class="mt-name">Debug: Drift Analysis</div><div class="mt-desc">Does the square close perfectly? If not — which corner drifts? Is the error cumulative? Aiden measures and adjusts one variable at a time.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"In Scratch, you used degrees for turning. Here, you use motor rotations. What's the relationship between them?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 The Calibration Mindset</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">This is Aiden's first experience with physical calibration — a core robotics skill:</div>
+      <div style="background:rgba(255,204,68,0.06);border:1px solid rgba(255,204,68,0.2);border-radius:10px;padding:14px;font-size:13px;line-height:1.7;">
+        <strong style="color:var(--white);">Rotations ↔ Distance</strong><br>
+        1 rotation = wheel circumference<br>
+        Circumference = π × diameter<br>
+        SPIKE wheel ≈ 5.6cm diameter → ~17.6cm per rotation<br><br>
+        <strong style="color:var(--white);">Target: 30cm</strong><br>
+        30 ÷ 17.6 ≈ <strong style="color:var(--gold);">1.7 rotations</strong><br>
+        (Exact value varies by surface friction — always test!)
+      </div>
+      <div class="spike-demo" style="margin-top:12px;">
+        <div class="spike-demo-title">Square Path with Loop</div>
+        <span class="spike-block spk-control">repeat (4)</span>
+        <div style="margin-left:14px;margin-top:4px;">
+          <div><span class="spike-block spk-motor">move (1.7) rotations forward</span></div>
+          <div><span class="spike-block spk-motor">turn right (90) degrees</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">During calibration</div>
+      <div class="script-block">"You got 25cm instead of 30. Is that too much or too little rotation? What's your next guess? Let's write down each attempt."</div>
+      <div class="script-label">Loop connection</div>
+      <div class="script-block gold">"You're doing the same move 4 times. Remember what we did in Scratch week 3? How can we write this more efficiently?"</div>
+      <div class="script-label">Square doesn't close</div>
+      <div class="script-block blue">"The rover drifted 5cm by the 4th corner. Is the error in the forward move or the turn? How would you test which one?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Found calibrated rotation values for 30cm forward movement</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Rover traces a recognizable square path (corners within 5cm)</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Used a repeat(4) loop instead of writing 4 copies of the same code</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Recorded calibration values in mission log (notebook)</div></div>
+      </div>
+      <div class="success-bar" style="margin-top:14px;">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Program a figure-8 path. Requires both left and right turns — new calibration challenge.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w3">
+    <span class="qp-label">Week 3 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 4 ══ -->
+<div class="lesson" id="w4">
+  <div class="lesson-hero stripe-blue">
+    <div class="hero-number">04</div>
+    <div class="hero-top">
+      <div class="hero-emoji">👁️</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 4 · Physical Robotics</div>
+        <div class="hero-title">Distance Sensor — Rover Gets Eyes</div>
+        <div class="hero-concept">Add the distance sensor — the rover can now see obstacles and react before hitting them</div>
+        <div class="hero-tags">
+          <span class="tag tag-b">SENSORS</span>
+          <span class="tag tag-b">DISTANCE</span>
+          <span class="tag tag-b">INPUT</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Sensor = real-world input</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Obstacle proximity detection</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Rover stops before hitting wall</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"On Mars, the rover can't see around corners — but it can measure how far away obstacles are using ultrasonic sound pulses. We're adding the <strong>distance sensor</strong> today. It sends out a sound wave and times how long it takes to bounce back. That time becomes a number — and the rover can <strong>decide what to do</strong> based on that number."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:10</div><div class="mt-content"><div class="mt-name">Sensor Anatomy</div><div class="mt-desc">Mount distance sensor on front of rover. Two circles = transmitter and receiver. Explain ultrasonic: "Like a bat's echolocation." Read the live sensor value in SPIKE app.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:10–0:20</div><div class="mt-content"><div class="mt-name">Sensor Reading Experiments</div><div class="mt-desc">Hold hand 10cm away — what value shows? 30cm? 100cm? Discover the sensor's range and units (cm). At what distance does it max out?</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:55</div><div class="mt-content"><div class="mt-name">Build: Obstacle Stop</div><div class="mt-desc">Rover drives forward in forever loop. If distance sensor reads less than 15cm → stop. Aiden connects sensor input to motor output for the first time.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:55–1:05</div><div class="mt-content"><div class="mt-name">Extend: Slow then Stop</div><div class="mt-desc">Add two zones: if distance less than 30cm → slow down; if less than 10cm → full stop. Nested conditionals — two thresholds.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"The sensor gives the rover a number. How does the rover turn that number into a decision? Walk me through the code."</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Sensor = Input → Decision → Action</div>
+      <div style="font-size:13px;color:var(--text);margin-bottom:14px;">This is the fundamental robotics loop — reinforce it every session:</div>
+      <div style="background:rgba(0,207,255,0.06);border:1px solid rgba(0,207,255,0.2);border-radius:10px;padding:14px;font-family:'Space Mono',monospace;font-size:12px;line-height:2.2;">
+        <span style="color:var(--blue);">INPUT</span> → Sensor reads 8cm<br>
+        <span style="color:var(--accent);">DECISION</span> → if 8 &lt; 15, then…<br>
+        <span style="color:var(--green);">ACTION</span> → motors stop
+      </div>
+      <div class="spike-demo" style="margin-top:12px;">
+        <div class="spike-demo-title">Obstacle Stop Program</div>
+        <span class="spike-block spk-control">forever</span>
+        <div style="margin-left:14px;margin-top:4px;">
+          <span class="spike-block spk-motor">move forward at speed 50</span>
+          <div style="margin-top:4px;"><span class="spike-block spk-control">if distance &lt; 15cm then</span></div>
+          <div style="margin-left:14px;"><span class="spike-block spk-motor">stop all motors</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Reading live sensor values</div>
+      <div class="script-block">"Hold your hand 10cm away. What number does it show? Now move it to 30cm. What changes? How does the rover 'see' that difference?"</div>
+      <div class="script-label">Connecting to Q1 conditionals</div>
+      <div class="script-block gold">"In Scratch, you used 'if touching edge' — that was a sensor too. This is the same idea, but now the sensor is a real device reading the real world."</div>
+      <div class="script-label">Two-zone challenge</div>
+      <div class="script-block blue">"What if the rover should slow down before it stops? What number would trigger slow? What number triggers stop? Are those two separate if blocks?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Distance sensor mounted and reads live values in SPIKE app</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Rover stops before hitting a wall (consistently within 15cm)</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can explain input → decision → action chain for the obstacle stop program</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Adjusted the stop threshold independently and explained the trade-off</div></div>
+      </div>
+      <div class="success-bar" style="margin-top:14px;">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Add a sound alarm when the rover is in danger zone — sense, decide, and alert simultaneously.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w4">
+    <span class="qp-label">Week 4 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 5 ══ -->
+<div class="lesson" id="w5">
+  <div class="lesson-hero stripe-green">
+    <div class="hero-number">05</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🌈</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 5 · Physical Robotics</div>
+        <div class="hero-title">Color Sensor — Reading the Surface</div>
+        <div class="hero-concept">The rover learns to read the Mars terrain by color — follow lines, detect zones, and respond to surface conditions</div>
+        <div class="hero-tags">
+          <span class="tag tag-g">COLOR SENSOR</span>
+          <span class="tag tag-g">LINE FOLLOWING</span>
+          <span class="tag tag-g">SURFACE DATA</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Color = surface condition</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Follow the mission path</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Rover stops on red zone</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Mars base has painted the surface with color codes — black lines mark safe paths, red zones mark danger areas, green zones mark sample collection sites. The rover's color sensor reads these codes like a barcode scanner. <strong>Color in = decision out.</strong> Today the rover learns to read the ground."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title green">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:10</div><div class="mt-content"><div class="mt-name">Color Sensor Setup</div><div class="mt-desc">Mount color sensor pointing downward (about 1cm from surface). Read live values — show Aiden how different colored paper gives different readings. Build color vocabulary: hue, brightness, color ID.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:10–0:20</div><div class="mt-content"><div class="mt-name">Mars Surface Map</div><div class="mt-desc">Create a Mars terrain mat together: black electrical tape lines on white paper. Add a red "danger zone" rectangle and green "sample site" rectangle. This becomes the mission field.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:50</div><div class="mt-content"><div class="mt-name">Build: Zone Detection</div><div class="mt-desc">Program: if color = red → stop and flash red lights, say "Danger!". If color = green → stop and flash green, say "Sample acquired!". Drive rover over the map manually at first, then autonomously.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:05</div><div class="mt-content"><div class="mt-name">Extend: Simple Line Follow</div><div class="mt-desc">Tape a curved black line. Program: if color is dark → go straight; if color is light → turn to find the line. Intro to bang-bang control — a simple but real algorithm.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"You now have two sensors. How are distance and color different kinds of input? What can each one do that the other can't?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Two Sensors, Two Data Types</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Distance sensor</strong> — returns a number (cm). Compare with &lt; or &gt;.</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Color sensor</strong> — returns a color name or number. Compare with = (equals).</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Bang-bang control</strong> — the simplest line-following algorithm: fully turn left OR fully turn right based on light reading. Crude but effective.</div></div>
+      </div>
+      <div class="spike-demo" style="margin-top:12px;">
+        <div class="spike-demo-title">Zone Detection Program</div>
+        <span class="spike-block spk-control">forever</span>
+        <div style="margin-left:14px;margin-top:4px;">
+          <span class="spike-block spk-motor">move forward at speed 40</span>
+          <div style="margin-top:4px;"><span class="spike-block spk-control">if color = red then</span></div>
+          <div style="margin-left:14px;">
+            <span class="spike-block spk-motor">stop motors</span>
+            <span class="spike-block spk-light">set light to red</span>
+            <span class="spike-block spk-sound">say "Danger Zone!"</span>
+          </div>
+          <div style="margin-top:4px;"><span class="spike-block spk-control">if color = green then</span></div>
+          <div style="margin-left:14px;">
+            <span class="spike-block spk-motor">stop motors</span>
+            <span class="spike-block spk-light">set light to green</span>
+            <span class="spike-block spk-sound">say "Sample acquired!"</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Reading live color values</div>
+      <div class="script-block">"Hold the sensor over red. What does it say? Now over green. Now over the black tape. How does the number change? What does the rover use that number for?"</div>
+      <div class="script-label">Line following attempt</div>
+      <div class="script-block gold">"The rover went off the line. What did the sensor read at that moment? What should have happened? Which block handles that condition?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Color sensor mounted and reads different colors correctly in SPIKE app</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Rover stops and responds differently to red vs green zones</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can explain why color uses "=" while distance uses "&lt;" or "&gt;"</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Attempted basic line following (doesn't have to be perfect)</div></div>
+      </div>
+      <div class="success-bar" style="margin-top:14px;">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Use both sensors simultaneously — stop for obstacles AND respond to color zones in the same program.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w5">
+    <span class="qp-label">Week 5 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 6 ══ -->
+<div class="lesson" id="w6">
+  <div class="lesson-hero stripe-gold">
+    <div class="hero-number">06</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🔀</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 6 · Physical Robotics</div>
+        <div class="hero-title">Autonomous Decision-Making</div>
+        <div class="hero-concept">Combine both sensors into one autonomous program — the rover decides what to do entirely on its own</div>
+        <div class="hero-tags">
+          <span class="tag tag-gd">AUTONOMY</span>
+          <span class="tag tag-gd">MULTI-SENSOR</span>
+          <span class="tag tag-gd">LOGIC</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Sensor priority & logic</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Fully autonomous surface run</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Rover runs 60s with no human input</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Mission Control is 20 minutes away by radio signal. The rover must operate <strong>completely on its own</strong> for a full surface run. Today we combine distance and color sensing into one brain: avoid obstacles, follow the path, detect mission zones — all without a single command from Earth."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title gold">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:15</div><div class="mt-content"><div class="mt-name">Design the Brain</div><div class="mt-desc">Paper first: draw a decision flowchart. What should happen if distance is near AND color is red? Which sensor takes priority? Aiden designs the logic before coding it.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:15–0:50</div><div class="mt-content"><div class="mt-name">Build: Dual-Sensor Program</div><div class="mt-desc">One forever loop. Inside: check distance first (safety), then color (mission). If obstacle near → turn and avoid. Else, check color and respond. Drive continuously otherwise.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:05</div><div class="mt-content"><div class="mt-name">Field Test: 60-Second Run</div><div class="mt-desc">Set the Mars terrain mat on the floor. Start the rover. Neither Aiden nor you touch it for 60 seconds. Count mission events: obstacles avoided, zones detected.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"What did the rover do that you didn't expect? What would you change in the logic? Which sensor was more important?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Priority Logic</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">When two conditions could be true at once, the rover needs to know which wins:</div>
+      <div style="background:rgba(255,204,68,0.06);border:1px solid rgba(255,204,68,0.2);border-radius:10px;padding:14px;font-family:'Space Mono',monospace;font-size:12px;line-height:2;">
+        <span style="color:var(--red);">PRIORITY 1:</span> Distance &lt; 10cm → STOP<br>
+        <span style="color:var(--gold);">PRIORITY 2:</span> Color = red → STOP<br>
+        <span style="color:var(--green);">PRIORITY 3:</span> Color = green → COLLECT<br>
+        <span style="color:var(--muted);">DEFAULT:</span> Drive forward
+      </div>
+      <div style="font-size:13px;color:var(--text);margin-top:12px;">The order of if-blocks in code determines which condition is checked first. This is sensor priority — a real robotics design decision.</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Before the 60-second run</div>
+      <div class="script-block">"In 60 seconds, we don't touch it. What do you predict it will do when it reaches the red zone? What about when it gets close to a wall?"</div>
+      <div class="script-label">After the run</div>
+      <div class="script-block gold">"What surprised you? Did it do anything you didn't program? What would you add or change for next time?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Drew decision flowchart on paper before writing any code</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Rover ran autonomously for 60 seconds without human intervention</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Both sensors active in the same program simultaneously</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can explain sensor priority: "I check distance first because safety matters most"</div></div>
+      </div>
+      <div class="success-bar" style="margin-top:14px;">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Add a mission counter — variable that tracks how many green zones the rover found in the 60-second run.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w6">
+    <span class="qp-label">Week 6 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 7 ══ -->
+<div class="lesson" id="w7">
+  <div class="lesson-hero stripe-orange">
+    <div class="hero-number">07</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🦾</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 7 · Physical Robotics</div>
+        <div class="hero-title">Actuators — The Rover Gets an Arm</div>
+        <div class="hero-concept">Add a small motor as a robotic arm. Now the rover can interact with objects — not just observe them</div>
+        <div class="hero-tags">
+          <span class="tag tag-o">ACTUATOR</span>
+          <span class="tag tag-o">SMALL MOTOR</span>
+          <span class="tag tag-o">GRIPPER</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Actuator = physical output</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Sample collection arm</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Arm deploys on green zone</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Seeing a sample isn't enough — the rover needs to <strong>pick it up</strong>. Today we add a small motor as the rover's arm. When the color sensor detects a green sample zone, the arm sweeps down, collects the sample, and returns to position. This is an <strong>actuator</strong>: a motor that does physical work in the world."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title orange">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:15</div><div class="mt-content"><div class="mt-name">Design the Arm</div><div class="mt-desc">Aiden sketches the arm design: where does it mount, what angle does it sweep, how far should it reach? Build the arm with LEGO bricks attached to small motor.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:15–0:30</div><div class="mt-content"><div class="mt-name">Arm Calibration</div><div class="mt-desc">How many degrees of rotation = a full sweep? Test: rotate 45°, 90°, 180°. Find the "collect" position and "rest" position. Save those numbers.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:30–0:55</div><div class="mt-content"><div class="mt-name">Build: Triggered Collection</div><div class="mt-desc">Integrate arm into the Week 6 autonomous program. When color = green → stop drive motors → sweep arm down → wait 1 second → return arm → resume driving.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:55–1:05</div><div class="mt-content"><div class="mt-name">Sequence Challenge</div><div class="mt-desc">The arm must happen in the right order — stop before sweeping, return before moving. Aiden discovers physical sequencing: order matters in hardware just like in code.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"What's the difference between a sensor and an actuator? One is input, one is output — which is which?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Sensors vs. Actuators</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+        <div style="background:rgba(0,207,255,0.06);border:1px solid rgba(0,207,255,0.2);border-radius:10px;padding:12px;">
+          <div style="font-family:'Orbitron',monospace;font-size:9px;color:var(--blue);margin-bottom:6px;">SENSORS (INPUT)</div>
+          <div style="font-size:12px;color:var(--text);">Distance sensor<br>Color sensor<br>Hub gyro<br>Touch sensor</div>
+        </div>
+        <div style="background:rgba(255,136,68,0.06);border:1px solid rgba(255,136,68,0.2);border-radius:10px;padding:12px;">
+          <div style="font-family:'Orbitron',monospace;font-size:9px;color:var(--orange);margin-bottom:6px;">ACTUATORS (OUTPUT)</div>
+          <div style="font-size:12px;color:var(--text);">Large motors<br>Small motor (arm)<br>Hub light matrix<br>Hub speaker</div>
+        </div>
+      </div>
+      <div class="spike-demo">
+        <div class="spike-demo-title">Collection Sequence</div>
+        <span class="spike-block spk-control">if color = green then</span>
+        <div style="margin-left:14px;margin-top:4px;">
+          <div><span class="spike-block spk-motor">stop drive motors</span></div>
+          <div><span class="spike-block spk-motor">rotate arm motor (90) degrees</span></div>
+          <div><span class="spike-block spk-control">wait (1) second</span></div>
+          <div><span class="spike-block spk-motor">rotate arm motor (-90) degrees</span></div>
+          <div><span class="spike-block spk-motor">resume drive motors</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">When arm moves wrong</div>
+      <div class="script-block">"The arm went too far. Is that a code problem or a build problem? How do you tell the difference? What's one thing we can change to find out?"</div>
+      <div class="script-label">Sequence importance</div>
+      <div class="script-block gold">"What happens if the arm sweeps while the rover is still moving? Try it — what does the rover tell us?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Arm built and small motor connected, calibrated to a sweep angle</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Arm deploys only when color sensor detects green</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Drive motors stop before arm moves, arm returns before driving resumes</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can explain sensor vs. actuator distinction unprompted</div></div>
+      </div>
+      <div class="success-bar" style="margin-top:14px;">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Add a "samples collected" variable — arm deploys, counter increases by 1, Hub displays the count on its light matrix.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w7">
+    <span class="qp-label">Week 7 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 8 ══ -->
+<div class="lesson" id="w8">
+  <div class="lesson-hero stripe-gold">
+    <div class="hero-number">08</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🧩</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 8 · Physical Robotics</div>
+        <div class="hero-title">Full System Integration</div>
+        <div class="hero-concept">Drive + sensors + arm + variables — everything running as one complete rover system. Pre-capstone dry run.</div>
+        <div class="hero-tags">
+          <span class="tag tag-gd">INTEGRATION</span>
+          <span class="tag tag-gd">SYSTEMS</span>
+          <span class="tag tag-gd">CAPSTONE PREP</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Focus</div><div class="hs-value">All systems working together</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Full Mars surface simulation</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">3-minute autonomous mission</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Pre-capstone systems check. Every subsystem Aiden built — drive, distance avoidance, color detection, arm collection, sample counter — must work together flawlessly. Today we run a <strong>3-minute autonomous Mars surface simulation</strong> and Aiden observes, logs data, and identifies what to improve before Demo Day."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title gold">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:15</div><div class="mt-content"><div class="mt-name">Systems Review</div><div class="mt-desc">Aiden walks you through each subsystem and explains what it does before touching any hardware. No surprises in the code.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:15–0:30</div><div class="mt-content"><div class="mt-name">Debug & Polish</div><div class="mt-desc">Fix any known issues from weeks 1–7. Tighten loose LEGO connections. Re-calibrate motor values if surface has changed. This is pre-flight check.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:30–0:55</div><div class="mt-content"><div class="mt-name">3-Minute Mission Simulation</div><div class="mt-desc">Full Mars terrain mat. Aiden starts the rover, you watch and log: how many samples collected, how many obstacles avoided, any crashes. Aiden is Mission Control — he watches and takes notes, doesn't intervene.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:55–1:10</div><div class="mt-content"><div class="mt-name">Mission Debrief & Improvement Plan</div><div class="mt-desc">Review the log together. What worked? What failed? Aiden writes 3 specific improvements he wants to make before Demo Day.</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🗒 Mission Log Template</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">Aiden fills this out during the 3-minute run:</div>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:13px;line-height:2.2;">
+        🟢 Samples collected: ___<br>
+        🧱 Obstacles avoided: ___<br>
+        💥 Crashes / stuck: ___<br>
+        ❓ Unexpected behavior: ___<br>
+        ⚡ Battery at end (%): ___<br>
+        📝 Top 3 improvements:
+        <div style="color:var(--muted);margin-left:10px;">1. ___________<br>2. ___________<br>3. ___________</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Before the simulation</div>
+      <div class="script-block">"You are Mission Control. Your job is to observe, not fix. If something goes wrong, write it down. You'll fix it after the 3 minutes. Real engineers don't interrupt running experiments."</div>
+      <div class="script-label">After the simulation</div>
+      <div class="script-block gold">"Tell me what you noticed. Not what went wrong — what did you observe? What did the data tell you?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>All subsystems (drive, distance, color, arm, counter) active in one program</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Rover ran for 3 minutes without human intervention</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Aiden filled in the mission log during the run</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Identified 3 specific improvements to make before Demo Day</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w8">
+    <span class="qp-label">Week 8 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 9 ══ -->
+<div class="lesson" id="w9">
+  <div class="lesson-hero stripe-red">
+    <div class="hero-number">09</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🚀</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 9 · Capstone Build — Part 1</div>
+        <div class="hero-title">Mars Obstacle Field — Build Day</div>
+        <div class="hero-concept">Aiden designs and builds the capstone challenge: a physical Mars obstacle field the rover must navigate autonomously</div>
+        <div class="hero-tags">
+          <span class="tag tag-r">CAPSTONE</span>
+          <span class="tag tag-r">DESIGN</span>
+          <span class="tag tag-r">BUILD DAY</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Type</div><div class="hs-value">Design + Build</div></div>
+      <div class="hero-stat"><div class="hs-label">Aiden's Role</div><div class="hs-value">Lead engineer</div></div>
+      <div class="hero-stat"><div class="hs-label">Your Role</div><div class="hs-value">Mission Control (questions only)</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Final surface mission. Aiden designs a Mars obstacle course — then programs the rover to complete it autonomously. The course must include at least: 2 physical obstacles to avoid, 1 red danger zone, 2 green sample zones. <strong>Design the course AND the rover brain to beat it.</strong> Mission Control only asks questions."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title red">📋 Capstone Requirements</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>Course design</strong> — hand-drawn map of the obstacle field before building it</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>2+ physical obstacles</strong> — LEGO structures or household objects the rover must avoid</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>1 red danger zone</strong> — rover must stop and sound alarm</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>2 green sample zones</strong> — rover must stop, deploy arm, count sample</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>Sample counter</strong> — displayed on Hub light matrix at end of run</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>No human input</strong> — once started, the rover operates fully autonomously</div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🗒 Design Phase (20 min — Paper First)</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">No hardware until the design is done:</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div>Draw the course top-down — label every zone and obstacle with dimensions</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div>Write the rover's decision logic in plain words before coding</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div>List any calibration values that need re-checking for this specific course</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div>Estimate: how many samples should the rover collect in a perfect run?</div></div>
+      </div>
+      <div class="hw-callout" style="margin-top:12px;">
+        <div class="hw-icon">🧱</div>
+        <div>Use books, boxes, or LEGO builds as obstacles — the course doesn't need to be fancy, just physically consistent so the rover can learn it.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title blue">💬 Mission Control Prompts (That's All You Say)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div class="script-block">"What happens if the rover reaches a corner where there's an obstacle AND a red zone at the same time? Which does your code handle first?"</div>
+      <div class="script-block">"How will you know the rover successfully collected a sample? What does the Hub show?"</div>
+      <div class="script-block gold">"If you had to remove one feature to make the code simpler, which would you cut? Why?"</div>
+      <div class="script-block blue">"The arm might need re-calibration for this new course. How will you test it before the full run?"</div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w9">
+    <span class="qp-label">Week 9 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 10 ══ -->
+<div class="lesson" id="w10">
+  <div class="lesson-hero stripe-red">
+    <div class="hero-number">10</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🏆</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 10 · Capstone Complete — Graduation</div>
+        <div class="hero-title">Mars Obstacle Field — Demo Day</div>
+        <div class="hero-concept">Final run, live audience, full explanation. Quarter 2 complete. Aiden is a robotics engineer.</div>
+        <div class="hero-tags">
+          <span class="tag tag-r">DEMO DAY</span>
+          <span class="tag tag-g">GRADUATION</span>
+          <span class="tag tag-b">PRESENT</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Goal</div><div class="hs-value">Complete & present</div></div>
+      <div class="hero-stat"><div class="hs-label">Audience</div><div class="hs-value">Family / friends</div></div>
+      <div class="hero-stat"><div class="hs-label">Aiden Explains</div><div class="hs-value">Every system built</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Surface Deployment graduation. Aiden built a rover from scratch, gave it eyes and a brain and an arm, and taught it to navigate Mars on its own. Today he runs the final mission live, then presents every system he built — sensors, actuators, decision logic — to an audience. <strong>This is what a robotics engineer does.</strong>"</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title red">⏱ Final Session Structure</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:20</div><div class="mt-content"><div class="mt-name">Final Debug & Polish</div><div class="mt-desc">Aiden runs the course solo, fixes any remaining issues using the 5-step debug protocol — independently. You observe only.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:35</div><div class="mt-content"><div class="mt-name">Rehearsal Presentation</div><div class="mt-desc">Aiden presents to you: "Here's what I built, here's each system, here's what I'm proud of, here's what I'd improve." Dry run before the audience.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:35–1:00</div><div class="mt-content"><div class="mt-name">Demo Day — Live Audience</div><div class="mt-desc">Invite family. Aiden explains the course, runs the rover live, narrates what's happening: "It just detected a green zone — watch the arm deploy."</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:00–1:10</div><div class="mt-content"><div class="mt-name">Q2 Graduation</div><div class="mt-desc">Review what Aiden built across 10 weeks. Preview Q3: "Next we throw away the blocks — everything you just did, we'll write in real Python code."</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title green">🎤 Demo Day Presentation Guide</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">Aiden covers all five:</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot green">1.</div><div><strong>"Here's my rover and what it can do."</strong> Walk the audience through each physical component.</div></div>
+        <div class="li-item"><div class="li-dot green">2.</div><div><strong>"Here's the distance sensor and why it matters."</strong> Demonstrate live with hand.</div></div>
+        <div class="li-item"><div class="li-dot green">3.</div><div><strong>"Here's the color sensor — watch what happens on red vs. green."</strong> Demo each zone.</div></div>
+        <div class="li-item"><div class="li-dot green">4.</div><div><strong>"Here's the arm — it deploys when the rover finds a sample."</strong> Trigger it manually first, then let rover find it.</div></div>
+        <div class="li-item"><div class="li-dot green">5.</div><div><strong>"Here's the full autonomous mission run."</strong> Start the rover. Narrate live. Let the audience cheer for the samples.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;background:linear-gradient(135deg,rgba(176,96,255,0.06),rgba(0,255,153,0.06));border-color:rgba(176,96,255,0.25);">
+    <div class="box-title purple">🎓 Q2 Graduation Checklist</div>
+    <div class="check-list">
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Assembled a functional two-motor rover chassis with Hub mounted (Week 1–2)</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Calibrated motor rotations for precise distance and turning (Week 3)</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Integrated distance sensor with autonomous obstacle avoidance (Week 4)</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Integrated color sensor with zone detection and response (Week 5)</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Built and triggered a robotic arm actuator (Week 7)</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Ran a full 3-minute autonomous mission (Week 8)</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Designed and built a Mars obstacle field course (Week 9)</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Presented and narrated a live Demo Day run to family audience (Week 10)</div></div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;border-color:rgba(0,207,255,0.3);background:rgba(0,207,255,0.04);">
+    <div class="box-title blue">🐍 Preview: Quarter 3</div>
+    <div style="font-size:14px;color:var(--text);line-height:1.7;">
+      "Next quarter, we throw away the blocks. Everything you did with LEGO SPIKE — loops, conditionals, variables, sensors, actuators — we'll write it all in <strong>real Python code</strong>. No dragging blocks. You type the instructions yourself. It looks harder, but you already know all the concepts. Python is just a different way to say the same things."
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w10">
+    <span class="qp-label">Week 10 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--green),var(--accent))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<footer>
+  <div class="wrap">
+    AIDEN'S SURFACE DEPLOYMENT · QUARTER 2 · LEGO SPIKE ESSENTIAL · 10-WEEK CURRICULUM
+  </div>
+</footer>
+
+<script>
+  function showWeek(n, btn) {
+    document.querySelectorAll('.lesson').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.wn-btn').forEach(b => b.classList.remove('active'));
+    const el = document.getElementById('w' + n);
+    if (el) el.classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function updateProgress(weekId) {
+    const lesson = document.getElementById(weekId);
+    if (!lesson) return;
+    const all  = lesson.querySelectorAll('.cl-item');
+    const done = lesson.querySelectorAll('.cl-item.done');
+    if (all.length === 0) return;
+    const pct = Math.round((done.length / all.length) * 100);
+
+    const prog = document.getElementById('prog-' + weekId);
+    if (prog) {
+      prog.querySelector('.qp-fill').style.width = pct + '%';
+      const pctEl = prog.querySelector('.qp-pct');
+      pctEl.textContent = pct + '%';
+      if (pct === 100) {
+        pctEl.style.color = 'var(--green)';
+        prog.querySelector('.qp-fill').style.background = 'linear-gradient(90deg,var(--green),var(--accent))';
+      } else {
+        pctEl.style.color = 'var(--accent)';
+        prog.querySelector('.qp-fill').style.background = 'linear-gradient(90deg,var(--accent),var(--blue))';
+      }
+    }
+
+    const weekNum = weekId.replace('w', '');
+    const navBtn  = document.querySelectorAll('.wn-btn')[parseInt(weekNum) - 1];
+    if (navBtn) {
+      if (pct === 100) navBtn.classList.add('done');
+      else navBtn.classList.remove('done');
+    }
+  }
+
+  function toggleCl(el) {
+    el.classList.toggle('done');
+    const box = el.querySelector('.cl-box');
+    if (el.classList.contains('done')) {
+      box.style.background    = 'var(--green)';
+      box.style.borderColor   = 'var(--green)';
+      box.style.color         = '#000';
+    } else {
+      box.style.background    = '';
+      box.style.borderColor   = '';
+      box.style.color         = '';
+    }
+    const lesson = el.closest('.lesson');
+    if (lesson) updateProgress(lesson.id);
+  }
+
+  // Start on week 1
+  document.getElementById('w1').classList.add('active');
+  document.querySelector('.wn-btn').classList.add('active');
+</script>
+</body>
+</html>

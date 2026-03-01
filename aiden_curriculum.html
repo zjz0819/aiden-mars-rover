@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mission Control — Aiden's Mars Coding Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Nunito:wght@400;700;900&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ────────────────────────────────────────── */
+:root {
+  --bg:    #080c18;
+  --surf:  #0e1526;
+  --surf2: #141e35;
+  --bdr:   #1e2d4a;
+  --text:  #e8f0ff;
+  --muted: #4a6080;
+  --q1:    #00cfff;
+  --q2:    #b060ff;
+  --q3:    #00ff99;
+  --q4:    #ff8844;
+  --gold:  #ffcc44;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Starfield */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(1px 1px at 8% 12%, rgba(255,255,255,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 22% 6%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(2px 2px at 68% 9%, rgba(0,207,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 88% 22%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 42% 4%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 88%, rgba(0,207,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 14% 72%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 79% 60%, rgba(255,255,255,0.25) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── HEADER ────────────────────────────────────────── */
+#mc-header {
+  position: relative;
+  z-index: 10;
+  background: linear-gradient(180deg, #0a1020 0%, #0e1628 100%);
+  border-bottom: 2px solid var(--bdr);
+  padding: 18px 24px 16px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-left { display: flex; flex-direction: column; gap: 2px; }
+.mc-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.mc-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--q1);
+  text-shadow: 0 0 24px rgba(0,207,255,0.4);
+  letter-spacing: 1px;
+}
+.mc-sub { font-size: 13px; color: var(--muted); }
+
+/* Fuel gauge */
+.fuel-gauge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-width: 240px;
+}
+.fuel-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.fuel-bar-wrap {
+  width: 100%;
+  height: 18px;
+  background: var(--surf2);
+  border: 1.5px solid var(--bdr);
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+}
+.fuel-fill {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, var(--q1), var(--q3));
+  transition: width 0.8s cubic-bezier(.4,0,.2,1);
+  min-width: 0;
+  position: relative;
+}
+.fuel-fill::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 8px; right: 8px; height: 4px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 4px;
+}
+.fuel-count {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+
+/* Header right */
+.header-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+.parent-btn {
+  background: var(--surf2);
+  border: 1.5px solid var(--bdr);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.18s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.parent-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+/* ── MAIN CONTENT ───────────────────────────────────── */
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 20px 80px;
+}
+
+/* ── MARS MAP ───────────────────────────────────────── */
+.map-section {
+  margin-bottom: 28px;
+}
+
+.map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.map-title-group { display: flex; align-items: center; gap: 10px; }
+.map-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--text);
+}
+.map-hint { font-size: 13px; color: var(--muted); }
+
+/* CTA button */
+#next-mission-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  background: var(--q1);
+  color: #000;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.18s;
+  letter-spacing: 0.3px;
+}
+#next-mission-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,207,255,0.35); }
+#next-mission-btn.q2 { background: var(--q2); }
+#next-mission-btn.q2:hover { box-shadow: 0 6px 20px rgba(176,96,255,0.35); }
+#next-mission-btn.q3 { background: var(--q3); }
+#next-mission-btn.q3:hover { box-shadow: 0 6px 20px rgba(0,255,153,0.35); }
+#next-mission-btn.q4 { background: var(--q4); }
+#next-mission-btn.q4:hover { box-shadow: 0 6px 20px rgba(255,136,68,0.35); }
+
+/* Map wrapper */
+.map-wrap {
+  background: #0b1020;
+  border: 1.5px solid var(--bdr);
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.5), inset 0 0 80px rgba(0,0,0,0.3);
+}
+.map-wrap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Legend */
+.map-legend {
+  display: flex;
+  gap: 20px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── WEEK DETAIL PANEL ──────────────────────────────── */
+#week-detail {
+  background: var(--surf);
+  border: 1.5px solid var(--bdr);
+  border-radius: 16px;
+  padding: 0;
+  margin-bottom: 28px;
+  overflow: hidden;
+  transition: all 0.3s;
+  max-height: 0;
+  opacity: 0;
+}
+#week-detail.open {
+  max-height: 400px;
+  opacity: 1;
+  padding: 0;
+}
+.detail-inner {
+  padding: 22px 24px;
+}
+.detail-q-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.detail-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 18px;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.detail-body {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 24px;
+}
+.detail-info { font-size: 14px; color: var(--muted); }
+.detail-actions { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
+.detail-go-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 900;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.detail-go-btn:hover { transform: translateY(-2px); }
+.detail-toggle-btn {
+  background: transparent;
+  border: 1.5px solid var(--bdr);
+  color: var(--muted);
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.18s;
+  white-space: nowrap;
+}
+.detail-toggle-btn:hover { border-color: var(--text); color: var(--text); }
+.detail-toggle-btn.done { color: var(--q3); border-color: var(--q3); }
+.detail-status-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 8px;
+}
+.detail-locked-msg {
+  font-size: 14px;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+  padding: 16px;
+}
+
+/* ── LIST VIEW (accordion) ──────────────────────────── */
+.list-section {
+  margin-bottom: 28px;
+}
+.list-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+.q-accordion { display: flex; flex-direction: column; gap: 10px; }
+.q-block {
+  background: var(--surf);
+  border: 1px solid var(--bdr);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.q-block-header {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.q-block-header:hover { background: var(--surf2); }
+.q-block-icon { font-size: 20px; }
+.q-block-name {
+  font-weight: 900;
+  font-size: 15px;
+  flex: 1;
+}
+.q-block-progress { font-size: 13px; color: var(--muted); }
+.q-block-arrow {
+  font-size: 12px;
+  color: var(--muted);
+  transition: transform 0.2s;
+}
+.q-block.open .q-block-arrow { transform: rotate(180deg); }
+.q-block-body {
+  display: none;
+  padding: 0 18px 14px;
+  border-top: 1px solid var(--bdr);
+}
+.q-block.open .q-block-body { display: block; }
+.q-week-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  gap: 12px;
+}
+.q-week-row:last-child { border-bottom: none; }
+.q-week-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  flex-shrink: 0;
+  width: 32px;
+}
+.q-week-title {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text);
+}
+.q-week-title a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.q-week-title a:hover { color: var(--q1); }
+.q-week-check {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--bdr);
+  border-radius: 6px;
+  flex-shrink: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 900;
+  color: #000;
+  transition: all 0.18s;
+}
+.q-week-check:hover { border-color: var(--q1); }
+.q-week-check.done { background: var(--q3); border-color: var(--q3); color: #000; }
+.q-week-row.done-row .q-week-title a { color: var(--q3); }
+.q-guide-link {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.q-guide-link a { color: inherit; text-decoration: underline; }
+.q-guide-link a:hover { color: var(--text); }
+
+/* ── PARENT PANEL ───────────────────────────────────── */
+#parent-panel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(420px, 100vw);
+  background: #0a1224;
+  border-left: 2px solid var(--bdr);
+  z-index: 100;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+#parent-panel.open { transform: translateX(0); }
+.panel-header {
+  padding: 20px 22px 16px;
+  border-bottom: 1px solid var(--bdr);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+.panel-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 1px;
+}
+.panel-close {
+  background: none;
+  border: 1.5px solid var(--bdr);
+  color: var(--muted);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s;
+}
+.panel-close:hover { border-color: var(--text); color: var(--text); }
+.panel-body { padding: 20px 22px; flex: 1; }
+.panel-section { margin-bottom: 24px; }
+.panel-section-title {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.stat-box {
+  background: var(--surf2);
+  border: 1px solid var(--bdr);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--gold);
+}
+.stat-lbl { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.recent-week {
+  background: var(--surf2);
+  border: 1px solid var(--bdr);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+}
+.recent-week-title { font-weight: 900; font-size: 14px; margin-bottom: 4px; }
+.recent-week-blurb { font-size: 13px; color: var(--muted); }
+.convo-item {
+  background: var(--surf2);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+.next-prep {
+  background: rgba(0,207,255,0.07);
+  border: 1px solid rgba(0,207,255,0.2);
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 14px;
+  color: var(--q1);
+}
+.print-progress-btn {
+  width: 100%;
+  padding: 12px;
+  background: transparent;
+  border: 1.5px solid var(--gold);
+  color: var(--gold);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.18s;
+  margin-top: 8px;
+}
+.print-progress-btn:hover { background: rgba(255,204,68,0.08); }
+
+/* Overlay backdrop */
+#panel-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+#panel-backdrop.show { opacity: 1; pointer-events: auto; }
+
+/* ── MISSION COMPLETE BANNER ────────────────────────── */
+#complete-banner {
+  display: none;
+  background: linear-gradient(135deg, rgba(0,207,255,0.1), rgba(0,255,153,0.1));
+  border: 2px solid var(--q3);
+  border-radius: 16px;
+  padding: 24px 28px;
+  text-align: center;
+  margin-bottom: 28px;
+}
+#complete-banner .cb-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--q3);
+  margin-bottom: 8px;
+}
+#complete-banner .cb-sub { font-size: 15px; color: var(--text); }
+
+/* ── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 640px) {
+  #mc-header { grid-template-columns: 1fr; gap: 12px; }
+  .header-right { justify-content: flex-start; }
+  .fuel-gauge { min-width: 0; width: 100%; }
+  .detail-body { grid-template-columns: 1fr; }
+  .detail-actions { align-items: flex-start; }
+}
+
+/* Print styles for parent panel */
+@media print {
+  body { background: #fff; color: #000; }
+  #mc-header, .map-section, #week-detail, .list-section { display: none; }
+  #parent-panel { position: static; transform: none; width: 100%; border: none; background: #fff; color: #000; }
+  #parent-panel.open { display: block; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── PARENT PANEL BACKDROP ── -->
+<div id="panel-backdrop" onclick="closeParent()"></div>
+
+<!-- ── PARENT PANEL ── -->
+<div id="parent-panel">
+  <div class="panel-header">
+    <div class="panel-title">🔑 Parent View</div>
+    <button class="panel-close" onclick="closeParent()">✕</button>
+  </div>
+  <div class="panel-body">
+
+    <div class="panel-section">
+      <div class="panel-section-title">Progress Summary</div>
+      <div class="stat-grid">
+        <div class="stat-box">
+          <div class="stat-num" id="p-done">0</div>
+          <div class="stat-lbl">Weeks Done</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="p-left">40</div>
+          <div class="stat-lbl">Remaining</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="p-pct">0%</div>
+          <div class="stat-lbl">Journey</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="p-q">Q1</div>
+          <div class="stat-lbl">Current Zone</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-title">Recent Sessions</div>
+      <div id="p-recent">
+        <div style="font-size:13px;color:var(--muted);">No sessions completed yet — start Week 1!</div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-title">💬 Conversation Starters</div>
+      <div id="p-convos">
+        <div class="convo-item">"What did ROBO need Aiden's help with this week?"</div>
+        <div class="convo-item">"Can you show me what you built in Scratch?"</div>
+        <div class="convo-item">"If ROBO could talk, what do you think he would say?"</div>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-title">📋 Next Session Prep</div>
+      <div class="next-prep" id="p-next-prep">
+        Open aiden_curriculum.html, click Week 1 on the Mars map, and start the mission together!
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-section-title">📚 Parent Guides</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <a href="aiden_q1_lessons.html" style="color:var(--q1);font-size:14px;font-weight:700;">🛸 Q1 — Scratch Guide</a>
+        <a href="aiden_q2_lessons.html" style="color:var(--q2);font-size:14px;font-weight:700;">🤖 Q2 — SPIKE Guide</a>
+        <a href="aiden_q3_lessons.html" style="color:var(--q3);font-size:14px;font-weight:700;">🐍 Q3 — Python Guide</a>
+        <a href="aiden_q4_lessons.html" style="color:var(--q4);font-size:14px;font-weight:700;">⚡ Q4 — Arduino Guide</a>
+      </div>
+    </div>
+
+    <button class="print-progress-btn" onclick="window.print()">🖨️ Print Progress Report</button>
+
+  </div>
+</div>
+
+<!-- ── HEADER ── -->
+<header id="mc-header">
+  <div class="header-left">
+    <div class="mc-label">Mission Control</div>
+    <div class="mc-title">AIDEN'S MARS JOURNEY</div>
+    <div class="mc-sub">40 Weeks · 4 Zones · One Epic Rover</div>
+  </div>
+
+  <div class="fuel-gauge">
+    <div class="fuel-label">🔋 ROBO's Fuel Level</div>
+    <div class="fuel-bar-wrap">
+      <div class="fuel-fill" id="fuel-fill" style="width:0%"></div>
+    </div>
+    <div class="fuel-count" id="fuel-count">0 / 40 weeks</div>
+  </div>
+
+  <div class="header-right">
+    <button class="parent-btn" onclick="openParent()">🔑 Parent View</button>
+  </div>
+</header>
+
+<!-- ── MAIN ── -->
+<main>
+
+  <!-- Mission complete banner -->
+  <div id="complete-banner">
+    <div class="cb-title">🎉 MISSION COMPLETE! ROBO MADE IT TO MARS BASE ALPHA!</div>
+    <div class="cb-sub">Aiden completed all 40 weeks of the coding journey. That's 40 missions, 4 terrain zones, and one very happy rover. 🚀</div>
+  </div>
+
+  <!-- MAP SECTION -->
+  <div class="map-section">
+    <div class="map-header">
+      <div class="map-title-group">
+        <div class="map-title">🪐 MARS EXPLORATION MAP</div>
+        <div class="map-hint">Click any landing pad to open that mission</div>
+      </div>
+      <a id="next-mission-btn" href="#" class="q1">🚀 Start Mission 1 →</a>
+    </div>
+
+    <div class="map-wrap">
+      <svg id="mars-map" viewBox="0 0 900 440" xmlns="http://www.w3.org/2000/svg" style="cursor:default;">
+
+        <!-- Map background (dark Mars surface) -->
+        <rect x="0" y="0" width="900" height="440" fill="#0e0c1a"/>
+
+        <!-- Zone bands -->
+        <rect x="0" y="0"   width="900" height="148" fill="rgba(0,207,255,0.04)"/>
+        <rect x="0" y="148" width="900" height="87"  fill="rgba(176,96,255,0.04)"/>
+        <rect x="0" y="235" width="900" height="87"  fill="rgba(0,255,153,0.04)"/>
+        <rect x="0" y="322" width="900" height="118" fill="rgba(255,136,68,0.04)"/>
+
+        <!-- Zone divider lines (organic wavy) -->
+        <path d="M0,148 Q120,138 240,150 Q360,162 480,146 Q600,130 720,148 Q840,162 900,148"
+              stroke="rgba(176,96,255,0.18)" stroke-width="1.5" fill="none"/>
+        <path d="M0,235 Q100,225 220,237 Q360,249 480,233 Q620,217 740,236 Q860,249 900,235"
+              stroke="rgba(0,255,153,0.18)" stroke-width="1.5" fill="none"/>
+        <path d="M0,322 Q150,310 280,324 Q420,338 540,320 Q660,306 800,322 Q870,328 900,322"
+              stroke="rgba(255,136,68,0.18)" stroke-width="1.5" fill="none"/>
+
+        <!-- Zone labels -->
+        <text x="18" y="22" font-family="Orbitron,sans-serif" font-size="10" fill="rgba(0,207,255,0.5)" letter-spacing="2" font-weight="700">Q1 · SCRATCH CRATER</text>
+        <text x="18" y="168" font-family="Orbitron,sans-serif" font-size="10" fill="rgba(176,96,255,0.5)" letter-spacing="2" font-weight="700">Q2 · SPIKE VALLEY</text>
+        <text x="18" y="255" font-family="Orbitron,sans-serif" font-size="10" fill="rgba(0,255,153,0.5)" letter-spacing="2" font-weight="700">Q3 · PYTHON PLAINS</text>
+        <text x="18" y="342" font-family="Orbitron,sans-serif" font-size="10" fill="rgba(255,136,68,0.5)" letter-spacing="2" font-weight="700">Q4 · ARDUINO PEAKS</text>
+
+        <!-- Crater decorations (scattered) -->
+        <!-- Q1 region -->
+        <circle cx="640" cy="32"  r="18" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="2"/>
+        <circle cx="640" cy="32"  r="10" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+        <circle cx="200" cy="40"  r="12" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1.5"/>
+        <circle cx="860" cy="55"  r="22" fill="none" stroke="rgba(255,255,255,0.035)" stroke-width="2"/>
+        <!-- Q2 region -->
+        <circle cx="500" cy="195" r="20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="2"/>
+        <circle cx="750" cy="190" r="14" fill="none" stroke="rgba(255,255,255,0.035)" stroke-width="1.5"/>
+        <circle cx="60"  cy="200" r="16" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1.5"/>
+        <!-- Q3 region -->
+        <circle cx="320" cy="280" r="15" fill="none" stroke="rgba(255,255,255,0.035)" stroke-width="1.5"/>
+        <circle cx="700" cy="275" r="10" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <circle cx="50"  cy="270" r="24" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="2"/>
+        <!-- Q4 region -->
+        <circle cx="600" cy="400" r="20" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="2"/>
+        <circle cx="350" cy="415" r="14" fill="none" stroke="rgba(255,255,255,0.035)" stroke-width="1.5"/>
+        <circle cx="820" cy="390" r="10" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+        <!-- Rock formations (tiny triangles scattered) -->
+        <polygon points="760,50  768,38  776,50"  fill="rgba(255,255,255,0.04)"/>
+        <polygon points="120,120 126,112 132,120" fill="rgba(255,255,255,0.03)"/>
+        <polygon points="400,210 406,202 412,210" fill="rgba(255,255,255,0.04)"/>
+        <polygon points="200,300 205,293 210,300" fill="rgba(255,255,255,0.035)"/>
+        <polygon points="750,350 756,342 762,350" fill="rgba(255,255,255,0.04)"/>
+
+        <!-- MARS BASE ALPHA at final destination (bottom-left area, W40 end point) -->
+        <g id="mars-base" opacity="0.6">
+          <rect x="72" y="390" width="56" height="35" rx="5" fill="#1a1530" stroke="rgba(255,136,68,0.4)" stroke-width="1.5"/>
+          <polygon points="100,375 85,390 115,390" fill="#1a1530" stroke="rgba(255,136,68,0.4)" stroke-width="1.5"/>
+          <!-- Dome -->
+          <ellipse cx="100" cy="390" rx="18" ry="12" fill="#0e0c1a" stroke="rgba(255,136,68,0.5)" stroke-width="1.5"/>
+          <!-- Flag -->
+          <line x1="87" y1="360" x2="87" y2="377" stroke="rgba(255,136,68,0.5)" stroke-width="1.5"/>
+          <rect x="87" y="360" width="14" height="8" rx="1" fill="rgba(255,136,68,0.5)"/>
+          <text x="100" y="418" font-family="Orbitron,sans-serif" font-size="6" fill="rgba(255,136,68,0.5)" text-anchor="middle" letter-spacing="1">BASE ALPHA</text>
+        </g>
+
+        <!-- Path segments group (filled by JS) -->
+        <g id="map-paths"></g>
+
+        <!-- Tire tracks group (filled by JS) -->
+        <g id="tire-tracks"></g>
+
+        <!-- Week nodes group (filled by JS) -->
+        <g id="map-nodes"></g>
+
+        <!-- ROBO rover on map (filled by JS) -->
+        <g id="robo-on-map"></g>
+
+        <!-- ROBO speech bubble (filled by JS) -->
+        <g id="robo-speech-bubble"></g>
+
+      </svg>
+    </div>
+
+    <!-- Map legend -->
+    <div class="map-legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--q3);box-shadow:0 0 5px var(--q3)"></div>
+        Completed
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--q1);box-shadow:0 0 8px var(--q1);animation:legendPulse 1.5s infinite"></div>
+        Current Mission
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#2a3a5a;border:1px solid #3a4a6a"></div>
+        Locked
+      </div>
+      <div class="legend-item">🛸 ROBO's position</div>
+    </div>
+  </div>
+
+  <!-- WEEK DETAIL PANEL -->
+  <div id="week-detail">
+    <div class="detail-inner" id="detail-inner"></div>
+  </div>
+
+  <!-- LIST VIEW -->
+  <div class="list-section">
+    <div class="list-section-header">
+      <div class="section-title">📋 All Missions — List View</div>
+    </div>
+    <div class="q-accordion" id="q-accordion">
+      <!-- Built by JS -->
+    </div>
+  </div>
+
+</main>
+
+<style>
+@keyframes legendPulse {
+  0%,100% { opacity:1; }
+  50%      { opacity:0.4; }
+}
+@keyframes nodePulse {
+  0%,100% { r: 14; opacity:1; }
+  50%      { r: 17; opacity:0.7; }
+}
+</style>
+
+<script>
+// ════════════════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════════════════
+
+const Q_META = {
+  1: { name:'Scratch Crater',  color:'#00cfff', icon:'🛸', guide:'aiden_q1_lessons.html',
+       convos: ["What did ROBO need Aiden's help with this week?",
+                "Can you show me your Scratch project?",
+                "What does a sprite do? Can you explain it to me?"],
+       prep: "Open Scratch (scratch.mit.edu) on your computer. Have the lesson page open for reference." },
+  2: { name:'SPIKE Valley',    color:'#b060ff', icon:'🤖', guide:'aiden_q2_lessons.html',
+       convos: ["What LEGO piece was the hardest to figure out?",
+                "Can you show me how the sensor works?",
+                "What would happen if ROBO's motor ran backwards?"],
+       prep: "Charge the LEGO SPIKE Prime hub overnight. Have the SPIKE app open and ready." },
+  3: { name:'Python Plains',   color:'#00ff99', icon:'🐍', guide:'aiden_q3_lessons.html',
+       convos: ["What does print() actually do? Show me!",
+                "If you made a mistake in the code, what happened?",
+                "Why do you think Python is called Python?"],
+       prep: "Open a Python editor (Thonny is great for kids). No hardware needed this quarter." },
+  4: { name:'Arduino Peaks',   color:'#ff8844', icon:'⚡', guide:'aiden_q4_lessons.html',
+       convos: ["What did the LED do when your code ran?",
+                "What's the difference between digital and analog?",
+                "Could you make the rover beep a song?"],
+       prep: "Get the Arduino Uno, USB cable, and breadboard ready. Open the Arduino IDE." },
+};
+
+// 40 week nodes with map coordinates
+// Path: Q1 left→right (top), Q2 right→left (upper-mid), Q3 left→right (lower-mid), Q4 right→left (bottom)
+const WEEKS = [
+  // Q1 — Scratch Crater (LTR, y≈88-118)
+  {id:'q1w1',  q:1, wn:1,  gw:1,  x:55,  y:115, short:'Sprites & Events',   title:'Sprites, Stage & Events',    link:'aiden_q1_w1.html',  blurb:'Learned what sprites are and how "When flag clicked" events start a program. ROBO\'s camera woke up!'},
+  {id:'q1w2',  q:1, wn:2,  gw:2,  x:148, y:88,  short:'Loops',              title:'Loops — Patrol Routes',      link:'aiden_q1_w2.html',  blurb:'Built repeat loops to make ROBO patrol in circles. Saved ROBO from running off the edge of Mars!'},
+  {id:'q1w3',  q:1, wn:3,  gw:3,  x:233, y:118, short:'Conditionals',       title:'Conditionals — Obstacles',   link:'aiden_q1_w3.html',  blurb:'Used "if" blocks to detect obstacles. ROBO can now swerve around rocks!'},
+  {id:'q1w4',  q:1, wn:4,  gw:4,  x:318, y:90,  short:'Variables',          title:'Variables — Fuel Tracking',  link:'aiden_q1_w4.html',  blurb:'Created a fuel variable to track ROBO\'s energy. No more running out of power mid-mission!'},
+  {id:'q1w5',  q:1, wn:5,  gw:5,  x:400, y:116, short:'Broadcasting',       title:'Broadcasting Messages',      link:'aiden_q1_w5.html',  blurb:'Used broadcast messages to coordinate two sprites. ROBO called the base station!'},
+  {id:'q1w6',  q:1, wn:6,  gw:6,  x:480, y:88,  short:'Custom Blocks',      title:'Custom Blocks',              link:'aiden_q1_w6.html',  blurb:'Built a custom block (like a function) to store ROBO\'s favourite patrol route.'},
+  {id:'q1w7',  q:1, wn:7,  gw:7,  x:560, y:115, short:'Clones',             title:'Clones — Meteor Storm',      link:'aiden_q1_w7.html',  blurb:'Used clones to fill the screen with meteors ROBO had to dodge. Super exciting!'},
+  {id:'q1w8',  q:1, wn:8,  gw:8,  x:640, y:88,  short:'Lists',              title:'Lists — Sample Collection',  link:'aiden_q1_w8.html',  blurb:'Used a list to store rock samples ROBO collected. Organised all the data!'},
+  {id:'q1w9',  q:1, wn:9,  gw:9,  x:722, y:115, short:'Capstone I',         title:'Capstone Part 1',            link:'aiden_q1_w9.html',  blurb:'Started building the big capstone Scratch game. ROBO needs to reach the base!'},
+  {id:'q1w10', q:1, wn:10, gw:10, x:802, y:90,  short:'Capstone + Demo',    title:'Capstone Part 2 + Demo Day', link:'aiden_q1_w10.html', blurb:'Completed and showed off the capstone Scratch game. Q1 complete — ROBO crossed Scratch Crater!'},
+
+  // Q2 — SPIKE Valley (RTL, y≈155-180)
+  {id:'q2w1',  q:2, wn:1,  gw:11, x:835, y:155, short:'Unbox & Power On',   title:'Unbox & Power On',           link:'aiden_q2_w1.html',  blurb:'Unboxed the LEGO SPIKE Prime and powered it on for the first time. ROBO got a real body!'},
+  {id:'q2w2',  q:2, wn:2,  gw:12, x:757, y:178, short:'Build Chassis',      title:'Build Chassis',              link:'aiden_q2_w2.html',  blurb:'Built ROBO\'s drive chassis with two motors and wheels. He can move!'},
+  {id:'q2w3',  q:2, wn:3,  gw:13, x:678, y:155, short:'Drive Missions',     title:'Drive Missions',             link:'aiden_q2_w3.html',  blurb:'Programmed ROBO to drive a specific distance and turn. Navigating SPIKE Valley!'},
+  {id:'q2w4',  q:2, wn:4,  gw:14, x:600, y:178, short:'Obstacle Sensor',    title:'Obstacle Sensor',            link:'aiden_q2_w4.html',  blurb:'Added the distance sensor. ROBO stops automatically before hitting anything!'},
+  {id:'q2w5',  q:2, wn:5,  gw:15, x:522, y:155, short:'Color Tracking',     title:'Color Tracking',             link:'aiden_q2_w5.html',  blurb:'Used the color sensor to follow a line. ROBO found the path through the valley!'},
+  {id:'q2w6',  q:2, wn:6,  gw:16, x:444, y:178, short:'Speed Control',      title:'Speed Control',              link:'aiden_q2_w6.html',  blurb:'Learned to control motor speed. Fast ROBO, slow ROBO, perfect ROBO!'},
+  {id:'q2w7',  q:2, wn:7,  gw:17, x:366, y:155, short:'Dual Sensors',       title:'Dual Sensors',               link:'aiden_q2_w7.html',  blurb:'Combined two sensors together. ROBO can see AND follow lines simultaneously!'},
+  {id:'q2w8',  q:2, wn:8,  gw:18, x:288, y:178, short:'Integration',        title:'Integration Challenge',      link:'aiden_q2_w8.html',  blurb:'Combined everything learned into one programme. ROBO navigated a full obstacle course!'},
+  {id:'q2w9',  q:2, wn:9,  gw:19, x:210, y:155, short:'Capstone Design',    title:'Capstone Design',            link:'aiden_q2_w9.html',  blurb:'Designed ROBO\'s most complex mission yet — a timed challenge course.'},
+  {id:'q2w10', q:2, wn:10, gw:20, x:148, y:178, short:'Demo Day',           title:'Demo Day',                   link:'aiden_q2_w10.html', blurb:'Showed the SPIKE rover to the family. Q2 complete — ROBO crossed SPIKE Valley!'},
+
+  // Q3 — Python Plains (LTR, y≈255-280)
+  {id:'q3w1',  q:3, wn:1,  gw:21, x:110, y:255, short:'print() Logs',       title:'print() — Mission Logs',     link:'aiden_q3_w1.html',  blurb:'First Python code! Used print() to send messages from ROBO to mission control.'},
+  {id:'q3w2',  q:3, wn:2,  gw:22, x:192, y:280, short:'Variables',          title:'Variables — Fuel Tracking',  link:'aiden_q3_w2.html',  blurb:'Created Python variables to store ROBO\'s fuel level and rock sample count.'},
+  {id:'q3w3',  q:3, wn:3,  gw:23, x:272, y:255, short:'input() Commands',   title:'input() — User Commands',    link:'aiden_q3_w3.html',  blurb:'Used input() to send live commands to ROBO. Type and ROBO responds!'},
+  {id:'q3w4',  q:3, wn:4,  gw:24, x:352, y:278, short:'for loops',          title:'for loops — Movement',       link:'aiden_q3_w4.html',  blurb:'Wrote for loops to make ROBO move a set number of steps automatically.'},
+  {id:'q3w5',  q:3, wn:5,  gw:25, x:432, y:255, short:'while loops',        title:'while loops — Patrol',       link:'aiden_q3_w5.html',  blurb:'Used while loops to keep ROBO patrolling until a condition is met.'},
+  {id:'q3w6',  q:3, wn:6,  gw:26, x:510, y:278, short:'if/elif/else',       title:'if/elif/else — Decisions',   link:'aiden_q3_w6.html',  blurb:'ROBO makes smart decisions! If low fuel, return to base. Elif enough, keep going. Else, explore!'},
+  {id:'q3w7',  q:3, wn:7,  gw:27, x:590, y:255, short:'Functions',          title:'Functions — Reusable Code',  link:'aiden_q3_w7.html',  blurb:'Built def functions to package ROBO\'s actions. Write once, use anywhere!'},
+  {id:'q3w8',  q:3, wn:8,  gw:28, x:668, y:278, short:'Lists',              title:'Lists — Sample Collections', link:'aiden_q3_w8.html',  blurb:'Used Python lists to organise all the rock samples ROBO has collected on the plains.'},
+  {id:'q3w9',  q:3, wn:9,  gw:29, x:748, y:255, short:'Capstone Build',     title:'Capstone Build',             link:'aiden_q3_w9.html',  blurb:'Built a full Python rover simulation that runs from command line!'},
+  {id:'q3w10', q:3, wn:10, gw:30, x:828, y:278, short:'Demo Day',           title:'Demo Day',                   link:'aiden_q3_w10.html', blurb:'Ran the Python capstone for the family. Q3 complete — ROBO crossed Python Plains!'},
+
+  // Q4 — Arduino Peaks (RTL, y≈340-362)
+  {id:'q4w1',  q:4, wn:1,  gw:31, x:818, y:340, short:'LED Blink',          title:'LED Blink — Basic Output',   link:'aiden_q4_w1.html',  blurb:'First Arduino code! Made an LED blink — the "Hello World" of hardware coding.'},
+  {id:'q4w2',  q:4, wn:2,  gw:32, x:740, y:362, short:'Variables & Serial', title:'Variables & Serial',         link:'aiden_q4_w2.html',  blurb:'Used Serial.println() to send data from ROBO to the computer screen. Real sensor logging!'},
+  {id:'q4w3',  q:4, wn:3,  gw:33, x:660, y:340, short:'Analog Input',       title:'Analog Input — Sensors',     link:'aiden_q4_w3.html',  blurb:'Read analog values from a sensor. ROBO measures the world with real numbers!'},
+  {id:'q4w4',  q:4, wn:4,  gw:34, x:580, y:362, short:'Servo Motor',        title:'Servo Motor — Control',      link:'aiden_q4_w4.html',  blurb:'Controlled a servo motor arm. ROBO can now pick up objects!'},
+  {id:'q4w5',  q:4, wn:5,  gw:35, x:500, y:340, short:'Button Input',       title:'Button Input',               link:'aiden_q4_w5.html',  blurb:'Added a physical button. Aiden presses it and ROBO reacts. Physical control!'},
+  {id:'q4w6',  q:4, wn:6,  gw:36, x:420, y:362, short:'Distance Sensor',    title:'Distance Sensor',            link:'aiden_q4_w6.html',  blurb:'Added a real ultrasonic distance sensor. ROBO stops itself from crashing for real!'},
+  {id:'q4w7',  q:4, wn:7,  gw:37, x:340, y:340, short:'Functions',          title:'Functions — Reusable Circuits',link:'aiden_q4_w7.html',blurb:'Wrote Arduino functions to organise the rover\'s behaviours into clean, reusable blocks.'},
+  {id:'q4w8',  q:4, wn:8,  gw:38, x:260, y:362, short:'Full Rover System',  title:'Full Rover System',          link:'aiden_q4_w8.html',  blurb:'Combined all sensors and motors into one working rover system. ROBO is fully operational!'},
+  {id:'q4w9',  q:4, wn:9,  gw:39, x:180, y:340, short:'Capstone Build',     title:'Capstone Challenge',         link:'aiden_q4_w9.html',  blurb:'Built the final capstone rover project — a timed autonomous challenge.'},
+  {id:'q4w10', q:4, wn:10, gw:40, x:100, y:362, short:'Graduation! 🎓',     title:'Graduation Day 🎓',          link:'aiden_q4_w10.html', blurb:'40 weeks done! ROBO reached Mars Base Alpha. Aiden is officially a Mars Mission Coder!'},
+];
+
+// ════════════════════════════════════════════════════
+// LOCALSTORAGE
+// ════════════════════════════════════════════════════
+const DONE_KEY = 'aidenDoneWeeks';
+function getDone() {
+  try { return JSON.parse(localStorage.getItem(DONE_KEY)) || []; }
+  catch { return []; }
+}
+function saveDone(arr) { localStorage.setItem(DONE_KEY, JSON.stringify(arr)); }
+
+// ════════════════════════════════════════════════════
+// MAP RENDERING
+// ════════════════════════════════════════════════════
+const NS = 'http://www.w3.org/2000/svg';
+
+function mkEl(tag, attrs) {
+  const el = document.createElementNS(NS, tag);
+  for (const [k,v] of Object.entries(attrs)) el.setAttribute(k, v);
+  return el;
+}
+
+function renderMap(done) {
+  const pathG  = document.getElementById('map-paths');
+  const trackG = document.getElementById('tire-tracks');
+  const nodeG  = document.getElementById('map-nodes');
+  const roboG  = document.getElementById('robo-on-map');
+  const bubbleG= document.getElementById('robo-speech-bubble');
+
+  pathG.innerHTML = trackG.innerHTML = nodeG.innerHTML = roboG.innerHTML = bubbleG.innerHTML = '';
+
+  // Determine current (first not done) and all done
+  const currentWeek = WEEKS.find(w => !done.includes(w.id)) || null;
+
+  // ── Draw path segments ──────────────────────────
+  for (let i = 0; i < WEEKS.length - 1; i++) {
+    const a = WEEKS[i], b = WEEKS[i + 1];
+    const isDone = done.includes(a.id) && done.includes(b.id);
+    const isCurrent = !isDone && (done.includes(a.id) || a === currentWeek);
+    const color = isDone ? QColor(a.q) : isCurrent ? 'rgba(255,255,255,0.15)' : 'rgba(255,255,255,0.07)';
+    const w     = isDone ? 2.5 : 1.5;
+    const dash  = isDone ? 'none' : '6 4';
+
+    const line = mkEl('line', {x1:a.x, y1:a.y, x2:b.x, y2:b.y,
+      stroke: color, 'stroke-width': w, 'stroke-dasharray': dash,
+      'stroke-linecap': 'round'});
+    pathG.appendChild(line);
+  }
+
+  // ── Tire tracks over completed segments ─────────
+  for (let i = 0; i < WEEKS.length - 1; i++) {
+    const a = WEEKS[i], b = WEEKS[i + 1];
+    if (!done.includes(a.id)) continue;
+    // Draw two parallel thin track lines
+    const angle = Math.atan2(b.y - a.y, b.x - a.x);
+    const perp = angle + Math.PI / 2;
+    const off = 2.5;
+    const dx = Math.cos(perp) * off, dy = Math.sin(perp) * off;
+    for (const sign of [-1, 1]) {
+      const track = mkEl('line', {
+        x1: a.x + dx*sign, y1: a.y + dy*sign,
+        x2: b.x + dx*sign, y2: b.y + dy*sign,
+        stroke: QColor(a.q), 'stroke-width': '1',
+        'stroke-dasharray': '5 3', opacity: '0.35',
+        'stroke-linecap': 'round'
+      });
+      trackG.appendChild(track);
+    }
+  }
+
+  // ── Draw nodes ───────────────────────────────────
+  WEEKS.forEach(w => {
+    const isDone    = done.includes(w.id);
+    const isCurrent = currentWeek && w.id === currentWeek.id;
+    const isLocked  = !isDone && !isCurrent;
+    const qc        = QColor(w.q);
+
+    const g = mkEl('g', {class: 'map-node', 'data-id': w.id,
+      style: `cursor:pointer;`, transform: `translate(${w.x},${w.y})`});
+
+    if (isCurrent) {
+      // Pulse ring (outer glow)
+      const pulse = mkEl('circle', {r:'20', fill:'none',
+        stroke: qc, 'stroke-width':'2', opacity:'0.5'});
+      pulse.innerHTML = `<animate attributeName="r" values="16;22;16" dur="1.6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.5;0;0.5" dur="1.6s" repeatCount="indefinite"/>`;
+      g.appendChild(pulse);
+    }
+
+    // Node background circle
+    const circle = mkEl('circle', {r:'14',
+      fill: isDone ? `rgba(0,255,153,0.15)` : isCurrent ? `rgba(${hexToRgb(qc)},0.18)` : 'rgba(20,30,50,0.8)',
+      stroke: isDone ? '#00ff99' : isCurrent ? qc : '#2a3a5a',
+      'stroke-width': isDone || isCurrent ? '2' : '1.5'});
+    if (isDone) circle.setAttribute('filter', `drop-shadow(0 0 4px #00ff99)`);
+    if (isCurrent) circle.setAttribute('filter', `drop-shadow(0 0 6px ${qc})`);
+    g.appendChild(circle);
+
+    // Number or check
+    if (isDone) {
+      const check = mkEl('text', {
+        x:'0', y:'5', 'text-anchor':'middle', 'font-size':'14',
+        'font-weight':'900', fill:'#00ff99', 'font-family':'Nunito,sans-serif'});
+      check.textContent = '✓';
+      g.appendChild(check);
+    } else {
+      const num = mkEl('text', {
+        x:'0', y:'4', 'text-anchor':'middle', 'font-size':'10',
+        'font-weight':'700', fill: isCurrent ? qc : '#4a6080',
+        'font-family':'Orbitron,sans-serif'});
+      num.textContent = w.gw;
+      g.appendChild(num);
+    }
+
+    // Hover tooltip: short title below node
+    if (isCurrent) {
+      const bg = mkEl('rect', {x:'-32', y:'17', width:'64', height:'16',
+        rx:'4', fill:'rgba(0,0,0,0.7)'});
+      const lbl = mkEl('text', {
+        x:'0', y:'29', 'text-anchor':'middle', 'font-size':'9',
+        fill: qc, 'font-family':'Nunito,sans-serif', 'font-weight':'700'});
+      lbl.textContent = w.short;
+      g.appendChild(bg);
+      g.appendChild(lbl);
+    }
+
+    // Click handler
+    g.addEventListener('click', () => selectWeek(w.id));
+    // Hover
+    g.addEventListener('mouseenter', (e) => {
+      const t = mkEl('title', {});
+      t.textContent = `Week ${w.gw}: ${w.title}`;
+      g.appendChild(t);
+    });
+
+    nodeG.appendChild(g);
+  });
+
+  // ── ROBO on map ──────────────────────────────────
+  if (currentWeek) {
+    const cx = currentWeek.x, cy = currentWeek.y;
+    const qc = QColor(currentWeek.q);
+    roboG.setAttribute('transform', `translate(${cx - 20}, ${cy - 52})`);
+    roboG.innerHTML = miniRoboSVG(qc);
+
+    // Speech bubble
+    const bx = Math.min(cx + 5, 800), by = cy - 88;
+    bubbleG.innerHTML = `
+      <rect x="${bx}" y="${by}" width="120" height="26" rx="6"
+            fill="rgba(8,12,24,0.9)" stroke="${qc}" stroke-width="1.2"/>
+      <line x1="${cx}" y1="${cy-50}" x2="${bx+10}" y2="${by+26}"
+            stroke="${qc}" stroke-width="1" opacity="0.6"/>
+      <text x="${bx+60}" y="${by+17}" text-anchor="middle"
+            font-size="8.5" fill="${qc}" font-family="Nunito,sans-serif" font-weight="700">
+        Week ${currentWeek.gw} – Let's go! 🚀
+      </text>`;
+  } else if (done.length === 40) {
+    // All done — ROBO at base alpha
+    roboG.setAttribute('transform', 'translate(80, 330)');
+    roboG.innerHTML = miniRoboSVG('#ff8844');
+    bubbleG.innerHTML = `
+      <rect x="110" y="330" width="120" height="26" rx="6"
+            fill="rgba(8,12,24,0.9)" stroke="#ff8844" stroke-width="1.2"/>
+      <text x="170" y="347" text-anchor="middle"
+            font-size="8.5" fill="#ff8844" font-family="Nunito,sans-serif" font-weight="700">
+        BASE ALPHA REACHED! ⭐
+      </text>`;
+  }
+}
+
+function miniRoboSVG(accent) {
+  return `
+    <!-- Mini ROBO on map -->
+    <!-- Shadow -->
+    <ellipse cx="20" cy="45" rx="14" ry="4" fill="rgba(0,0,0,0.3)"/>
+    <!-- Wheels L -->
+    <ellipse cx="8"  cy="38" rx="5" ry="3.5" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
+    <ellipse cx="8"  cy="46" rx="5" ry="3.5" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
+    <!-- Wheels R -->
+    <ellipse cx="32" cy="38" rx="5" ry="3.5" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
+    <ellipse cx="32" cy="46" rx="5" ry="3.5" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
+    <!-- Body -->
+    <rect x="11" y="20" width="18" height="24" rx="4" fill="#162040" stroke="${accent}" stroke-width="1.5"/>
+    <!-- Solar L -->
+    <rect x="2" y="24" width="8" height="5" rx="1.5" fill="#0d1630" stroke="#1a3060" stroke-width="1"/>
+    <!-- Solar R -->
+    <rect x="30" y="24" width="8" height="5" rx="1.5" fill="#0d1630" stroke="#1a3060" stroke-width="1"/>
+    <!-- Camera mast -->
+    <rect x="16" y="12" width="8" height="11" rx="2" fill="#1a2a50" stroke="#2a4070" stroke-width="1"/>
+    <!-- Eye -->
+    <circle cx="20" cy="17" r="5" fill="#060c1a" stroke="${accent}" stroke-width="1"/>
+    <circle cx="20" cy="17" r="3" fill="${accent}" opacity="0.85"/>
+    <circle cx="20" cy="17" r="1.5" fill="#030810"/>
+    <circle cx="21.5" cy="15.5" r="1" fill="white" opacity="0.5"/>
+    <!-- Antenna -->
+    <line x1="23" y1="12" x2="25" y2="6" stroke="#3a5580" stroke-width="1.2"/>
+    <circle cx="25" cy="5" r="2" fill="${accent}">
+      <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  `;
+}
+
+function QColor(q) {
+  return ['','#00cfff','#b060ff','#00ff99','#ff8844'][q];
+}
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `${r},${g},${b}`;
+}
+
+// ════════════════════════════════════════════════════
+// WEEK DETAIL PANEL
+// ════════════════════════════════════════════════════
+let selectedId = null;
+
+function selectWeek(id) {
+  selectedId = id;
+  const done = getDone();
+  const w = WEEKS.find(x => x.id === id);
+  if (!w) return;
+  const qm = Q_META[w.q];
+  const qc = qm.color;
+  const isDone = done.includes(id);
+  const isCurrent = !isDone && !WEEKS.slice(0, WEEKS.indexOf(w)).some(x => !done.includes(x.id));
+  const isLocked  = !isDone && !isCurrent;
+
+  const inner = document.getElementById('detail-inner');
+
+  if (isLocked) {
+    const prevWeek = WEEKS[WEEKS.indexOf(w) - 1];
+    inner.innerHTML = `
+      <div class="detail-q-label" style="color:${qc}">${qm.icon} ${qm.name} · Week ${w.wn} of 10</div>
+      <div class="detail-title">${w.title}</div>
+      <div class="detail-locked-msg">
+        🔒 This mission is locked! Complete Week ${prevWeek ? prevWeek.gw : '...'} first.<br>
+        <span style="font-size:13px;">ROBO is waiting at the previous landing pad.</span>
+      </div>`;
+  } else {
+    const statusColor = isDone ? '#00ff99' : qc;
+    const statusText  = isDone ? '✓ COMPLETED' : '🚀 CURRENT MISSION';
+    const btnClass    = `q${w.q}`;
+    const btnColor    = qc;
+
+    inner.innerHTML = `
+      <div class="detail-q-label" style="color:${qc}">${qm.icon} ${qm.name} · Week ${w.wn} of 10 · Mission ${w.gw} of 40</div>
+      <div class="detail-title">${w.title}</div>
+      <div class="detail-body">
+        <div class="detail-info">
+          <div class="detail-status-badge" style="background:${statusColor}22;color:${statusColor};border:1px solid ${statusColor}44">
+            ${statusText}
+          </div>
+          ${isDone ? `<p style="font-size:14px;color:var(--muted)">${w.blurb}</p>` : `<p style="font-size:14px;color:var(--muted)">ROBO needs Aiden's help for this mission! Click the button to open the lesson.</p>`}
+        </div>
+        <div class="detail-actions">
+          <a href="${w.link}" class="detail-go-btn" style="background:${btnColor}">
+            ${isDone ? '🔄 Revisit Mission' : '🚀 Start Mission'} →
+          </a>
+          <button class="detail-toggle-btn ${isDone?'done':''}" onclick="toggleWeekDone('${id}')">
+            ${isDone ? '↩ Mark Incomplete' : '✓ Mark as Done'}
+          </button>
+        </div>
+      </div>`;
+  }
+
+  const panel = document.getElementById('week-detail');
+  panel.classList.add('open');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function toggleWeekDone(id) {
+  let done = getDone();
+  if (done.includes(id)) {
+    done = done.filter(x => x !== id);
+  } else {
+    done.push(id);
+  }
+  saveDone(done);
+  updateAll(done);
+  selectWeek(id); // refresh detail
+}
+
+// ════════════════════════════════════════════════════
+// LIST VIEW (accordion)
+// ════════════════════════════════════════════════════
+function buildListView(done) {
+  const acc = document.getElementById('q-accordion');
+  acc.innerHTML = '';
+
+  [1,2,3,4].forEach(q => {
+    const qm = Q_META[q];
+    const qWeeks = WEEKS.filter(w => w.q === q);
+    const doneCount = qWeeks.filter(w => done.includes(w.id)).length;
+
+    const block = document.createElement('div');
+    block.className = 'q-block';
+    block.innerHTML = `
+      <div class="q-block-header" onclick="this.parentElement.classList.toggle('open')">
+        <div class="q-block-icon">${qm.icon}</div>
+        <div class="q-block-name" style="color:${qm.color}">Q${q}: ${qm.name}</div>
+        <div class="q-block-progress">${doneCount}/10</div>
+        <div class="q-block-arrow">▼</div>
+      </div>
+      <div class="q-block-body">
+        ${qWeeks.map(w => {
+          const isDone = done.includes(w.id);
+          return `<div class="q-week-row ${isDone?'done-row':''}" id="row-${w.id}">
+            <div class="q-week-num">W${w.gw}</div>
+            <div class="q-week-title"><a href="${w.link}">${w.title}</a></div>
+            <div class="q-week-check ${isDone?'done':''}" onclick="toggleWeekDone('${w.id}')"
+                 id="chk-${w.id}" style="border-color:${isDone?'var(--q3)':'var(--bdr)'}">
+              ${isDone ? '✓' : ''}
+            </div>
+          </div>`;
+        }).join('')}
+        <div class="q-guide-link">📚 <a href="${qm.guide}">Parent Guide for Q${q}</a></div>
+      </div>`;
+    acc.appendChild(block);
+  });
+}
+
+// ════════════════════════════════════════════════════
+// FUEL GAUGE + CTA BUTTON
+// ════════════════════════════════════════════════════
+function updateFuelGauge(done) {
+  const pct = Math.round((done.length / 40) * 100);
+  document.getElementById('fuel-fill').style.width = pct + '%';
+  document.getElementById('fuel-count').textContent = `${done.length} / 40 weeks`;
+
+  const btn = document.getElementById('next-mission-btn');
+  const current = WEEKS.find(w => !done.includes(w.id));
+  if (current) {
+    btn.href = current.link;
+    btn.textContent = `🚀 Mission ${current.gw}: ${current.short} →`;
+    btn.className = `q${current.q}`;
+    btn.style.display = 'inline-flex';
+  } else {
+    btn.textContent = '🎉 All 40 Missions Complete!';
+    btn.href = '#';
+    btn.className = '';
+    btn.style.background = 'var(--q3)';
+  }
+
+  // Mission complete banner
+  if (done.length === 40) {
+    document.getElementById('complete-banner').style.display = 'block';
+  }
+}
+
+// ════════════════════════════════════════════════════
+// PARENT PANEL
+// ════════════════════════════════════════════════════
+function updateParentPanel(done) {
+  const current = WEEKS.find(w => !done.includes(w.id));
+  const doneCount = done.length;
+  const pct = Math.round((doneCount / 40) * 100);
+
+  document.getElementById('p-done').textContent  = doneCount;
+  document.getElementById('p-left').textContent  = 40 - doneCount;
+  document.getElementById('p-pct').textContent   = pct + '%';
+
+  // Current quarter
+  let cq = 1;
+  if (current) cq = current.q;
+  else if (doneCount === 40) cq = 4;
+  document.getElementById('p-q').textContent = `Q${cq}`;
+
+  // Recent 3 completed weeks
+  const recentIds = done.slice(-3).reverse();
+  const recentHtml = recentIds.length
+    ? recentIds.map(id => {
+        const w = WEEKS.find(x => x.id === id);
+        return w ? `<div class="recent-week">
+          <div class="recent-week-title" style="color:${QColor(w.q)}">W${w.gw}: ${w.title}</div>
+          <div class="recent-week-blurb">${w.blurb}</div>
+        </div>` : '';
+      }).join('')
+    : '<div style="font-size:13px;color:var(--muted);">No weeks completed yet.</div>';
+  document.getElementById('p-recent').innerHTML = recentHtml;
+
+  // Conversation starters based on current quarter
+  const qm = Q_META[cq];
+  const convosHtml = qm.convos.map(c => `<div class="convo-item">"${c}"</div>`).join('');
+  document.getElementById('p-convos').innerHTML = convosHtml;
+
+  // Next session prep
+  document.getElementById('p-next-prep').innerHTML = current
+    ? `<strong>Next up: Week ${current.gw} — ${current.title}</strong><br><br>${qm.prep}`
+    : '🎓 All 40 missions complete! Celebrate Aiden\'s achievement!';
+}
+
+function openParent() {
+  document.getElementById('parent-panel').classList.add('open');
+  document.getElementById('panel-backdrop').classList.add('show');
+}
+function closeParent() {
+  document.getElementById('parent-panel').classList.remove('open');
+  document.getElementById('panel-backdrop').classList.remove('show');
+}
+
+// ════════════════════════════════════════════════════
+// MAIN UPDATE CYCLE
+// ════════════════════════════════════════════════════
+function updateAll(done) {
+  renderMap(done);
+  buildListView(done);
+  updateFuelGauge(done);
+  updateParentPanel(done);
+}
+
+// ════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  updateAll(getDone());
+});
+</script>
+
+</body>
+</html>

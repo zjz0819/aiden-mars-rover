@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aiden — Quarter 4: Final Expedition</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c18;
+    --deep: #0b1022;
+    --panel: #0e1628;
+    --card: #111d35;
+    --border: #1a3050;
+    --accent: #ff8844;
+    --gold: #ffcc44;
+    --green: #00ff99;
+    --red: #ff4466;
+    --blue: #00cfff;
+    --orange: #ff8844;
+    --purple: #b060ff;
+    --text: #c0d4f0;
+    --muted: #3d5575;
+    --white: #e8f2ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(1px 1px at 5% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 5%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(2px 2px at 75% 8%, rgba(255,136,68,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 25%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 70%, rgba(255,255,255,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 85%, rgba(0,207,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 65%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(2px 2px at 40% 45%, rgba(255,136,68,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,0.3) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+  /* ── HEADER ── */
+  header {
+    padding: 44px 0 32px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .quarter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,136,68,0.08);
+    border: 1px solid rgba(255,136,68,0.25);
+    border-radius: 24px;
+    padding: 6px 16px 6px 10px;
+    margin-bottom: 14px;
+  }
+  .q-icon {
+    width: 28px; height: 28px;
+    background: rgba(255,136,68,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .q-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(26px, 4.5vw, 48px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  h1 em { color: var(--accent); font-style: normal; }
+  .header-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .header-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 2px; }
+  .meta-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .meta-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* ── NAV ── */
+  .week-nav {
+    display: flex;
+    gap: 6px;
+    padding: 20px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .week-nav::-webkit-scrollbar { display: none; }
+  .wn-btn {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .wn-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .wn-btn.active { background: rgba(255,136,68,0.12); border-color: var(--accent); color: var(--accent); box-shadow: 0 0 12px rgba(255,136,68,0.2); }
+  .wn-btn.done { background: rgba(0,255,153,0.06); border-color: rgba(0,255,153,0.3); color: var(--green); }
+
+  /* ── LESSON ── */
+  .lesson { display: none; }
+  .lesson.active { display: block; animation: fadeUp 0.3s ease; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  .lesson-hero {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .lesson-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .stripe-purple::before { background: linear-gradient(90deg, var(--purple), transparent); }
+  .stripe-blue::before   { background: linear-gradient(90deg, var(--blue), transparent); }
+  .stripe-green::before  { background: linear-gradient(90deg, var(--accent), transparent); }
+  .stripe-gold::before   { background: linear-gradient(90deg, var(--gold), transparent); }
+  .stripe-red::before    { background: linear-gradient(90deg, var(--red), transparent); }
+  .stripe-orange::before { background: linear-gradient(90deg, var(--orange), transparent); }
+
+  .hero-top { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px; }
+  .hero-number {
+    font-family: 'Orbitron', monospace;
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.08;
+    position: absolute;
+    top: 16px; right: 24px;
+    color: var(--white);
+  }
+  .hero-emoji { font-size: 40px; }
+  .hero-info { flex: 1; }
+  .hero-week {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .hero-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .hero-concept { font-size: 14px; color: var(--muted); }
+  .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    letter-spacing: 1px;
+  }
+  .tag-p  { background: rgba(0,204,153,0.1);  color: var(--accent); border: 1px solid rgba(0,204,153,0.2); }
+  .tag-b  { background: rgba(0,207,255,0.1);   color: var(--blue);   border: 1px solid rgba(0,207,255,0.2); }
+  .tag-g  { background: rgba(0,255,153,0.1);   color: var(--green);  border: 1px solid rgba(0,255,153,0.2); }
+  .tag-gd { background: rgba(255,204,68,0.1);  color: var(--gold);   border: 1px solid rgba(255,204,68,0.2); }
+  .tag-r  { background: rgba(255,68,102,0.1);  color: var(--red);    border: 1px solid rgba(255,68,102,0.2); }
+  .tag-o  { background: rgba(255,136,68,0.1);  color: var(--orange); border: 1px solid rgba(255,136,68,0.2); }
+
+  .hero-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media(max-width: 600px) { .hero-grid { grid-template-columns: 1fr; } }
+  .hero-stat {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .hs-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .hs-value { font-weight: 700; color: var(--white); font-size: 13px; }
+
+  /* ── LAYOUT ── */
+  .two-col   { display: grid; grid-template-columns: 1fr 1fr;     gap: 16px; margin-bottom: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  @media(max-width: 640px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 20px;
+  }
+  .box-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .box-title.purple { color: var(--purple); }
+  .box-title.blue   { color: var(--blue); }
+  .box-title.gold   { color: var(--gold); }
+  .box-title.green  { color: var(--accent); }
+  .box-title.red    { color: var(--red); }
+  .box-title.orange { color: var(--orange); }
+
+  /* Timeline */
+  .mini-timeline { display: flex; flex-direction: column; gap: 12px; }
+  .mt-row { display: flex; gap: 10px; }
+  .mt-time {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    min-width: 55px;
+    padding-top: 1px;
+    flex-shrink: 0;
+  }
+  .mt-name { font-weight: 700; color: var(--white); font-size: 13px; }
+  .mt-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* Lists */
+  .li-list { display: flex; flex-direction: column; gap: 8px; }
+  .li-item { display: flex; gap: 8px; font-size: 13px; line-height: 1.45; }
+  .li-dot         { color: var(--accent); flex-shrink: 0; margin-top: 2px; font-size: 10px; }
+  .li-dot.gold    { color: var(--gold); }
+  .li-dot.green   { color: var(--accent); }
+  .li-dot.red     { color: var(--red); }
+  .li-dot.blue    { color: var(--blue); }
+  .li-dot.orange  { color: var(--orange); }
+
+  /* Script blocks */
+  .script-block {
+    background: rgba(255,136,68,0.04);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    margin: 8px 0;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text);
+  }
+  .script-block.gold   { border-color: var(--gold);   background: rgba(255,204,68,0.04); }
+  .script-block.green  { border-color: var(--accent);  background: rgba(255,136,68,0.04); }
+  .script-block.red    { border-color: var(--red);    background: rgba(255,68,102,0.04); }
+  .script-block.blue   { border-color: var(--blue);   background: rgba(0,207,255,0.04); }
+  .script-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  /* Checklist */
+  .check-list { display: flex; flex-direction: column; gap: 6px; }
+  .cl-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.02);
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.15s;
+    user-select: none;
+  }
+  .cl-item:hover { background: rgba(255,255,255,0.04); }
+  .cl-item.done  { background: rgba(255,136,68,0.04); }
+  .cl-box {
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    transition: all 0.15s;
+  }
+  .cl-item.done .cl-box { background: var(--accent); border-color: var(--accent); color: #000; }
+
+  /* Mission brief */
+  .mission-brief {
+    background: linear-gradient(135deg, rgba(255,136,68,0.06), rgba(0,207,255,0.06));
+    border: 1px solid rgba(255,136,68,0.2);
+    border-radius: 13px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .mission-brief::before {
+    content: '⚙ MISSION BRIEF';
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  .mission-brief p { font-size: 14px; line-height: 1.6; color: var(--text); }
+  .mission-brief strong { color: var(--white); }
+
+  /* Arduino code block */
+  .ard-demo {
+    background: rgba(255,136,68,0.04);
+    border: 1px solid rgba(255,136,68,0.2);
+    border-radius: 10px;
+    padding: 14px;
+    margin: 10px 0;
+  }
+  .ard-demo-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .ard-code {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    line-height: 1.8;
+    color: var(--white);
+    white-space: pre;
+    display: block;
+    overflow-x: auto;
+  }
+  .ard-keyword { color: var(--orange); }
+  .ard-str { color: var(--gold); }
+  .ard-num { color: var(--blue); }
+  .ard-cmt { color: var(--muted); }
+  .ard-type { color: var(--purple); }
+
+  /* Success bar */
+  .success-bar {
+    display: flex;
+    gap: 10px;
+    padding: 14px 18px;
+    background: rgba(255,136,68,0.05);
+    border: 1px solid rgba(255,136,68,0.2);
+    border-radius: 10px;
+    align-items: center;
+    font-size: 13px;
+    margin: 8px 0;
+  }
+  .success-bar .sb-icon { font-size: 18px; flex-shrink: 0; }
+
+  /* Progress */
+  .q-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+  }
+  .qp-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .qp-bar { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .qp-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; background: var(--accent); }
+  .qp-pct {
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 36px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 36px 0 28px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+  }
+  /* ── TOP NAV BAR ── */
+  .top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,12,24,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+    margin-bottom: 0;
+  }
+  .top-bar-inner {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 14px;
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+  }
+  .back-btn:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .top-bar-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── ROBO PARENT GUIDE ── */
+  .robo-welcome { display:flex; align-items:flex-start; gap:20px; background:rgba(255,136,68,0.05); border:1px solid rgba(255,136,68,0.2); border-radius:16px; padding:20px 24px; margin:24px 0 0; }
+  .robo-svg-sm { flex-shrink:0; width:72px; height:72px; }
+  .robo-parent-bubble { background:rgba(255,136,68,0.06); border:1px solid rgba(255,136,68,0.22); border-radius:12px; padding:14px 18px; font-size:15px; line-height:1.6; color:#c0d4f0; flex:1; position:relative; }
+  .robo-parent-bubble::before { content:''; position:absolute; left:-10px; top:20px; border:5px solid transparent; border-right-color:rgba(255,136,68,0.22); }
+  .robo-bubble-name { font-family:'Space Mono',monospace; font-size:11px; color:#ff8844; letter-spacing:.08em; margin-bottom:6px; }
+  .convos-panel { background:rgba(255,136,68,0.03); border:1px solid rgba(255,136,68,0.15); border-radius:16px; padding:24px 28px; margin:28px 0; }
+  .convos-title { font-family:'Orbitron',sans-serif; font-size:13px; letter-spacing:.1em; color:#ff8844; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .convo-list { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  @media(max-width:640px) { .convo-list { grid-template-columns:1fr; } }
+  .convo-item { background:rgba(255,255,255,0.03); border:1px solid rgba(255,136,68,0.1); border-radius:10px; padding:12px 14px; font-size:14px; color:#c0d4f0; line-height:1.5; }
+  .convo-item::before { content:'"'; color:#ff8844; font-size:20px; font-weight:900; line-height:0.8; display:block; margin-bottom:4px; }
+  @media print {
+    body::before, .top-bar, .week-nav, .back-btn, .robo-welcome, .print-btn { display:none !important; }
+    body { background:#fff !important; color:#000 !important; }
+    .lesson { display:block !important; page-break-before:always; border:none; }
+    .lesson:first-of-type { page-break-before:avoid; }
+    .box, .lesson-hero, .convos-panel { background:#f5f5f5 !important; border:1px solid #ccc !important; color:#000 !important; break-inside:avoid; }
+    .box-title, .hero-title, .hero-week, .convos-title { color:#000 !important; }
+    .script-block, .code-block, pre { background:#f0f0f0 !important; color:#000 !important; border-left:3px solid #999 !important; }
+    a { color:#000 !important; }
+    .tag { background:#eee !important; color:#333 !important; border:1px solid #ccc !important; }
+  }
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <a href="aiden_curriculum.html" class="back-btn">← Mission Control</a>
+    <span class="top-bar-title">Q4 · Arduino · Final Expedition</span>
+    <button class="print-btn" onclick="window.print()" style="background:rgba(255,136,68,0.1);border:1px solid rgba(255,136,68,0.3);color:#ff8844;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.05em;">🖨 PRINT GUIDE</button>
+
+  </div>
+</div>
+
+<div class="wrap">
+
+<header>
+  <div class="quarter-pill">
+    <div class="q-icon">⚙</div>
+    <span class="q-label">Quarter 4 · Weeks 31–40 · Arduino</span>
+  </div>
+  <h1>Final <em>Expedition</em></h1>
+  <p class="header-sub">ARDUINO · PHYSICAL COMPUTING · AGE 8–9</p>
+  <div class="header-meta">
+    <div class="meta-item"><div class="meta-label">Platform</div><div class="meta-value">Arduino</div></div>
+    <div class="meta-item"><div class="meta-label">Weeks</div><div class="meta-value">10</div></div>
+    <div class="meta-item"><div class="meta-label">Session</div><div class="meta-value">60–75 min</div></div>
+    <div class="meta-item"><div class="meta-label">Mission Phase</div><div class="meta-value">Phase 4</div></div>
+    <div class="meta-item"><div class="meta-label">Capstone</div><div class="meta-value">Week 9–10</div></div>
+  </div>
+</header>
+  <!-- ROBO WELCOME -->
+  <div class="robo-welcome">
+    <svg class="robo-svg-sm" viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="15" y="30" width="50" height="38" rx="10" fill="#1a0800" stroke="#ff8844" stroke-width="2"/>
+      <rect x="22" y="38" width="36" height="22" rx="6" fill="#200e00"/>
+      <circle cx="31" cy="49" r="5" fill="#ff8844" opacity="0.9"/>
+      <circle cx="49" cy="49" r="5" fill="#ff8844" opacity="0.9"/>
+      <circle cx="31" cy="49" r="2.5" fill="#0d0400"/>
+      <circle cx="49" cy="49" r="2.5" fill="#0d0400"/>
+      <rect x="33" y="20" width="14" height="12" rx="4" fill="#1a0800" stroke="#ff8844" stroke-width="1.5"/>
+      <circle cx="40" cy="16" r="4" fill="#ff8844" opacity="0.8"/>
+      <circle cx="40" cy="16" r="2" fill="#0d0400"/>
+      <rect x="20" y="68" width="40" height="6" rx="3" fill="#1a0800" stroke="#ff8844" stroke-width="1.5"/>
+      <rect x="10" y="42" width="8" height="16" rx="4" fill="#1a0800" stroke="#ff8844" stroke-width="1.5"/>
+      <rect x="62" y="42" width="8" height="16" rx="4" fill="#1a0800" stroke="#ff8844" stroke-width="1.5"/>
+      <rect x="26" y="74" width="10" height="16" rx="5" fill="#1a0800" stroke="#ff8844" stroke-width="1.5"/>
+      <rect x="44" y="74" width="10" height="16" rx="5" fill="#1a0800" stroke="#ff8844" stroke-width="1.5"/>
+    </svg>
+    <div class="robo-parent-bubble">
+      <div class="robo-bubble-name">ROBO · PARENT BRIEFING</div>
+      Welcome to Q4 — Arduino Peaks, the final frontier! Aiden now programs <strong>real microcontrollers</strong> with C++ code — the same language used in actual embedded systems. This quarter involves physical components: LEDs, buttons, sensors, motors. Expect a little messiness with wires. That's engineering! You'll both be amazed at what Aiden can build. ⚡
+    </div>
+  </div>
+
+  <!-- CONVERSATION STARTERS -->
+  <div class="convos-panel">
+    <div class="convos-title">💬 CONVERSATION STARTERS · USE ANY TIME</div>
+    <div class="convo-list">
+      <div class="convo-item">What does setup() do vs loop()? Why do we need both?</div>
+      <div class="convo-item">What would happen if we changed this delay() number?</div>
+      <div class="convo-item">Can you trace what the program does, step by step?</div>
+      <div class="convo-item">How is this like Python or Scratch — what's the same idea?</div>
+      <div class="convo-item">What does this sensor actually detect in the real world?</div>
+      <div class="convo-item">If this were on a real Mars rover, what would it control?</div>
+      <div class="convo-item">What happens if a wire is connected wrong? How would you debug that?</div>
+      <div class="convo-item">You've now learned 4 coding tools — which one is your favourite?</div>
+    </div>
+  </div>
+
+
+<div class="week-nav">
+  <button class="wn-btn active" onclick="showWeek(1,this)">W1</button>
+  <button class="wn-btn" onclick="showWeek(2,this)">W2</button>
+  <button class="wn-btn" onclick="showWeek(3,this)">W3</button>
+  <button class="wn-btn" onclick="showWeek(4,this)">W4</button>
+  <button class="wn-btn" onclick="showWeek(5,this)">W5</button>
+  <button class="wn-btn" onclick="showWeek(6,this)">W6</button>
+  <button class="wn-btn" onclick="showWeek(7,this)">W7</button>
+  <button class="wn-btn" onclick="showWeek(8,this)">W8</button>
+  <button class="wn-btn" onclick="showWeek(9,this)">W9</button>
+  <button class="wn-btn" onclick="showWeek(10,this)">W10</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 1 ══ -->
+<div class="lesson active" id="w1">
+  <div class="lesson-hero stripe-orange">
+    <div class="hero-number">31</div>
+    <div class="hero-top">
+      <div class="hero-emoji">💡</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 1 · Arduino Basics</div>
+        <div class="hero-title">LED Blink — Hello Hardware</div>
+        <div class="hero-concept">Open Arduino IDE, learn setup() and loop(), write first program to blink an LED on pin 13</div>
+        <div class="hero-tags">
+          <span class="tag tag-o">SETUP</span>
+          <span class="tag tag-o">LOOP</span>
+          <span class="tag tag-o">DIGITALWRITE</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Hardware Pins</div><div class="hs-value">Pin 13 (LED)</div></div>
+      <div class="hero-stat"><div class="hs-label">New Functions</div><div class="hs-value">setup(), loop(), digitalWrite()</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">LED blinks on board</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover has arrived on Mars and needs to signal its location home. Program the onboard LED to blink in Morse code. Today, Aiden writes actual hardware code that controls a real light—not on a screen, but a physical LED that turns on and off."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title orange">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:08</div><div class="mt-content"><div class="mt-name">Arduino IDE Tour</div><div class="mt-desc">Open Arduino IDE. Show the editor pane (top) and serial monitor (bottom). Explain: "This is where we tell the microcontroller what to do."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:08–0:18</div><div class="mt-content"><div class="mt-name">Structure Lesson</div><div class="mt-desc">Explain <code>setup()</code> runs once at startup. <code>loop()</code> runs forever. <code>pinMode()</code> tells pin 13 to act as output. Aiden types each line.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:18–0:42</div><div class="mt-content"><div class="mt-name">Write & Upload Code</div><div class="mt-desc">Type blink sketch. Connect Arduino board via USB. Upload (Ctrl+U). Watch the onboard LED blink once per second. Success!</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:42–0:55</div><div class="mt-content"><div class="mt-name">Experiment & Modify</div><div class="mt-desc">Change delay values: 500ms, 2000ms. Faster blink? Slower? Let Aiden guess the effect before changing numbers.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:55–1:05</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"What makes the LED blink? Why do we need setup and loop? How is this different from Scratch?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>setup()</strong> — runs once when Arduino powers on; initialize pins here</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>loop()</strong> — runs forever after setup; main program logic lives here</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>pinMode()</strong> — tells a pin to be INPUT or OUTPUT</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>digitalWrite()</strong> — sets a digital pin HIGH (5V) or LOW (0V)</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>delay()</strong> — pauses program for milliseconds (1000ms = 1 second)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ard-demo">
+    <div class="ard-demo-title">Code Example: Blink Sketch</div>
+    <code class="ard-code"><span class="ard-keyword">void</span> <span class="ard-keyword">setup</span>() {
+  <span class="ard-keyword">pinMode</span>(<span class="ard-num">13</span>, <span class="ard-keyword">OUTPUT</span>);
+}
+
+<span class="ard-keyword">void</span> <span class="ard-keyword">loop</span>() {
+  <span class="ard-keyword">digitalWrite</span>(<span class="ard-num">13</span>, <span class="ard-keyword">HIGH</span>);
+  <span class="ard-keyword">delay</span>(<span class="ard-num">1000</span>);
+  <span class="ard-keyword">digitalWrite</span>(<span class="ard-num">13</span>, <span class="ard-keyword">LOW</span>);
+  <span class="ard-keyword">delay</span>(<span class="ard-num">1000</span>);
+}</code>
+  </div>
+
+  <div class="box">
+    <div class="box-title green">💚 Parent Script (Support)</div>
+    <div class="script-block green">
+      <div class="script-label">When Aiden is stuck on syntax errors:</div>
+      "Arduino is very picky about spelling and punctuation. Let's read the error message together. It tells us exactly where the problem is. Find the red squiggly line—what's different from our example?"
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title red">❌ Parent Script (Redirect)</div>
+    <div class="script-block red">
+      <div class="script-label">If Aiden wants to skip to complex circuits:</div>
+      "Great enthusiasm! But we need to master blinking first. Once the LED responds to your code, we'll add more pins and more lights. Trust the process—every expert started with blink."
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title purple">✅ Success Criteria</div>
+    <div class="check-list">
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Arduino IDE opens and connects to board</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Sketch uploads without errors</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Onboard LED (pin 13) blinks visibly</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Aiden can explain setup vs. loop in own words</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Successfully changes delay() to modify blink speed</div></div>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title blue">🏠 Between-Session Homework</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Sketch a circuit diagram: Arduino → Pin 13 → LED → GND. Label each part.</div></div>
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Write a blinking pattern (SOS in Morse code: three short, three long, three short).</div></div>
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Bonus: Search "Arduino LED projects" and describe two ideas you find interesting.</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress">
+    <div class="qp-label">Q4 Progress</div>
+    <div class="qp-bar"><div class="qp-fill" style="width: 10%;"></div></div>
+    <div class="qp-pct">10%</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 2 ══ -->
+<div class="lesson" id="w2">
+  <div class="lesson-hero stripe-blue">
+    <div class="hero-number">32</div>
+    <div class="hero-top">
+      <div class="hero-emoji">📊</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 2 · Debugging & Variables</div>
+        <div class="hero-title">Variables & Serial Monitor</div>
+        <div class="hero-concept">Declare int variables for pin numbers, use Serial.println() to watch rover telemetry, control 3 LEDs with cleaner code</div>
+        <div class="hero-tags">
+          <span class="tag tag-b">VARIABLES</span>
+          <span class="tag tag-b">SERIAL</span>
+          <span class="tag tag-b">DEBUGGING</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">New Concepts</div><div class="hs-value">int, Serial.begin(), println()</div></div>
+      <div class="hero-stat"><div class="hs-label">Hardware</div><div class="hs-value">3 LEDs on pins 9, 10, 11</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Serial output visible in monitor</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover needs to report its status continuously to Earth. We add variables to store pin numbers (cleaner code!) and open the Serial Monitor to watch status messages stream in real-time—just like NASA mission control tracking a spacecraft."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title orange">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:08</div><div class="mt-content"><div class="mt-name">Variables Introduction</div><div class="mt-desc">Explain: "Instead of writing 9 over and over, we save it in a variable named ledRed. We declare it once at the top—cleaner!"</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:08–0:20</div><div class="mt-content"><div class="mt-name">Serial Communication Setup</div><div class="mt-desc">Add <code>Serial.begin(9600)</code> to setup(). Open Tools → Serial Monitor. Set baud to 9600. Explain: "Baud = speed of conversation between Arduino and computer."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:45</div><div class="mt-content"><div class="mt-name">Build 3-LED Telemetry</div><div class="mt-desc">Wired setup: pin 9 (red), pin 10 (green), pin 11 (blue). Write code with variables. Add Serial.println() for each state change. Upload.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:45–0:58</div><div class="mt-content"><div class="mt-name">Monitor & Debug</div><div class="mt-desc">Watch Serial Monitor output. Change delay values. Tweak messages. "Each println is like the rover texting us!"</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:58–1:05</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"Why use variables? How does Serial help us debug? What would happen without delay between messages?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>int</strong> — variable type for whole numbers (integers)</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>Serial.begin(9600)</strong> — start serial communication at 9600 baud</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>Serial.println()</strong> — send a message to Serial Monitor (print + new line)</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>Serial Monitor</strong> — window showing messages from Arduino in real-time</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>Baud rate</strong> — data transmission speed; standard is 9600</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ard-demo">
+    <div class="ard-demo-title">Code Example: 3-LED Status Reporter</div>
+    <code class="ard-code"><span class="ard-type">int</span> ledRed = <span class="ard-num">9</span>;
+<span class="ard-type">int</span> ledGreen = <span class="ard-num">10</span>;
+
+<span class="ard-keyword">void</span> <span class="ard-keyword">setup</span>() {
+  <span class="ard-keyword">Serial.begin</span>(<span class="ard-num">9600</span>);
+  <span class="ard-keyword">pinMode</span>(ledRed, <span class="ard-keyword">OUTPUT</span>);
+  <span class="ard-keyword">pinMode</span>(ledGreen, <span class="ard-keyword">OUTPUT</span>);
+}
+
+<span class="ard-keyword">void</span> <span class="ard-keyword">loop</span>() {
+  <span class="ard-keyword">digitalWrite</span>(ledRed, <span class="ard-keyword">HIGH</span>);
+  <span class="ard-keyword">Serial.println</span>(<span class="ard-str">"Red ON"</span>);
+  <span class="ard-keyword">delay</span>(<span class="ard-num">500</span>);
+}</code>
+  </div>
+
+  <div class="box">
+    <div class="box-title green">💚 Parent Script (Support)</div>
+    <div class="script-block green">
+      <div class="script-label">When Aiden is confused about variable syntax:</div>
+      "Think of a variable like a labeled box. <code>int ledRed = 9;</code> creates a box labeled 'ledRed' and puts the number 9 inside. Now whenever we use ledRed, Arduino knows we mean 9."
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title red">❌ Parent Script (Redirect)</div>
+    <div class="script-block red">
+      <div class="script-label">If Serial Monitor shows no messages:</div>
+      "Check the baud rate at the bottom of the Monitor. It must match 9600 in your code. If still blank, unplug and replug the USB cable."
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title purple">✅ Success Criteria</div>
+    <div class="check-list">
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Variables declared at top of sketch</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Serial Monitor displays messages at correct baud rate</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>All 3 LEDs light up and turn off per code logic</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Aiden edits variable values and sees changes in hardware behavior</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Understands Serial.println() as "rover sending messages"</div></div>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title blue">🏠 Between-Session Homework</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Create a simple telemetry sequence: Red ON → Green ON → Both OFF → repeat. Add descriptive Serial messages.</div></div>
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Sketch the wiring: Show where pin 9, 10, 11 connect to each LED.</div></div>
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Bonus: Name each LED after a Mars Rover system (Power, Navigation, Science).</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress">
+    <div class="qp-label">Q4 Progress</div>
+    <div class="qp-bar"><div class="qp-fill" style="width: 20%;"></div></div>
+    <div class="qp-pct">20%</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 3 ══ -->
+<div class="lesson" id="w3">
+  <div class="lesson-hero stripe-gold">
+    <div class="hero-number">33</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🎚</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 3 · Analog Sensors</div>
+        <div class="hero-title">Potentiometer & Brightness Control</div>
+        <div class="hero-concept">Read analog input (0–1023) from potentiometer, map it to PWM output (0–255), control LED brightness with a knob</div>
+        <div class="hero-tags">
+          <span class="tag tag-gd">ANALOG</span>
+          <span class="tag tag-gd">MAP</span>
+          <span class="tag tag-gd">PWM</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Input Type</div><div class="hs-value">Analog (0–1023)</div></div>
+      <div class="hero-stat"><div class="hs-label">Output Type</div><div class="hs-value">PWM (0–255)</div></div>
+      <div class="hero-stat"><div class="hs-label">Hardware</div><div class="hs-value">Potentiometer, LED on pin 11</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover's headlamp brightness depends on how dark the Martian night is. A potentiometer sensor reads ambient light (analog input), and we convert it to control how bright the LED shines. The knob controls the light—just like Mars Rover adjusting its lights!"</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title orange">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:10</div><div class="mt-content"><div class="mt-name">Analog vs. Digital</div><div class="mt-desc">Explain: Digital = ON/OFF (1 or 0). Analog = smooth range (0 to 1023). Potentiometer gives analog values as you turn the knob.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:10–0:20</div><div class="mt-content"><div class="mt-name">PWM Explanation</div><div class="mt-desc">"LED can't be half-bright with digital. PWM (Pulse-Width Modulation) rapidly flicks the LED on/off so fast it looks smooth."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:45</div><div class="mt-content"><div class="mt-name">Wiring & Code</div><div class="mt-desc">Connect pot to A0. LED to pin 11 (PWM pin). Write code: analogRead() → map() → analogWrite(). Upload and test.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:45–0:58</div><div class="mt-content"><div class="mt-name">Experiment</div><div class="mt-desc">Turn pot dial slowly. Watch LED brightness follow the movement. Print analog values to Serial Monitor. See 0–1023 range.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:58–1:05</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"How is analog input different from digital? Why do we use map()? Why pin 11 specifically?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>analogRead(A0)</strong> — reads sensor on pin A0, returns 0–1023</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>map(value, inMin, inMax, outMin, outMax)</strong> — converts one range to another (1023→255)</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>analogWrite(pin, 0–255)</strong> — PWM output; only works on PWM pins (marked ~)</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>Potentiometer</strong> — variable resistor; outputs analog voltage as knob turns</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>PWM pins</strong> — ~3, ~5, ~6, ~9, ~10, ~11 on Uno; enable fading</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ard-demo">
+    <div class="ard-demo-title">Code Example: Pot Controls LED Brightness</div>
+    <code class="ard-code"><span class="ard-type">int</span> pot = <span class="ard-keyword">A0</span>;
+<span class="ard-type">int</span> led = <span class="ard-num">11</span>;
+
+<span class="ard-keyword">void</span> <span class="ard-keyword">setup</span>() {
+  <span class="ard-keyword">pinMode</span>(led, <span class="ard-keyword">OUTPUT</span>);
+}
+
+<span class="ard-keyword">void</span> <span class="ard-keyword">loop</span>() {
+  <span class="ard-type">int</span> val = <span class="ard-keyword">analogRead</span>(pot);
+  <span class="ard-type">int</span> bright = <span class="ard-keyword">map</span>(val, <span class="ard-num">0</span>, <span class="ard-num">1023</span>, <span class="ard-num">0</span>, <span class="ard-num">255</span>);
+  <span class="ard-keyword">analogWrite</span>(led, bright);
+}</code>
+  </div>
+
+  <div class="box">
+    <div class="box-title green">💚 Parent Script (Support)</div>
+    <div class="script-block green">
+      <div class="script-label">When explaining PWM:</div>
+      "Imagine blinking your eyes super fast. If you blink fast enough, it looks like you're always looking. PWM does the same: flicks the light so fast our eyes can't see the flicker, making it look smooth."
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title red">❌ Parent Script (Redirect)</div>
+    <div class="script-block red">
+      <div class="script-label">If LED doesn't fade (stays on/off):</div>
+      "Double-check: Is the LED plugged into a PWM pin (pin with ~)? If you used pin 13, it won't fade. Try pin 11 instead."
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title purple">✅ Success Criteria</div>
+    <div class="check-list">
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Potentiometer wired to A0, LED to pin 11</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>analogRead() reads values 0–1023 from pot</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>map() function converts to 0–255 range</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Turning pot dial smoothly changes LED brightness</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Aiden explains difference between analog and digital</div></div>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title blue">🏠 Between-Session Homework</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Experiment: Try different map ranges. What if you map to 100–200 instead of 0–255? What changes?</div></div>
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Sketch the wiring: Potentiometer (3 pins) → A0, 5V, GND. LED → Pin 11.</div></div>
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Bonus: Add another LED on a different PWM pin, controlled by same pot.</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress">
+    <div class="qp-label">Q4 Progress</div>
+    <div class="qp-bar"><div class="qp-fill" style="width: 30%;"></div></div>
+    <div class="qp-pct">30%</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 4 ══ -->
+<div class="lesson" id="w4">
+  <div class="lesson-hero stripe-purple">
+    <div class="hero-number">34</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🤖</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 4 · Motor Control</div>
+        <div class="hero-title">Servo Motor & Robotic Arm</div>
+        <div class="hero-concept">Include Servo library, attach() servo to pin, use servo.write(angle) to sweep a robotic arm through 180 degrees</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">SERVO</span>
+          <span class="tag tag-p">LIBRARY</span>
+          <span class="tag tag-p">INCLUDE</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">New Library</div><div class="hs-value">Servo.h</div></div>
+      <div class="hero-stat"><div class="hs-label">Angle Range</div><div class="hs-value">0° to 180°</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Arm sweeps smoothly</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover's robotic arm can point in any direction to collect samples. We program a servo motor to sweep through all possible angles—0°, 90°, and 180°. This is the first time Aiden uses a library, unlocking even more capabilities."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title orange">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:08</div><div class="mt-content"><div class="mt-name">What's a Library?</div><div class="mt-desc">Explain: "Libraries are pre-written code packs. Servo.h lets us control motors easily without writing complex code."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:08–0:18</div><div class="mt-content"><div class="mt-name">Include & Create Servo</div><div class="mt-desc">Add <code>#include &lt;Servo.h&gt;</code>. Create <code>Servo arm;</code> object. Explain: "arm is now a servo we can control."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:18–0:42</div><div class="mt-content"><div class="mt-name">Wire & Calibrate</div><div class="mt-desc">Connect servo: brown (GND), red (5V), yellow (pin 9). Upload code. Watch arm sweep 0° → 90° → 180° → repeat.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:42–0:55</div><div class="mt-content"><div class="mt-name">Program Sequences</div><div class="mt-desc">Modify code to sweep slower (increase delay). Try patterns: scan left-right, quick tap, slow pan. Aiden choreographs the arm.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:55–1:05</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"What is a library? How does servo.attach() prepare the motor? Why 0–180 degrees?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>#include</strong> — imports a library into sketch</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>Servo object</strong> — <code>Servo arm;</code> creates a named servo control variable</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>attach(pin)</strong> — tells servo which pin controls it (usually 9 or 10)</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>write(angle)</strong> — moves servo to angle in degrees (0–180°)</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>Servo wiring</strong> — brown=GND, red=5V, yellow=signal pin</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ard-demo">
+    <div class="ard-demo-title">Code Example: Servo Sweep</div>
+    <code class="ard-code"><span class="ard-keyword">#include</span> <span class="ard-str">&lt;Servo.h&gt;</span>
+<span class="ard-keyword">Servo</span> arm;
+
+<span class="ard-keyword">void</span> <span class="ard-keyword">setup</span>() {
+  arm.<span class="ard-keyword">attach</span>(<span class="ard-num">9</span>);
+}
+
+<span class="ard-keyword">void</span> <span class="ard-keyword">loop</span>() {
+  arm.<span class="ard-keyword">write</span>(<span class="ard-num">0</span>);
+  <span class="ard-keyword">delay</span>(<span class="ard-num">1000</span>);
+  arm.<span class="ard-keyword">write</span>(<span class="ard-num">90</span>);
+  <span class="ard-keyword">delay</span>(<span class="ard-num">1000</span>);
+  arm.<span class="ard-keyword">write</span>(<span class="ard-num">180</span>);
+  <span class="ard-keyword">delay</span>(<span class="ard-num">1000</span>);
+}</code>
+  </div>
+
+  <div class="box">
+    <div class="box-title green">💚 Parent Script (Support)</div>
+    <div class="script-block green">
+      <div class="script-label">When servo twitches or doesn't move:</div>
+      "Servo motors are picky about power. Make sure the red wire is connected to Arduino's 5V directly. If it's jerky, the power might be dropping. Never skip this connection."
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title red">❌ Parent Script (Redirect)</div>
+    <div class="script-block red">
+      <div class="script-label">If Aiden wants to control servo from pot:</div>
+      "Great idea for next week! First, we need to master basic servo movement. Once the arm sweeps smoothly, we'll combine it with the potentiometer. Patience—we're building skills."
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title purple">✅ Success Criteria</div>
+    <div class="check-list">
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Servo.h library included at top of sketch</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Servo object created and attached to pin 9</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Servo arm sweeps smoothly through 0°, 90°, 180°</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Wiring correct: brown=GND, red=5V, yellow=pin 9</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Aiden can modify delay to speed up/slow down movement</div></div>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title blue">🏠 Between-Session Homework</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Draw the servo wiring diagram: label all three wires and Arduino pins.</div></div>
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Create a movement pattern: zigzag left-right, rotate full circle, slow sweep.</div></div>
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Bonus: Research what #include does. Explain to a parent in own words.</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress">
+    <div class="qp-label">Q4 Progress</div>
+    <div class="qp-bar"><div class="qp-fill" style="width: 40%;"></div></div>
+    <div class="qp-pct">40%</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 5 ══ -->
+<div class="lesson" id="w5">
+  <div class="lesson-hero stripe-red">
+    <div class="hero-number">35</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🔘</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 5 · Digital Input</div>
+        <div class="hero-title">Button Control & Debouncing</div>
+        <div class="hero-concept">Wire digital push button to pin 2, read input with digitalRead(), use INPUT_PULLUP, toggle LED when button pressed, introduce debouncing concept</div>
+        <div class="hero-tags">
+          <span class="tag tag-r">DIGITALREAD</span>
+          <span class="tag tag-r">PULLUP</span>
+          <span class="tag tag-r">IF</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Input Type</div><div class="hs-value">Digital (HIGH/LOW)</div></div>
+      <div class="hero-stat"><div class="hs-label">New Concept</div><div class="hs-value">INPUT_PULLUP, if statements</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Button toggles LED</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover has an emergency button to activate its sample collection arm. When scientists press the button on Earth, the rover responds instantly. Today, we combine everything: read a digital input (button), use an if statement to decide what to do, and light an LED. This is real interactive programming!"</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title orange">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:10</div><div class="mt-content"><div class="mt-name">Button & If Statements</div><div class="mt-desc">Explain: "if (button pressed) then turn on LED. This is decision-making—Arduino responds to input!"</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:10–0:20</div><div class="mt-content"><div class="mt-name">INPUT_PULLUP Concept</div><div class="mt-desc">"Normal state: HIGH. Pressed state: LOW. Pullup means the button pulls the wire to ground when pressed."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:45</div><div class="mt-content"><div class="mt-name">Wire Button & Code</div><div class="mt-desc">Connect button to pin 2 and GND. LED to pin 13. Write: digitalRead() → if statement → digitalWrite(). Upload and test.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:45–0:55</div><div class="mt-content"><div class="mt-name">Observe & Discuss</div><div class="mt-desc">Press button repeatedly. Notice LED lights when pressed. Mention "bouncing" if button feels jittery. Introduce debouncing concept briefly.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:55–1:05</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"Why is button LOW when pressed? What's an if statement? What happens if we ignore bouncing?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>digitalRead(pin)</strong> — reads button: returns HIGH (unpressed) or LOW (pressed)</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>INPUT_PULLUP</strong> — pinMode mode; button reads HIGH when unpressed, LOW when pressed</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>if (condition)</strong> — decision structure; code inside runs only if condition is true</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>Debouncing</strong> — button "bounces" electrically when pressed; fix with delay() or code filters</div></div>
+        <div class="li-item"><div class="li-dot orange">▸</div><div><strong>Button wiring</strong> — one pin to Arduino input, other pin to GND (ground)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ard-demo">
+    <div class="ard-demo-title">Code Example: Button Controls LED</div>
+    <code class="ard-code"><span class="ard-type">int</span> btn = <span class="ard-num">2</span>;
+<span class="ard-type">int</span> led = <span class="ard-num">13</span>;
+
+<span class="ard-keyword">void</span> <span class="ard-keyword">setup</span>() {
+  <span class="ard-keyword">pinMode</span>(btn, <span class="ard-keyword">INPUT_PULLUP</span>);
+  <span class="ard-keyword">pinMode</span>(led, <span class="ard-keyword">OUTPUT</span>);
+}
+
+<span class="ard-keyword">void</span> <span class="ard-keyword">loop</span>() {
+  <span class="ard-keyword">if</span>(<span class="ard-keyword">digitalRead</span>(btn) == <span class="ard-keyword">LOW</span>) {
+    <span class="ard-keyword">digitalWrite</span>(led, <span class="ard-keyword">HIGH</span>);
+  } <span class="ard-keyword">else</span> {
+    <span class="ard-keyword">digitalWrite</span>(led, <span class="ard-keyword">LOW</span>);
+  }
+}</code>
+  </div>
+
+  <div class="box">
+    <div class="box-title green">💚 Parent Script (Support)</div>
+    <div class="script-block green">
+      <div class="script-label">When explaining if statements:</div>
+      "If statements are like a decision tree: 'If the button is pressed, do this. Otherwise, do that.' We use them to make the Arduino respond to the world."
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title red">❌ Parent Script (Redirect)</div>
+    <div class="script-block red">
+      <div class="script-label">If button seems unresponsive or LED flickers:</div>
+      "Button might be bouncing (fluttering electrically). This is normal! For now, it's okay. In Week 9, we'll add delay() to fix this. For today, just understand the logic."
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title purple">✅ Success Criteria</div>
+    <div class="check-list">
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Button wired to pin 2 and GND correctly</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>pinMode set to INPUT_PULLUP for button pin</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>LED lights when button pressed, turns off when released</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>digitalRead() correctly reads HIGH and LOW states</div></div>
+      <div class="cl-item" onclick="toggleCheck(this)"><div class="cl-box">✓</div><div>Aiden explains why we use INPUT_PULLUP and if statements</div></div>
+    </div>
+  </div>
+
+  <div class="box">
+    <div class="box-title blue">🏠 Between-Session Homework</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Modify code to toggle LED (button press = on, again = off, again = on). Hint: use a variable to track state.</div></div>
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Draw button wiring: show pin 2, GND, and internal Arduino pullup resistance.</div></div>
+      <div class="li-item"><div class="li-dot blue">▸</div><div>Bonus: Add Serial.println() to print "Button Pressed" or "Button Released" to monitor.</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress">
+    <div class="qp-label">Q4 Progress</div>
+    <div class="qp-bar"><div class="qp-fill" style="width: 50%;"></div></div>
+    <div class="qp-pct">50%</div>
+  </div>
+</div>
+
+<footer>
+Part 1 of Quarter 4 Lessons • Weeks 31–35 (Arduino Fundamentals) • aiden_curriculum.html
+</footer>
+
+</div><!-- wrap -->
+
+
+<div class="lesson" id="w6">
+  <div class="lesson-hero stripe-orange">
+    <div class="hero-number">06</div>
+    <div class="hero-top">
+      <div class="hero-emoji">📏</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 6 · Distance Sensing</div>
+        <div class="hero-title">HC-SR04 Ultrasonic Sensor</div>
+        <div class="hero-concept">Wire distance sensor, measure cm, detect obstacles using trigger/echo pins and pulseIn()</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">ULTRASONIC</span>
+          <span class="tag tag-p">PULSEIN</span>
+          <span class="tag tag-p">OBSTACLE DETECT</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">New Skill</div><div class="hs-value">pulseIn() timing</div></div>
+      <div class="hero-stat"><div class="hs-label">Hardware</div><div class="hs-value">HC-SR04 sensor</div></div>
+      <div class="hero-stat"><div class="hs-label">Success</div><div class="hs-value">Reads distance & alerts</div></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title orange">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:08</div><div class="mt-content"><div class="mt-name">Sensor Intro</div><div class="mt-desc">Hold the HC-SR04 sensor. "This sonic sensor works like a rover's eyes — it sends sound waves and measures how long they take to return to detect obstacles."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:08–0:22</div><div class="mt-content"><div class="mt-name">Wire Breadboard</div><div class="mt-desc">Connect VCC → 5V, GND → GND, TRIG → pin 9, ECHO → pin 10. Double-check each wire. Take a photo.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:22–0:45</div><div class="mt-content"><div class="mt-name">Code: Measure Distance</div><div class="mt-desc">Upload distance code. Open Serial Monitor at 9600 baud. Move hand toward/away from sensor. Watch cm values change in real time.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:45–1:00</div><div class="mt-content"><div class="mt-name">Add Obstacle Alert</div><div class="mt-desc">Add if(cm < 15) block. Hold hand 10cm away. See "OBSTACLE!" print. Explain: the rover is using this to avoid walls.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:00–1:05</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"How does the sensor measure distance? Why does it use sound, not light?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Trigger pin</strong> — tells sensor to send sound wave</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Echo pin</strong> — measures how long the sound takes to return</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>pulseIn()</strong> — measures pulse width in microseconds</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Speed of sound</strong> — 343 m/s; divide duration by 58 for cm</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>if/else logic</strong> — check distance, decide action (alert vs normal)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ard-demo">
+    <div class="ard-demo-title">distance_sensor.ino</div>
+    <code class="ard-code"><span class="ard-type">int</span> <span class="ard-keyword">trig</span> = <span class="ard-num">9</span>;
+<span class="ard-type">int</span> <span class="ard-keyword">echo</span> = <span class="ard-num">10</span>;
+
+<span class="ard-keyword">void</span> <span class="ard-keyword">setup</span>() {
+  Serial.<span class="ard-keyword">begin</span>(<span class="ard-num">9600</span>);
+  <span class="ard-keyword">pinMode</span>(<span class="ard-keyword">trig</span>, OUTPUT);
+  <span class="ard-keyword">pinMode</span>(<span class="ard-keyword">echo</span>, INPUT);
+}
+
+<span class="ard-keyword">void</span> <span class="ard-keyword">loop</span>() {
+  <span class="ard-keyword">digitalWrite</span>(<span class="ard-keyword">trig</span>, HIGH);
+  <span class="ard-keyword">delayMicroseconds</span>(<span class="ard-num">10</span>);
+  <span class="ard-keyword">digitalWrite</span>(<span class="ard-keyword">trig</span>, LOW);
+
+  <span class="ard-type">long</span> <span class="ard-keyword">dur</span> = <span class="ard-keyword">pulseIn</span>(<span class="ard-keyword">echo</span>, HIGH);
+  <span class="ard-type">int</span> <span class="ard-keyword">cm</span> = <span class="ard-keyword">dur</span> / <span class="ard-num">58</span>;
+
+  Serial.<span class="ard-keyword">println</span>(<span class="ard-keyword">cm</span>);
+
+  <span class="ard-keyword">if</span>(<span class="ard-keyword">cm</span> < <span class="ard-num">15</span>) {
+    Serial.<span class="ard-keyword">println</span>(<span class="ard-str">"OBSTACLE!"</span>);
+  }
+
+  <span class="ard-keyword">delay</span>(<span class="ard-num">500</span>);
+}</code>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">During wiring</div>
+      <div class="script-block">"Count the pins with me. TRIG sends the signal; ECHO listens for the echo. The Arduino measures the time it takes — that's distance."</div>
+      <div class="script-label">When values appear</div>
+      <div class="script-block green">"The sensor is measuring in centimeters. Move closer. What happens? The numbers get smaller — the rover knows you're near!"</div>
+      <div class="script-label">When "OBSTACLE!" shows</div>
+      <div class="script-block red">"The rover sees an obstacle coming. That if statement is making a decision: 'Is it too close? Then warn!'"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Wires HC-SR04 correctly (all 4 pins)</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Opens Serial Monitor; sees cm readings</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Moves hand; cm values respond</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Explains what pulseIn() does</div></div>
+      </div>
+      <div class="success-bar">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Change obstacle threshold to 20cm. Try with different objects.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🏠 Between Sessions</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Measure distance to 3 household objects; record in a table</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Watch: "How Sonar Works" (YouTube, 3 min)</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Ask: "What could the rover do when it detects an obstacle?"</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 7 ══ -->
+<div class="lesson" id="w7">
+  <div class="lesson-hero stripe-orange">
+    <div class="hero-number">07</div>
+    <div class="hero-top">
+      <div class="hero-emoji">⚙️</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 7 · Modular Code</div>
+        <div class="hero-title">Arduino Functions & Reusability</div>
+        <div class="hero-concept">Write void functions with parameters, apply DRY principle, build rover subsystems: blinkLED(), checkDistance(), reportStatus()</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">FUNCTIONS</span>
+          <span class="tag tag-p">PARAMETERS</span>
+          <span class="tag tag-p">DRY PRINCIPLE</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Pattern</div><div class="hs-value">Avoid repetition</div></div>
+      <div class="hero-stat"><div class="hs-label">Skill Focus</div><div class="hs-value">Function parameters</div></div>
+      <div class="hero-stat"><div class="hs-label">Outcome</div><div class="hs-value">Cleaner rover code</div></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title orange">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:10</div><div class="mt-content"><div class="mt-name">Code Review Problem</div><div class="mt-desc">Show code with 5 identical digitalWrite/delay blocks. "This is repetitive. We wrote the same thing 5 times. What if we need to change it?"</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:10–0:28</div><div class="mt-content"><div class="mt-name">Write First Function</div><div class="mt-desc">Write blinkLED() function together. Explain parameters (pin, times). Call it 3 times with different values. Show savings.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:28–0:50</div><div class="mt-content"><div class="mt-name">Build Rover Subsystems</div><div class="mt-desc">Write checkDistance() function (returns int). Write reportStatus() function (prints sensor data). Aiden writes parameter names.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:05</div><div class="mt-content"><div class="mt-name">Combine in Loop</div><div class="mt-desc">Call all functions in loop(). See rover doing multiple tasks with clean, readable code. Count how many lines saved.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"Why do functions make code better? What was the difference before and after?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Function</strong> — reusable block of code that does one job</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>void</strong> — function doesn't return a value (just does something)</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Parameter</strong> — information passed to a function (pin, times, etc.)</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>DRY</strong> — Don't Repeat Yourself; use functions instead</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Modular design</strong> — break rover into separate subsystems (sensor, motor, lights)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ard-demo">
+    <div class="ard-demo-title">rover_functions.ino</div>
+    <code class="ard-code"><span class="ard-keyword">void</span> <span class="ard-keyword">blinkLED</span>(<span class="ard-type">int</span> <span class="ard-keyword">pin</span>, <span class="ard-type">int</span> <span class="ard-keyword">times</span>) {
+  <span class="ard-keyword">for</span>(<span class="ard-type">int</span> <span class="ard-keyword">i</span>=<span class="ard-num">0</span>; <span class="ard-keyword">i</span>&lt;<span class="ard-keyword">times</span>; <span class="ard-keyword">i</span>++) {
+    <span class="ard-keyword">digitalWrite</span>(<span class="ard-keyword">pin</span>, HIGH);
+    <span class="ard-keyword">delay</span>(<span class="ard-num">200</span>);
+    <span class="ard-keyword">digitalWrite</span>(<span class="ard-keyword">pin</span>, LOW);
+    <span class="ard-keyword">delay</span>(<span class="ard-num">200</span>);
+  }
+}
+
+<span class="ard-keyword">void</span> <span class="ard-keyword">setup</span>() {
+  <span class="ard-keyword">pinMode</span>(<span class="ard-num">13</span>, OUTPUT);
+}
+
+<span class="ard-keyword">void</span> <span class="ard-keyword">loop</span>() {
+  <span class="ard-keyword">blinkLED</span>(<span class="ard-num">13</span>, <span class="ard-num">3</span>);
+  <span class="ard-keyword">delay</span>(<span class="ard-num">1000</span>);
+}</code>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Before writing function</div>
+      <div class="script-block">"Look at this code. We're blinking the LED the same way 5 times. Functions let us write it once, then reuse it."</div>
+      <div class="script-label">When function works</div>
+      <div class="script-block green">"The rover now has a 'blinking system.' We can call blinkLED() from anywhere. Much cleaner!"</div>
+      <div class="script-label">During subsystem building</div>
+      <div class="script-block">"The rover is getting modular — like separate departments. Sensors, motors, lights all have their own functions."</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Writes blinkLED() function with 2 parameters</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Calls function 3+ times with different values</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Code compiles; LED blinks as expected</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Explains why DRY principle matters</div></div>
+      </div>
+      <div class="success-bar">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Create checkDistance() function that returns an int. Use it in loop().</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🏠 Between Sessions</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Draw a diagram: rover subsystems (sensor, motor, light) as separate boxes</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Count: how many lines of code did functions save?</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Create a second helper function (e.g., turnMotor)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 8 ══ -->
+<div class="lesson" id="w8">
+  <div class="lesson-hero stripe-orange">
+    <div class="hero-number">08</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🤖</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 8 · System Integration</div>
+        <div class="hero-title">All Systems Connected</div>
+        <div class="hero-concept">Wire button + distance sensor + servo + LED. Button triggers servo; distance controls LED color; serial shows all readings. Autonomous rover behavior achieved.</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">INTEGRATION</span>
+          <span class="tag tag-p">MULTI-SENSOR</span>
+          <span class="tag tag-p">AUTONOMOUS</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Complexity</div><div class="hs-value">Full rover system</div></div>
+      <div class="hero-stat"><div class="hs-label">Inputs</div><div class="hs-value">Button + sensor</div></div>
+      <div class="hero-stat"><div class="hs-label">Outputs</div><div class="hs-value">Servo + LED</div></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title orange">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:12</div><div class="mt-content"><div class="mt-name">System Diagram</div><div class="mt-desc">Draw breadboard schematic together. Show: button → Arduino, HC-SR04 → Arduino, servo ← Arduino, LED ← Arduino. Label all pins.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:12–0:35</div><div class="mt-content"><div class="mt-name">Wire Everything</div><div class="mt-desc">Connect all components. Check each wire twice. Test each subsystem individually first (button, sensor, servo, LED).</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:35–0:55</div><div class="mt-content"><div class="mt-name">Upload Integration Code</div><div class="mt-desc">Press button → servo moves. Move hand near sensor → LED changes. Serial shows all readings in real-time.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:55–1:05</div><div class="mt-content"><div class="mt-name">Autonomous Demo</div><div class="mt-desc">Show that rover responds to environment without computer. It thinks; it acts. This is a real autonomous robot.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"Your rover now has eyes, hands, and a brain. It makes decisions. You built an autonomous machine."</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Inputs</strong> — sensors (button, distance) that tell rover the world</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Outputs</strong> — actuators (servo, LED) that let rover act</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Integration</strong> — combining all subsystems into one working machine</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Autonomous behavior</strong> — robot acts without human commands</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Serial monitoring</strong> — debugging multiple sensors at once</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ard-demo">
+    <div class="ard-demo-title">rover_integrated.ino (excerpt)</div>
+    <code class="ard-code"><span class="ard-cmt">// Multi-sensor rover</span>
+<span class="ard-type">int</span> <span class="ard-keyword">buttonPin</span> = <span class="ard-num">2</span>;
+<span class="ard-type">int</span> <span class="ard-keyword">trigPin</span> = <span class="ard-num">9</span>;
+<span class="ard-type">int</span> <span class="ard-keyword">echoPin</span> = <span class="ard-num">10</span>;
+<span class="ard-type">int</span> <span class="ard-keyword">ledPin</span> = <span class="ard-num">5</span>;
+
+<span class="ard-keyword">void</span> <span class="ard-keyword">loop</span>() {
+  <span class="ard-type">int</span> <span class="ard-keyword">dist</span> = <span class="ard-keyword">getDistance</span>();
+  <span class="ard-type">int</span> <span class="ard-keyword">btn</span> = <span class="ard-keyword">digitalRead</span>(<span class="ard-keyword">buttonPin</span>);
+
+  <span class="ard-keyword">if</span>(<span class="ard-keyword">btn</span> == HIGH) {
+    <span class="ard-keyword">servo</span>.<span class="ard-keyword">write</span>(<span class="ard-num">90</span>);
+  }
+
+  <span class="ard-keyword">if</span>(<span class="ard-keyword">dist</span> < <span class="ard-num">20</span>) {
+    <span class="ard-keyword">analogWrite</span>(<span class="ard-keyword">ledPin</span>, <span class="ard-num">255</span>);
+  } <span class="ard-keyword">else</span> {
+    <span class="ard-keyword">analogWrite</span>(<span class="ard-keyword">ledPin</span>, <span class="ard-num">100</span>);
+  }
+
+  Serial.<span class="ard-keyword">print</span>(<span class="ard-str">"Distance: "</span>);
+  Serial.<span class="ard-keyword">println</span>(<span class="ard-keyword">dist</span>);
+}</code>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">During wiring</div>
+      <div class="script-block">"This is the rover's nervous system. Every wire carries a signal — eyes, ears, and hands of the robot."</div>
+      <div class="script-label">When button triggers servo</div>
+      <div class="script-block green">"The rover responds to your command! Press the button; the servo moves. It's listening."</div>
+      <div class="script-label">Watching autonomous behavior</div>
+      <div class="script-block red">"You're no longer controlling it. The rover is making its own decisions based on what it senses. This is real AI at work."</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>All 4 components wired correctly</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Button press triggers servo movement</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Distance sensor controls LED brightness</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Serial shows all readings simultaneously</div></div>
+      </div>
+      <div class="success-bar">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Add sound feedback: beep when obstacle detected.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🏠 Between Sessions</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Photograph the integrated breadboard; label each component</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Write list: "How does my rover act on its own?"</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Plan: add one more feature (e.g., piezo buzzer, second LED)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 9 ══ -->
+<div class="lesson" id="w9">
+  <div class="lesson-hero stripe-orange">
+    <div class="hero-number">09</div>
+    <div class="hero-top">
+      <div class="hero-emoji">📋</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 9 · Capstone Design (Part 1)</div>
+        <div class="hero-title">Autonomous Obstacle-Avoidance Rover</div>
+        <div class="hero-concept">Design on paper. Wire full rover on breadboard. Write integrated code. Test each subsystem. "No screen opening until the paper plan is done."</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">CAPSTONE</span>
+          <span class="tag tag-p">DESIGN-FIRST</span>
+          <span class="tag tag-p">HANDS-ON</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Scope</div><div class="hs-value">Full rover system</div></div>
+      <div class="hero-stat"><div class="hs-label">Method</div><div class="hs-value">Paper → breadboard → code</div></div>
+      <div class="hero-stat"><div class="hs-label">Challenge</div><div class="hs-value">Autonomous navigation</div></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title orange">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:20</div><div class="mt-content"><div class="mt-name">Design Phase</div><div class="mt-desc">Draw rover blueprint on paper: which sensors? which actuators? where do wires go? Label every pin. "No screen yet. Finish the plan first."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:45</div><div class="mt-content"><div class="mt-name">Wiring</div><div class="mt-desc">Follow paper blueprint. Wire motors, distance sensor, LED for status. Double-check every pin. Take photo of plan + breadboard.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:45–1:00</div><div class="mt-content"><div class="mt-name">Code Skeleton</div><div class="mt-desc">Write setup() with all pinModes. Create function stubs: moveForward(), stopMotor(), checkPath(). Don't fill logic yet.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:00–1:10</div><div class="mt-content"><div class="mt-name">Test Each System</div><div class="mt-desc">Test motor individually. Test sensor. Test LED. Verify each part works before combining logic.</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Capstone Goals</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Design-first</strong> — think before coding</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Real project scope</strong> — motors, sensors, lights together</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Modular thinking</strong> — separate functions for each behavior</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Testing protocol</strong> — verify each part before the whole</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Problem-solving</strong> — debug breadboard and code</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title blue">💬 Parent Script</div>
+    <div class="script-label">At start (before any wiring)</div>
+    <div class="script-block">"This is the final project. You design it first on paper. Every pin, every wire, every idea on the blueprint before we touch the breadboard. Engineers always plan before they build."</div>
+    <div class="script-label">During wiring</div>
+    <div class="script-block green">"Check the paper plan. Does this wire match the diagram? Good. You're building exactly what you designed."</div>
+    <div class="script-label">Before touching code</div>
+    <div class="script-block">"First we test: motor works? Sensor works? Light works? Then we write the logic that puts it all together."</div>
+  </div>
+
+  <div class="box">
+    <div class="box-title green">✅ Success Criteria</div>
+    <div class="check-list">
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Complete paper blueprint with labeled pins</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Full rover wired on breadboard (motors + sensors + lights)</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>setup() compiles; all pinModes declared</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Each subsystem (motor, sensor, LED) tested individually</div></div>
+    </div>
+    <div class="success-bar">
+      <div class="sb-icon">🌟</div>
+      <div><strong>Next week:</strong> Complete the obstacle-avoidance logic in loop(). Test the full autonomous rover.</div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🏠 Between Sessions</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Review your blueprint; make any notes</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Research: how do real rovers avoid obstacles?</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Plan the obstacle-avoidance logic (pseudocode)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 10 ══ -->
+<div class="lesson" id="w10">
+  <div class="lesson-hero stripe-orange">
+    <div class="hero-number">10</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🎓</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 10 · Demo Day & Graduation</div>
+        <div class="hero-title">Final Expedition & Year 1 Celebration</div>
+        <div class="hero-concept">Run capstone rover. Family presentation. Complete obstacle-avoidance demo. Celebrate Q4 + Year 1 achievements. Preview Year 2 (Python + Raspberry Pi).</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">DEMO DAY</span>
+          <span class="tag tag-p">GRADUATION</span>
+          <span class="tag tag-p">CELEBRATION</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Audience</div><div class="hs-value">Family + friends</div></div>
+      <div class="hero-stat"><div class="hs-label">Challenge</div><div class="hs-value">Autonomous demo</div></div>
+      <div class="hero-stat"><div class="hs-label">Milestone</div><div class="hs-value">Year 1 complete 🎓</div></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title orange">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:15</div><div class="mt-content"><div class="mt-name">Complete Logic</div><div class="mt-desc">Finish obstacle-avoidance loop(). If distance < 20cm: backup + turn. Else: move forward. Upload and test.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:15–0:40</div><div class="mt-content"><div class="mt-name">Demo Prep</div><div class="mt-desc">Set up obstacle course (books, toys). Brief Aiden: "Show the rover moving. Show it stop when it sees an obstacle. Explain what the sensors do."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:40–1:00</div><div class="mt-content"><div class="mt-name">Family Demo</div><div class="mt-desc">Aiden presents rover. Places it in obstacle course. Narrates: "This sensor sees obstacles. This motor moves it. The Arduino makes decisions." Rover avoids obstacles autonomously.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:00–1:05</div><div class="mt-content"><div class="mt-name">Reflection & Celebration</div><div class="mt-desc">"Show the year's journey: Scratch blocks → Python code → Arduino + hardware. You built a robot. 🎓"</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Year 2 Preview</div><div class="mt-desc">Peek ahead: "Next year, you'll learn advanced Python and use Raspberry Pi. This rover will get smarter. More sensors. Real AI. You ready?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🎓 Year 1 Achievements</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Q1:</strong> Scratch visual blocks, event-based thinking</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Q2:</strong> Logic, loops, conditionals, debugging</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Q3:</strong> Python text-based code, functions, data types</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Q4:</strong> Arduino, sensors, motors, autonomous robotics</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Full journey:</strong> From blocks to real hardware. Age 7→8. Rover complete.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title blue">💬 Parent Script</div>
+    <div class="script-label">At demo start</div>
+    <div class="script-block">"Welcome everyone. One year ago, Aiden learned Scratch blocks. Today, Aiden built a robot that thinks and acts. Here's what Year 1 taught us."</div>
+    <div class="script-label">During autonomous demo</div>
+    <div class="script-block green">"Notice: no remote control, no buttons to press. The rover is making decisions based on what it senses. This is autonomous robotics."</div>
+    <div class="script-label">After successful run</div>
+    <div class="script-block red">"You learned four different platforms. You wrote blocks, Python, and Arduino code. You wired electronics. You debugged hardware and software. You are officially a maker. Congratulations. 🎓"</div>
+    <div class="script-label">Year 2 preview</div>
+    <div class="script-block">"Next year: Raspberry Pi. More sensors. Machine learning basics. Your rover evolves. Ready?"</div>
+  </div>
+
+  <div class="box">
+    <div class="box-title green">✅ Success Criteria</div>
+    <div class="check-list">
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Capstone rover completes obstacle-avoidance loop()</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Obstacle course demo: rover avoids obstacles autonomously</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Aiden explains how rover works (sensors → decisions → actions)</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Reflects on Year 1 journey: blocks → code → hardware</div></div>
+    </div>
+    <div class="success-bar">
+      <div class="sb-icon">🎓</div>
+      <div><strong>Certificate:</strong> Year 1 Complete. Age 8. From Scratch to Arduino. Capstone Rover Builder. Ready for Year 2.</div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🚀 Year 2 Preview (Age 9)</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div><strong>Q1–Q2:</strong> Advanced Python — classes, libraries, OOP</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div><strong>Q3–Q4:</strong> Raspberry Pi — Linux basics, GPIO, camera module, real-time data</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div><strong>Capstone:</strong> Vision-based obstacle avoidance (camera + ML model)</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div><strong>Goal:</strong> Rover recognizes objects, makes smart decisions, learns from environment</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Aiden Q4 Lessons Part 2 (Weeks 6–10) · Arduino & Physical Computing · Age 8 · Year 1 Capstone
+</footer>
+
+<script>
+function showWeek(weekNum, btn) {
+  const lessons = document.querySelectorAll('.lesson');
+  const buttons = document.querySelectorAll('.wn-btn');
+
+  lessons.forEach(l => l.classList.remove('active'));
+  buttons.forEach(b => b.classList.remove('active'));
+
+  const lesson = document.getElementById('w' + weekNum);
+  if (lesson) {
+    lesson.classList.add('active');
+    btn.classList.add('active');
+  }
+}
+
+function toggleCheck(item) {
+  item.classList.toggle('done');
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aiden — Quarter 3: Autonomous Operations</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c18;
+    --deep: #0b1022;
+    --panel: #0e1628;
+    --card: #111d35;
+    --border: #1a3050;
+    --accent: #00cc99;
+    --gold: #ffcc44;
+    --green: #00ff99;
+    --red: #ff4466;
+    --blue: #00cfff;
+    --orange: #ff8844;
+    --purple: #b060ff;
+    --text: #c0d4f0;
+    --muted: #3d5575;
+    --white: #e8f2ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(1px 1px at 5% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 5%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(2px 2px at 75% 8%, rgba(0,204,153,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 25%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 70%, rgba(255,255,255,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 85%, rgba(0,207,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 65%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(2px 2px at 40% 45%, rgba(255,204,68,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,0.3) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+  /* ── HEADER ── */
+  header {
+    padding: 44px 0 32px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .quarter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,204,153,0.08);
+    border: 1px solid rgba(0,204,153,0.25);
+    border-radius: 24px;
+    padding: 6px 16px 6px 10px;
+    margin-bottom: 14px;
+  }
+  .q-icon {
+    width: 28px; height: 28px;
+    background: rgba(0,204,153,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .q-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(26px, 4.5vw, 48px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  h1 em { color: var(--accent); font-style: normal; }
+  .header-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .header-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; gap: 2px; }
+  .meta-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .meta-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* ── NAV ── */
+  .week-nav {
+    display: flex;
+    gap: 6px;
+    padding: 20px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .week-nav::-webkit-scrollbar { display: none; }
+  .wn-btn {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .wn-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .wn-btn.active { background: rgba(0,204,153,0.12); border-color: var(--accent); color: var(--accent); box-shadow: 0 0 12px rgba(0,204,153,0.2); }
+  .wn-btn.done { background: rgba(0,255,153,0.06); border-color: rgba(0,255,153,0.3); color: var(--green); }
+
+  /* ── LESSON ── */
+  .lesson { display: none; }
+  .lesson.active { display: block; animation: fadeUp 0.3s ease; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  .lesson-hero {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .lesson-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .stripe-purple::before { background: linear-gradient(90deg, var(--purple), transparent); }
+  .stripe-blue::before   { background: linear-gradient(90deg, var(--blue), transparent); }
+  .stripe-green::before  { background: linear-gradient(90deg, var(--accent), transparent); }
+  .stripe-gold::before   { background: linear-gradient(90deg, var(--gold), transparent); }
+  .stripe-red::before    { background: linear-gradient(90deg, var(--red), transparent); }
+  .stripe-orange::before { background: linear-gradient(90deg, var(--orange), transparent); }
+
+  .hero-top { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 20px; }
+  .hero-number {
+    font-family: 'Orbitron', monospace;
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.08;
+    position: absolute;
+    top: 16px; right: 24px;
+    color: var(--white);
+  }
+  .hero-emoji { font-size: 40px; }
+  .hero-info { flex: 1; }
+  .hero-week {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .hero-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .hero-concept { font-size: 14px; color: var(--muted); }
+  .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    letter-spacing: 1px;
+  }
+  .tag-p  { background: rgba(0,204,153,0.1);  color: var(--accent); border: 1px solid rgba(0,204,153,0.2); }
+  .tag-b  { background: rgba(0,207,255,0.1);   color: var(--blue);   border: 1px solid rgba(0,207,255,0.2); }
+  .tag-g  { background: rgba(0,255,153,0.1);   color: var(--green);  border: 1px solid rgba(0,255,153,0.2); }
+  .tag-gd { background: rgba(255,204,68,0.1);  color: var(--gold);   border: 1px solid rgba(255,204,68,0.2); }
+  .tag-r  { background: rgba(255,68,102,0.1);  color: var(--red);    border: 1px solid rgba(255,68,102,0.2); }
+  .tag-o  { background: rgba(255,136,68,0.1);  color: var(--orange); border: 1px solid rgba(255,136,68,0.2); }
+
+  .hero-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media(max-width: 600px) { .hero-grid { grid-template-columns: 1fr; } }
+  .hero-stat {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .hs-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .hs-value { font-weight: 700; color: var(--white); font-size: 13px; }
+
+  /* ── LAYOUT ── */
+  .two-col   { display: grid; grid-template-columns: 1fr 1fr;     gap: 16px; margin-bottom: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  @media(max-width: 640px) { .two-col, .three-col { grid-template-columns: 1fr; } }
+
+  .box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 20px;
+  }
+  .box-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .box-title.purple { color: var(--purple); }
+  .box-title.blue   { color: var(--blue); }
+  .box-title.gold   { color: var(--gold); }
+  .box-title.green  { color: var(--accent); }
+  .box-title.red    { color: var(--red); }
+  .box-title.orange { color: var(--orange); }
+
+  /* Timeline */
+  .mini-timeline { display: flex; flex-direction: column; gap: 12px; }
+  .mt-row { display: flex; gap: 10px; }
+  .mt-time {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    min-width: 55px;
+    padding-top: 1px;
+    flex-shrink: 0;
+  }
+  .mt-name { font-weight: 700; color: var(--white); font-size: 13px; }
+  .mt-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* Lists */
+  .li-list { display: flex; flex-direction: column; gap: 8px; }
+  .li-item { display: flex; gap: 8px; font-size: 13px; line-height: 1.45; }
+  .li-dot         { color: var(--accent); flex-shrink: 0; margin-top: 2px; font-size: 10px; }
+  .li-dot.gold    { color: var(--gold); }
+  .li-dot.green   { color: var(--accent); }
+  .li-dot.red     { color: var(--red); }
+  .li-dot.blue    { color: var(--blue); }
+  .li-dot.orange  { color: var(--orange); }
+
+  /* Script blocks */
+  .script-block {
+    background: rgba(0,204,153,0.04);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    margin: 8px 0;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text);
+  }
+  .script-block.gold   { border-color: var(--gold);   background: rgba(255,204,68,0.04); }
+  .script-block.green  { border-color: var(--accent);  background: rgba(0,204,153,0.04); }
+  .script-block.red    { border-color: var(--red);    background: rgba(255,68,102,0.04); }
+  .script-block.blue   { border-color: var(--blue);   background: rgba(0,207,255,0.04); }
+  .script-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  /* Checklist */
+  .check-list { display: flex; flex-direction: column; gap: 6px; }
+  .cl-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.02);
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.15s;
+    user-select: none;
+  }
+  .cl-item:hover { background: rgba(255,255,255,0.04); }
+  .cl-item.done  { background: rgba(0,204,153,0.04); }
+  .cl-box {
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    transition: all 0.15s;
+  }
+  .cl-item.done .cl-box { background: var(--accent); border-color: var(--accent); color: #000; }
+
+  /* Mission brief */
+  .mission-brief {
+    background: linear-gradient(135deg, rgba(0,204,153,0.06), rgba(0,207,255,0.06));
+    border: 1px solid rgba(0,204,153,0.2);
+    border-radius: 13px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .mission-brief::before {
+    content: '🐍 MISSION BRIEF';
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  .mission-brief p { font-size: 14px; line-height: 1.6; color: var(--text); }
+  .mission-brief strong { color: var(--white); }
+
+  /* Python code block */
+  .py-demo {
+    background: rgba(0,204,153,0.04);
+    border: 1px solid rgba(0,204,153,0.2);
+    border-radius: 10px;
+    padding: 14px;
+    margin: 10px 0;
+  }
+  .py-demo-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .py-code {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    line-height: 2;
+    color: var(--white);
+    white-space: pre;
+    display: block;
+    overflow-x: auto;
+  }
+  .py-kw { color: var(--accent); }
+  .py-str { color: var(--gold); }
+  .py-num { color: var(--orange); }
+  .py-cmt { color: var(--muted); }
+  .py-func { color: var(--blue); }
+
+  .py-callout {
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    background: rgba(0,204,153,0.05);
+    border: 1px solid rgba(0,204,153,0.2);
+    border-radius: 10px;
+    margin: 10px 0;
+    align-items: flex-start;
+    font-size: 13px;
+  }
+  .py-callout .py-icon { font-size: 22px; flex-shrink: 0; }
+
+  /* Success bar */
+  .success-bar {
+    display: flex;
+    gap: 10px;
+    padding: 14px 18px;
+    background: rgba(0,204,153,0.05);
+    border: 1px solid rgba(0,204,153,0.2);
+    border-radius: 10px;
+    align-items: center;
+    font-size: 13px;
+    margin: 8px 0;
+  }
+  .success-bar .sb-icon { font-size: 18px; flex-shrink: 0; }
+
+  /* Progress */
+  .q-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+  }
+  .qp-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .qp-bar { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .qp-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+  .qp-pct {
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 36px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 36px 0 28px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+  }
+  /* ── TOP NAV BAR ── */
+  .top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,12,24,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+    margin-bottom: 0;
+  }
+  .top-bar-inner {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 14px;
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+  }
+  .back-btn:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .top-bar-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── ROBO PARENT GUIDE ── */
+  .robo-welcome { display:flex; align-items:flex-start; gap:20px; background:rgba(0,255,153,0.05); border:1px solid rgba(0,255,153,0.2); border-radius:16px; padding:20px 24px; margin:24px 0 0; }
+  .robo-svg-sm { flex-shrink:0; width:72px; height:72px; }
+  .robo-parent-bubble { background:rgba(0,255,153,0.06); border:1px solid rgba(0,255,153,0.22); border-radius:12px; padding:14px 18px; font-size:15px; line-height:1.6; color:#c0d4f0; flex:1; position:relative; }
+  .robo-parent-bubble::before { content:''; position:absolute; left:-10px; top:20px; border:5px solid transparent; border-right-color:rgba(0,255,153,0.22); }
+  .robo-bubble-name { font-family:'Space Mono',monospace; font-size:11px; color:#00ff99; letter-spacing:.08em; margin-bottom:6px; }
+  .convos-panel { background:rgba(0,255,153,0.03); border:1px solid rgba(0,255,153,0.15); border-radius:16px; padding:24px 28px; margin:28px 0; }
+  .convos-title { font-family:'Orbitron',sans-serif; font-size:13px; letter-spacing:.1em; color:#00ff99; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .convo-list { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  @media(max-width:640px) { .convo-list { grid-template-columns:1fr; } }
+  .convo-item { background:rgba(255,255,255,0.03); border:1px solid rgba(0,255,153,0.1); border-radius:10px; padding:12px 14px; font-size:14px; color:#c0d4f0; line-height:1.5; }
+  .convo-item::before { content:'"'; color:#00ff99; font-size:20px; font-weight:900; line-height:0.8; display:block; margin-bottom:4px; }
+  @media print {
+    body::before, .top-bar, .week-nav, .back-btn, .robo-welcome, .print-btn { display:none !important; }
+    body { background:#fff !important; color:#000 !important; }
+    .lesson { display:block !important; page-break-before:always; border:none; }
+    .lesson:first-of-type { page-break-before:avoid; }
+    .box, .lesson-hero, .convos-panel { background:#f5f5f5 !important; border:1px solid #ccc !important; color:#000 !important; break-inside:avoid; }
+    .box-title, .hero-title, .hero-week, .convos-title { color:#000 !important; }
+    .script-block, .code-block, pre { background:#f0f0f0 !important; color:#000 !important; border-left:3px solid #999 !important; }
+    a { color:#000 !important; }
+    .tag { background:#eee !important; color:#333 !important; border:1px solid #ccc !important; }
+  }
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <a href="aiden_curriculum.html" class="back-btn">← Mission Control</a>
+    <span class="top-bar-title">Q3 · Python · Autonomous Operations</span>
+    <button class="print-btn" onclick="window.print()" style="background:rgba(0,255,153,0.1);border:1px solid rgba(0,255,153,0.3);color:#00ff99;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.05em;">🖨 PRINT GUIDE</button>
+
+  </div>
+</div>
+
+<div class="wrap">
+
+<header>
+  <div class="quarter-pill">
+    <div class="q-icon">🐍</div>
+    <span class="q-label">Quarter 3 · Weeks 21–30 · Python + Thonny</span>
+  </div>
+  <h1>Autonomous <em>Operations</em></h1>
+  <p class="header-sub">TEXT-BASED CODING · MARS ROVER NARRATIVE · AGE 7–8</p>
+  <div class="header-meta">
+    <div class="meta-item"><div class="meta-label">Platform</div><div class="meta-value">Python</div></div>
+    <div class="meta-item"><div class="meta-label">Weeks</div><div class="meta-value">10</div></div>
+    <div class="meta-item"><div class="meta-label">Session</div><div class="meta-value">60–75 min</div></div>
+    <div class="meta-item"><div class="meta-label">Mission Phase</div><div class="meta-value">Phase 3</div></div>
+    <div class="meta-item"><div class="meta-label">Capstone</div><div class="meta-value">Week 9–10</div></div>
+  </div>
+</header>
+  <!-- ROBO WELCOME -->
+  <div class="robo-welcome">
+    <svg class="robo-svg-sm" viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="15" y="30" width="50" height="38" rx="10" fill="#001a0d" stroke="#00ff99" stroke-width="2"/>
+      <rect x="22" y="38" width="36" height="22" rx="6" fill="#002015"/>
+      <circle cx="31" cy="49" r="5" fill="#00ff99" opacity="0.9"/>
+      <circle cx="49" cy="49" r="5" fill="#00ff99" opacity="0.9"/>
+      <circle cx="31" cy="49" r="2.5" fill="#000d06"/>
+      <circle cx="49" cy="49" r="2.5" fill="#000d06"/>
+      <rect x="33" y="20" width="14" height="12" rx="4" fill="#001a0d" stroke="#00ff99" stroke-width="1.5"/>
+      <circle cx="40" cy="16" r="4" fill="#00ff99" opacity="0.8"/>
+      <circle cx="40" cy="16" r="2" fill="#000d06"/>
+      <rect x="20" y="68" width="40" height="6" rx="3" fill="#001a0d" stroke="#00ff99" stroke-width="1.5"/>
+      <rect x="10" y="42" width="8" height="16" rx="4" fill="#001a0d" stroke="#00ff99" stroke-width="1.5"/>
+      <rect x="62" y="42" width="8" height="16" rx="4" fill="#001a0d" stroke="#00ff99" stroke-width="1.5"/>
+      <rect x="26" y="74" width="10" height="16" rx="5" fill="#001a0d" stroke="#00ff99" stroke-width="1.5"/>
+      <rect x="44" y="74" width="10" height="16" rx="5" fill="#001a0d" stroke="#00ff99" stroke-width="1.5"/>
+    </svg>
+    <div class="robo-parent-bubble">
+      <div class="robo-bubble-name">ROBO · PARENT BRIEFING</div>
+      Welcome to Q3 — Python Plains! This quarter Aiden learns <strong>real Python</strong> — the same language NASA uses to process Mars data. Sessions are screen-based again, but with real code (not drag-and-drop). Aiden types every line. Your role: encourage mistakes — they're how programmers learn. When something breaks, celebrate the debugging! 🐍
+    </div>
+  </div>
+
+  <!-- CONVERSATION STARTERS -->
+  <div class="convos-panel">
+    <div class="convos-title">💬 CONVERSATION STARTERS · USE ANY TIME</div>
+    <div class="convo-list">
+      <div class="convo-item">What does this Python line actually tell the computer to do?</div>
+      <div class="convo-item">What would happen if you changed this number or word?</div>
+      <div class="convo-item">Can you read this code out loud like a sentence?</div>
+      <div class="convo-item">What's the error message saying? What does it mean?</div>
+      <div class="convo-item">How is a Python list like a real list you'd write on paper?</div>
+      <div class="convo-item">Could a NASA engineer use this exact code? Why or why not?</div>
+      <div class="convo-item">What's the difference between a function and a loop?</div>
+      <div class="convo-item">If you had to explain this to a friend, what would you say?</div>
+    </div>
+  </div>
+
+
+<div class="week-nav">
+  <button class="wn-btn" onclick="showWeek(1,this)">W1</button>
+  <button class="wn-btn" onclick="showWeek(2,this)">W2</button>
+  <button class="wn-btn" onclick="showWeek(3,this)">W3</button>
+  <button class="wn-btn" onclick="showWeek(4,this)">W4</button>
+  <button class="wn-btn" onclick="showWeek(5,this)">W5</button>
+  <button class="wn-btn" onclick="showWeek(6,this)">W6</button>
+  <button class="wn-btn" onclick="showWeek(7,this)">W7</button>
+  <button class="wn-btn" onclick="showWeek(8,this)">W8</button>
+  <button class="wn-btn" onclick="showWeek(9,this)">W9</button>
+  <button class="wn-btn" onclick="showWeek(10,this)">W10</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 1 ══ -->
+<div class="lesson" id="w1">
+  <div class="lesson-hero stripe-green">
+    <div class="hero-number">01</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🖥️</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 1 · Text-Based Programming</div>
+        <div class="hero-title">Thonny Setup & First Print</div>
+        <div class="hero-concept">Open Thonny, write the first Python program, send the rover's first transmission to Mission Control</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">PRINT</span>
+          <span class="tag tag-p">STRINGS</span>
+          <span class="tag tag-p">THONNY</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">print() sends messages</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Rover first transmission</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Runs first .py file</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover has landed on Mars and needs to send its first transmission to Earth Mission Control. Today you write <strong>real Python code</strong> for the very first time — not blocks, but actual text commands that professional software engineers use every day."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title green">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:10</div><div class="mt-content"><div class="mt-name">Thonny Orientation</div><div class="mt-desc">Open Thonny → tour the interface: editor (top), shell (bottom). "The editor is where you write; the shell is where the rover sends messages."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:10–0:20</div><div class="mt-content"><div class="mt-name">First Program</div><div class="mt-desc">New file → type <code>print("Rover AIDEN-1: Online")</code> → save as rover_boot.py → run with F5. See output in shell.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:50</div><div class="mt-content"><div class="mt-name">Build Rover Telemetry</div><div class="mt-desc">Add more print statements: status, fuel level, temperature, mission date. Make it look like a real NASA status readout. Aiden writes each line.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:05</div><div class="mt-content"><div class="mt-name">Explore Errors</div><div class="mt-desc">Deliberately delete a quote. Run it. See the SyntaxError. "The rover found a bug — what does the error message tell us?" Fix together using 5-step protocol.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"Python runs top to bottom, just like Scratch blocks. What's different about writing code as text?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>print()</strong> — displays text to the shell (rover's comm system)</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>String</strong> — text surrounded by quotes: <code>"Hello Mars!"</code></div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>.py file</strong> — a Python program file saved on the computer</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Running</strong> — F5 in Thonny; Python reads every line from top to bottom</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>SyntaxError</strong> — rover couldn't understand an instruction; one symbol is wrong</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="py-demo">
+    <div class="py-demo-title">rover_boot.py</div>
+    <code class="py-code"><span class="py-cmt"># Rover Boot Sequence</span>
+<span class="py-func">print</span>(<span class="py-str">"ROVER AIDEN-1: ONLINE"</span>)
+<span class="py-func">print</span>(<span class="py-str">"Systems: Nominal"</span>)
+<span class="py-func">print</span>(<span class="py-str">"Fuel Level: 100%"</span>)
+<span class="py-func">print</span>(<span class="py-str">"Temperature: -63°C"</span>)
+<span class="py-func">print</span>(<span class="py-str">"Mission Status: ACTIVE"</span>)</code>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Before running</div>
+      <div class="script-block">"Read every line out loud before pressing F5. What do you predict you'll see?"</div>
+      <div class="script-label">After first run</div>
+      <div class="script-block green">"You just ran your first real Python program. This is the same language NASA uses for data analysis."</div>
+      <div class="script-label">When error appears</div>
+      <div class="script-block blue">"Read the error message carefully. It tells us exactly which line has the problem. What does it say?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Opens Thonny independently</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Types and runs rover_boot.py</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Adds 3+ print statements</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Explains Python runs top-to-bottom</div></div>
+      </div>
+      <div class="success-bar">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Make the readout look like a table using spacing in strings: <code>print("FUEL:     100%")</code></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🏠 Between Sessions</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Watch 5-min Python intro video (cs50 YouTube)</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Ask at dinner: "What's a string?"</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Keep Thonny open and try one more print statement on your own</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w1">
+    <span class="qp-label">Week 1 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 2 ══ -->
+<div class="lesson" id="w2">
+  <div class="lesson-hero stripe-green">
+    <div class="hero-number">02</div>
+    <div class="hero-top">
+      <div class="hero-emoji">📊</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 2 · Text-Based Programming</div>
+        <div class="hero-title">Variables & Telemetry</div>
+        <div class="hero-concept">Store changing values in variables — rover data dashboard that updates</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">VARIABLES</span>
+          <span class="tag tag-p">DATA TYPES</span>
+          <span class="tag tag-p">TELEMETRY</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Variables store changing values</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Rover data dashboard</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Updates variable and prints new value</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover tracks vital statistics that constantly change — fuel level, battery percentage, temperature readings. Each one needs a named storage container that can be updated. That's a <strong>variable: a box with a label that holds a value.</strong>"</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title green">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:05</div><div class="mt-content"><div class="mt-name">Debrief W1</div><div class="mt-desc">Run rover_boot.py again. "What would change if each of those values needed to update as the mission continues?"</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:05–0:20</div><div class="mt-content"><div class="mt-name">Introduce Variables</div><div class="mt-desc">Create rover_telemetry.py. Set rover_name, fuel, battery, temp. Print each. Change fuel. Print again. "The box changed — but the label stayed the same."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:50</div><div class="mt-content"><div class="mt-name">Build Full Dashboard</div><div class="mt-desc">Use variables for everything. Use print with multiple items. Update variables and reprint to simulate mission time passing.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:05</div><div class="mt-content"><div class="mt-name">Explore Data Types</div><div class="mt-desc">Ask: "What's different about rover_name vs fuel vs battery?" Introduce str, int, float. Test with type() function.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"If a variable is a box — what are the three types of boxes you learned today?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Variable</strong> — named container: <code>fuel = 100</code></div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Assignment</strong> — = sign stores a value in the box</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>int</strong> — whole numbers (fuel level, sample count)</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>float</strong> — decimal numbers (temperature, battery %)</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>str</strong> — text in quotes (rover name, status messages)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="py-demo">
+    <div class="py-demo-title">rover_telemetry.py</div>
+    <code class="py-code"><span class="py-cmt"># Rover Telemetry System</span>
+rover_name = <span class="py-str">"AIDEN-1"</span>
+fuel = <span class="py-num">100</span>
+battery = <span class="py-num">98.5</span>
+temp = <span class="py-num">-63</span>
+
+<span class="py-func">print</span>(rover_name, <span class="py-str">"Status Report"</span>)
+<span class="py-func">print</span>(<span class="py-str">"Fuel:"</span>, fuel, <span class="py-str">"%"</span>)
+<span class="py-func">print</span>(<span class="py-str">"Battery:"</span>, battery, <span class="py-str">"%"</span>)
+<span class="py-func">print</span>(<span class="py-str">"Temperature:"</span>, temp, <span class="py-str">"°C"</span>)
+
+<span class="py-cmt"># Mission time passes...</span>
+fuel = fuel - <span class="py-num">20</span>
+battery = battery - <span class="py-num">5.2</span>
+<span class="py-func">print</span>(<span class="py-str">"--- UPDATED ---"</span>)
+<span class="py-func">print</span>(<span class="py-str">"Fuel:"</span>, fuel, <span class="py-str">"%"</span>)
+<span class="py-func">print</span>(<span class="py-str">"Battery:"</span>, battery, <span class="py-str">"%"</span>)</code>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Before changing fuel</div>
+      <div class="script-block">"What do you predict fuel will be after <code>fuel = fuel - 20</code>? Show me the math."</div>
+      <div class="script-label">On data types</div>
+      <div class="script-block green">"Why can't rover_name be 100? Why can't fuel be 'a lot'? What would go wrong?"</div>
+      <div class="script-label">Extension</div>
+      <div class="script-block blue">"What would happen if you wrote <code>fuel = fuel + fuel</code>?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Creates 4+ variables of different types</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Updates a variable and prints both before/after</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Explains "variable = named storage for a value"</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Uses at least two different data types correctly</div></div>
+      </div>
+      <div class="success-bar">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Create a second rover (rover_name2, fuel2, etc.) and compare them in a print statement</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🏠 Between Sessions</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Ask Aiden: "What's a variable in real life?" (e.g., your age changes each year)</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Practice: write 3 variables about yourself (name, age, favorite_color)</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w2">
+    <span class="qp-label">Week 2 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 3 ══ -->
+<div class="lesson" id="w3">
+  <div class="lesson-hero stripe-blue">
+    <div class="hero-number">03</div>
+    <div class="hero-top">
+      <div class="hero-emoji">📡</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 3 · Text-Based Programming</div>
+        <div class="hero-title">User Input & String Operations</div>
+        <div class="hero-concept">Program receives data from the user — Mission Control sends commands</div>
+        <div class="hero-tags">
+          <span class="tag tag-b">INPUT</span>
+          <span class="tag tag-b">STRINGS</span>
+          <span class="tag tag-b">COMMS</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Programs receive user data</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Mission Control command terminal</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Gets input and responds with it</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Earth Mission Control needs to send commands to the rover. We can't hard-code every command — the rover needs to <strong>listen</strong>, to accept messages from whoever is typing. That's <code>input()</code>: a function that pauses the program and waits for a human to type something."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:05</div><div class="mt-content"><div class="mt-name">Debrief W2</div><div class="mt-desc">"We stored variables in the code. What if we wanted the fuel level to come from Mission Control instead of being typed in the program?"</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:05–0:20</div><div class="mt-content"><div class="mt-name">Introduce input()</div><div class="mt-desc">Type <code>name = input("Pilot name: ")</code> → run → type a name → see it stored. Then <code>print("Welcome,", name)</code>. "The program waited for you!"</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:50</div><div class="mt-content"><div class="mt-name">Build Command Terminal</div><div class="mt-desc">Mission Control enters commands → rover acknowledges. Use int(input()) for number input. "Why can't you just add 5 to what input() gives you?"</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:05</div><div class="mt-content"><div class="mt-name">String Operations</div><div class="mt-desc">.upper(), .lower(), len(), + concatenation. "The rover's display converts all text to uppercase for clarity."</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"What's the difference between <code>name = 'Aiden'</code> and <code>name = input('Name:')</code>? When would you use each?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>input()</strong> — pauses program, waits for typed text, returns it as string</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>int(input())</strong> — converts typed number text to an integer</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Concatenation</strong> — joining strings with +: <code>"Hello, " + name</code></div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>.upper() / .lower()</strong> — change string case: <code>"aiden".upper()</code> → "AIDEN"</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>len()</strong> — counts characters: <code>len("Mars")</code> → 4</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="py-demo">
+    <div class="py-demo-title">mission_terminal.py</div>
+    <code class="py-code">pilot = <span class="py-func">input</span>(<span class="py-str">"Pilot name: "</span>)
+<span class="py-func">print</span>(<span class="py-str">"Welcome, "</span> + pilot.<span class="py-func">upper</span>() + <span class="py-str">"!"</span>)
+
+sector = <span class="py-func">input</span>(<span class="py-str">"Target sector: "</span>)
+<span class="py-func">print</span>(<span class="py-str">"Navigating to sector:"</span>, sector)
+
+distance = <span class="py-func">int</span>(<span class="py-func">input</span>(<span class="py-str">"Distance (meters): "</span>))
+<span class="py-func">print</span>(<span class="py-str">"Route programmed:"</span>, distance, <span class="py-str">"meters"</span>)
+<span class="py-func">print</span>(<span class="py-str">"Estimated time:"</span>, distance // <span class="py-num">50</span>, <span class="py-str">"minutes"</span>)</code>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Before int()</div>
+      <div class="script-block">"Try adding 10 to what input() gives you without int(). What happens? Why?"</div>
+      <div class="script-label">Concatenation vs comma</div>
+      <div class="script-block green">"Compare <code>print('Hi', name)</code> and <code>print('Hi' + name)</code>. Is there a difference?"</div>
+      <div class="script-label">After it works</div>
+      <div class="script-block blue">"You're now both programmer and user. When you ran the program, which role were you playing?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Gets user input</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Converts to int when needed</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Uses string concatenation</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Uses at least one string method</div></div>
+      </div>
+      <div class="success-bar">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Ask for fuel level and name. Print a formatted status card combining both.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🏠 Between Sessions</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Try: what happens if you type a word when int(input()) expects a number? (Rover research: error handling!)</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w3">
+    <span class="qp-label">Week 3 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 4 ══ -->
+<div class="lesson" id="w4">
+  <div class="lesson-hero stripe-green">
+    <div class="hero-number">04</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🔁</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 4 · Text-Based Programming</div>
+        <div class="hero-title">For Loops — Scan Cycles</div>
+        <div class="hero-concept">for loops repeat code a set number of times</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">FOR LOOPS</span>
+          <span class="tag tag-p">RANGE</span>
+          <span class="tag tag-p">ITERATION</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Loops repeat code automatically</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Automated scan cycles</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Builds scan loop using range()</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover must run 5 sensor scan cycles before collecting samples. Each cycle is identical. Writing it 5 times is wrong — engineers use loops. A <strong>for loop runs the same code a set number of times automatically.</strong>"</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title green">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:05</div><div class="mt-content"><div class="mt-name">Debrief W3</div><div class="mt-desc">In Scratch Week 3–4, you used repeat(5). Today we do the same thing in Python text code.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:05–0:20</div><div class="mt-content"><div class="mt-name">Introduce for Loop</div><div class="mt-desc">Start with <code>for i in range(5): print("Scanning...")</code>. Run it. Count the outputs. Change 5 to 10.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:50</div><div class="mt-content"><div class="mt-name">Build Scan System</div><div class="mt-desc">Use loop variable: <code>for scan in range(1, 6): print("Scan", scan, "complete")</code>. Add fake sensor reading. Log each one.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:05</div><div class="mt-content"><div class="mt-name">Explore range() Variants</div><div class="mt-desc">range(5) vs range(1,6) vs range(0,50,10). Countdown: range(10, 0, -1). Build launch countdown.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"How is range(5) different from range(1,6)? When does i equal 0 vs 1?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>for loop</strong> — runs code fixed times: <code>for i in range(5):</code></div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>range(n)</strong> — generates 0, 1, 2, ... n-1</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>range(start, stop)</strong> — generates start, start+1, ... stop-1</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>range(start, stop, step)</strong> — counts by step (even countdown)</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Indentation</strong> — 4 spaces before loop body (REQUIRED in Python)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="py-demo">
+    <div class="py-demo-title">scan_cycles.py</div>
+    <code class="py-code"><span class="py-cmt"># Rover Scan Protocol</span>
+<span class="py-func">print</span>(<span class="py-str">"Initiating scan sequence..."</span>)
+
+<span class="py-kw">for</span> scan <span class="py-kw">in</span> <span class="py-func">range</span>(<span class="py-num">1</span>, <span class="py-num">6</span>):
+    reading = scan * <span class="py-num">13</span> - <span class="py-num">5</span>
+    <span class="py-func">print</span>(<span class="py-str">"Scan"</span>, scan, <span class="py-str">"complete | Reading:"</span>, reading)
+
+<span class="py-func">print</span>(<span class="py-str">"All scans complete. Data logged."</span>)
+
+<span class="py-cmt"># Bonus: countdown</span>
+<span class="py-kw">for</span> t <span class="py-kw">in</span> <span class="py-func">range</span>(<span class="py-num">10</span>, <span class="py-num">0</span>, -<span class="py-num">1</span>):
+    <span class="py-func">print</span>(<span class="py-str">"Launch in"</span>, t, <span class="py-str">"..."</span>)
+<span class="py-func">print</span>(<span class="py-str">"LIFTOFF!"</span>)</code>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Before running</div>
+      <div class="script-block">"Before pressing F5 — count: what numbers will scan be during each loop? Write them down."</div>
+      <div class="script-label">Loop variable question</div>
+      <div class="script-block green">"In the scan loop, what is scan equal to on the 3rd time through?"</div>
+      <div class="script-label">After countdown</div>
+      <div class="script-block blue">"What controls the direction of the countdown? How is range(10,0,-1) different from range(10)?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Uses for loop with range()</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Uses loop variable inside the loop</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Predicts output before running</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Uses at least 2 different range() forms</div></div>
+      </div>
+      <div class="success-bar">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Build a fuel simulation — for each of 8 drives, fuel decreases by 12.5%. Print fuel after each drive.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🏠 Between Sessions</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Find a loop in real life — something that repeats a fixed number of times (like 3 meals a day or 5 school days)</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w4">
+    <span class="qp-label">Week 4 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 5 ══ -->
+<div class="lesson" id="w5">
+  <div class="lesson-hero stripe-purple">
+    <div class="hero-number">05</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🔄</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 5 · Text-Based Programming</div>
+        <div class="hero-title">While Loops — Patrol Mode</div>
+        <div class="hero-concept">while loops run until a condition becomes false</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">WHILE</span>
+          <span class="tag tag-p">BOOLEAN</span>
+          <span class="tag tag-p">CONDITION</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Loops until condition false</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Fuel-based patrol</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Fuel countdown while loop</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover patrols Mars terrain until its fuel runs out. We don't know how many steps in advance — it depends on each drive. A for loop can't handle this. A <strong>while loop checks a condition BEFORE every run</strong> — and stops when false."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:05</div><div class="mt-content"><div class="mt-name">Debrief W4</div><div class="mt-desc">"For loops: fixed count. What if the rover should stop when fuel hits zero — but you don't know how many drives that takes?"</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:05–0:20</div><div class="mt-content"><div class="mt-name">Introduce while Loop</div><div class="mt-desc"><code>fuel = 100; while fuel > 0: fuel -= 15; print("Fuel:", fuel)</code>. Run. Trace through.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:50</div><div class="mt-content"><div class="mt-name">Build Patrol Simulator</div><div class="mt-desc">Combine variables, while, and conditionals. Alert at low fuel. Stop when fuel reaches 0. Track distance.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:05</div><div class="mt-content"><div class="mt-name">Show Infinite Loop Danger</div><div class="mt-desc"><code>while True: print("oops")</code> — press Ctrl+C. "What does break do?" Add break condition.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"Name a real-life situation where you'd use a while loop and one where you'd use a for loop."</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>while loop</strong> — runs while condition is True, stops when False</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Boolean</strong> — True or False — that's it</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Decrement</strong> — <code>fuel -= 15</code> (same as <code>fuel = fuel - 15</code>)</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Infinite loop</strong> — <code>while True:</code> — runs forever until Ctrl+C</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>break</strong> — immediately exits any loop</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="py-demo">
+    <div class="py-demo-title">patrol_mode.py</div>
+    <code class="py-code"><span class="py-cmt"># Rover Patrol System</span>
+fuel = <span class="py-num">100</span>
+distance = <span class="py-num">0</span>
+
+<span class="py-kw">while</span> fuel > <span class="py-num">0</span>:
+    fuel -= <span class="py-num">15</span>
+    distance += <span class="py-num">50</span>
+    <span class="py-func">print</span>(<span class="py-str">"Fuel:"</span>, fuel, <span class="py-str">"% | Distance:"</span>, distance, <span class="py-str">"m"</span>)
+
+    <span class="py-kw">if</span> fuel <= <span class="py-num">20</span>:
+        <span class="py-func">print</span>(<span class="py-str">"⚠️  LOW FUEL WARNING"</span>)
+
+<span class="py-func">print</span>(<span class="py-str">"Patrol complete. Total distance:"</span>, distance, <span class="py-str">"meters"</span>)</code>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Before infinite loop</div>
+      <div class="script-block">"What would happen if we forgot to decrease fuel inside the loop?"</div>
+      <div class="script-label">Ctrl+C moment</div>
+      <div class="script-block green">"What does Ctrl+C do? Why is that an important keyboard shortcut for programmers?"</div>
+      <div class="script-label">For vs while</div>
+      <div class="script-block blue">"Could you have written the fuel patrol with a for loop? What would you need to know in advance?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Builds fuel countdown while loop</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Explains "while checks before each run"</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Identifies what causes an infinite loop in their code</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Uses break at least once</div></div>
+      </div>
+      <div class="success-bar">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Ask how much fuel to use per drive. Track how many drives before empty.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🏠 Between Sessions</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Ask: "What 'conditions' start and stop things in real life?" (traffic light red: stop while red is true)</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w5">
+    <span class="qp-label">Week 5 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 6 ══ -->
+<div class="lesson" id="w6">
+  <div class="lesson-hero stripe-green">
+    <div class="hero-number">06</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🏔️</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 6 · Text-Based Programming</div>
+        <div class="hero-title">If/Elif/Else — Terrain Logic</div>
+        <div class="hero-concept">elif adds more than 2 branches to decisions</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">IF ELIF ELSE</span>
+          <span class="tag tag-p">COMPARISON</span>
+          <span class="tag tag-p">DECISIONS</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">elif adds unlimited branches</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Terrain classification</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">4-branch terrain classifier</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The terrain scanner returns five possible surface types. The rover must classify and respond differently to each. If/else only gives 2 paths. <strong>elif gives you unlimited branches</strong> — the rover's decision tree."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title green">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:05</div><div class="mt-content"><div class="mt-name">Debrief W5</div><div class="mt-desc">Review conditionals from Q1 Scratch. "We used if/else. Python has a third option — what happens when there are 5 possible conditions?"</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:05–0:20</div><div class="mt-content"><div class="mt-name">Introduce elif</div><div class="mt-desc">Simple example: grade classifier. Show how elif avoids nested ifs.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:50</div><div class="mt-content"><div class="mt-name">Build Terrain Classifier</div><div class="mt-desc">Input terrain type → if rocky, if sandy, if icy, if volcanic, else unknown. Add appropriate rover responses.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:05</div><div class="mt-content"><div class="mt-name">Add Temperature Analyzer</div><div class="mt-desc">Input temp as int → 5 different ranges. "How is elif different from using multiple separate if blocks?"</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"Could you write the terrain classifier using only ifs (no elif)? What would be the problem?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>if</strong> — first condition checked</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>elif</strong> — "else if" — checked only if previous was False</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>else</strong> — runs when ALL previous conditions are False</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Comparison operators</strong> — == (equal), != (not equal), &lt;, &gt;, &lt;=, &gt;=</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Why elif not if</strong> — elif stops checking once match found (more efficient)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="py-demo">
+    <div class="py-demo-title">terrain_logic.py</div>
+    <code class="py-code"><span class="py-cmt"># Terrain Classification System</span>
+terrain = <span class="py-func">input</span>(<span class="py-str">"Terrain scan result: "</span>)
+
+<span class="py-kw">if</span> terrain == <span class="py-str">"rocky"</span>:
+    <span class="py-func">print</span>(<span class="py-str">"Speed reduced. Careful navigation."</span>)
+<span class="py-kw">elif</span> terrain == <span class="py-str">"sandy"</span>:
+    <span class="py-func">print</span>(<span class="py-str">"Full speed. Clear path."</span>)
+<span class="py-kw">elif</span> terrain == <span class="py-str">"icy"</span>:
+    <span class="py-func">print</span>(<span class="py-str">"DANGER: Motor lock engaged."</span>)
+<span class="py-kw">elif</span> terrain == <span class="py-str">"volcanic"</span>:
+    <span class="py-func">print</span>(<span class="py-str">"CRITICAL: Evacuating sector!"</span>)
+<span class="py-kw">else</span>:
+    <span class="py-func">print</span>(<span class="py-str">"Unknown terrain. Requesting analysis..."</span>)
+
+<span class="py-cmt"># Temperature Analysis</span>
+temp = <span class="py-func">int</span>(<span class="py-func">input</span>(<span class="py-str">"Surface temperature (°C): "</span>))
+<span class="py-kw">if</span> temp < -<span class="py-num">100</span>:
+    <span class="py-func">print</span>(<span class="py-str">"Critical cold — heating systems on."</span>)
+<span class="py-kw">elif</span> temp < -<span class="py-num">50</span>:
+    <span class="py-func">print</span>(<span class="py-str">"Cold — normal operations."</span>)
+<span class="py-kw">elif</span> temp < <span class="py-num">0</span>:
+    <span class="py-func">print</span>(<span class="py-str">"Warming trend — monitor closely."</span>)
+<span class="py-kw">else</span>:
+    <span class="py-func">print</span>(<span class="py-str">"ALERT: Temperature too high!"</span>)</code>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Before elif</div>
+      <div class="script-block">"What if there were 5 terrain types? Can we handle that with just if/else?"</div>
+      <div class="script-label">On ordering</div>
+      <div class="script-block green">"Why does the order of elif branches matter? What if we put temp < 0 before temp < -50?"</div>
+      <div class="script-label">After</div>
+      <div class="script-block blue">"Walk me through exactly what happens when terrain = 'volcanic'. Which lines run? Which lines get skipped?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Builds terrain classifier with 4+ branches</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Uses elif (not nested ifs)</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Uses at least 3 different comparison operators</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Explains why order of elif matters</div></div>
+      </div>
+      <div class="success-bar">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Combine terrain + temperature: "if rocky AND temp < -50: extra caution mode". Intro to and/or.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🏠 Between Sessions</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Find an if/elif/else in real life (thermostat: if too cold → heat; elif too hot → cool; else: do nothing)</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w6">
+    <span class="qp-label">Week 6 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 7 ══ -->
+<div class="lesson" id="w7">
+  <div class="lesson-hero stripe-gold">
+    <div class="hero-number">07</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🔧</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 7 · Text-Based Programming</div>
+        <div class="hero-title">Functions — Rover Subroutines</div>
+        <div class="hero-concept">Functions are reusable named blocks of code</div>
+        <div class="hero-tags">
+          <span class="tag tag-gd">DEF</span>
+          <span class="tag tag-gd">PARAMETERS</span>
+          <span class="tag tag-gd">RETURN</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Functions are reusable blocks</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Modular rover command system</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Defines and calls 3 functions</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Real rover software never copies and pastes code. Every repeated task becomes a <strong>function — a named block of instructions you can call by name</strong> from anywhere. Functions are how engineers build software that doesn't fall apart."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title gold">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:05</div><div class="mt-content"><div class="mt-name">Debrief W6</div><div class="mt-desc">"How many times did we write print() this quarter? That's a function — someone defined it so we can call it by name."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:05–0:20</div><div class="mt-content"><div class="mt-name">Define First Function</div><div class="mt-desc"><code>def greet_pilot(name): print("Welcome,", name)</code> → call it with <code>greet_pilot("Aiden")</code>. Change the argument.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:50</div><div class="mt-content"><div class="mt-name">Build Rover Commands</div><div class="mt-desc">def drive(distance), def scan(sector), def check_fuel(current). Use return in drive() to give back travel time.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:05</div><div class="mt-content"><div class="mt-name">Combine Functions</div><div class="mt-desc">Call multiple functions in sequence. Build a 3-step mission using only function calls — code becomes readable like English.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"What's the difference between defining a function and calling it? What are parameters?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>def</strong> — define a function: <code>def function_name(parameters):</code></div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Parameters</strong> — variables that receive values when called</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Call</strong> — execute a function: <code>greet_pilot("Aiden")</code></div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Return</strong> — send a value back to caller: <code>return result</code></div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Indentation</strong> — function body must be indented 4 spaces</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="py-demo">
+    <div class="py-demo-title">rover_commands.py</div>
+    <code class="py-code"><span class="py-cmt"># Rover Subroutine Library</span>
+
+<span class="py-kw">def</span> greet_pilot(name):
+    <span class="py-func">print</span>(<span class="py-str">"Welcome, "</span> + name + <span class="py-str">"! Mission ready."</span>)
+
+<span class="py-kw">def</span> drive(distance):
+    <span class="py-func">print</span>(<span class="py-str">"Driving"</span>, distance, <span class="py-str">"meters..."</span>)
+    time = distance // <span class="py-num">50</span>
+    <span class="py-kw">return</span> time
+
+<span class="py-kw">def</span> check_fuel(current_fuel):
+    <span class="py-kw">if</span> current_fuel < <span class="py-num">20</span>:
+        <span class="py-func">print</span>(<span class="py-str">"⚠️  WARNING: Low fuel!"</span>)
+    <span class="py-kw">else</span>:
+        <span class="py-func">print</span>(<span class="py-str">"Fuel OK:"</span>, current_fuel, <span class="py-str">"%"</span>)
+
+<span class="py-cmt"># Mission execution</span>
+greet_pilot(<span class="py-str">"Aiden"</span>)
+check_fuel(<span class="py-num">85</span>)
+travel_time = drive(<span class="py-num">200</span>)
+<span class="py-func">print</span>(<span class="py-str">"Travel time:"</span>, travel_time, <span class="py-str">"min"</span>)</code>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Defining vs calling</div>
+      <div class="script-block">"When we write <code>def drive(distance):</code> — does the code inside run right now? When does it run?"</div>
+      <div class="script-label">Return question</div>
+      <div class="script-block green">"What would happen if we removed <code>return time</code>? What would travel_time equal?"</div>
+      <div class="script-label">Big picture</div>
+      <div class="script-block blue">"Read the 'Mission execution' section out loud. Does it read like a story? That's why functions are powerful."</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Defines 3+ functions with parameters</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Calls functions with different arguments</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Uses return in at least one function</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Explains define vs call distinction</div></div>
+      </div>
+      <div class="success-bar">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Write a function that takes fuel and distance, calculates if fuel is enough, returns True or False.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🏠 Between Sessions</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Find real-life "functions": recipes (inputs: ingredients → output: food), dishwasher cycle (input: dishes → output: clean)</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w7">
+    <span class="qp-label">Week 7 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 8 ══ -->
+<div class="lesson" id="w8">
+  <div class="lesson-hero stripe-blue">
+    <div class="hero-number">08</div>
+    <div class="hero-top">
+      <div class="hero-emoji">📋</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 8 · Text-Based Programming</div>
+        <div class="hero-title">Lists & Data Logs</div>
+        <div class="hero-concept">Lists store multiple values in one variable</div>
+        <div class="hero-tags">
+          <span class="tag tag-b">LISTS</span>
+          <span class="tag tag-b">APPEND</span>
+          <span class="tag tag-b">ITERATION</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Lists hold multiple values</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Sensor data recorder</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Creates, appends, loops through list</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover collects 8 temperature readings. Storing each in a separate variable is unmanageable. A <strong>list holds multiple values in a single variable</strong> — and lets you process them all with a single loop."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:05</div><div class="mt-content"><div class="mt-name">Debrief W7</div><div class="mt-desc">"We have functions. Now the rover needs to log data over time. How many variables for 100 temperature readings?"</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:05–0:20</div><div class="mt-content"><div class="mt-name">Introduce Lists</div><div class="mt-desc">Create <code>readings = []</code> → append values → print the list. Access [0] and [-1]. "What does -1 give you?"</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:50</div><div class="mt-content"><div class="mt-name">Build Temperature Logger</div><div class="mt-desc">Loop 5 times with input — simulate readings. Append each to list. Then loop through to find min, max, average.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:05</div><div class="mt-content"><div class="mt-name">Analyze Data</div><div class="mt-desc">len(), sum(). Build mission report that summarizes all readings. "Scientists need to summarize datasets — you built a data analysis program."</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"If a variable is a box — what is a list? How is readings[0] different from readings[-1]?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Concepts</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>List</strong> — container holding multiple values: <code>readings = [45, 38, 52]</code></div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>append()</strong> — adds item to the end: <code>readings.append(47)</code></div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Indexing</strong> — access by position: [0]=first, [1]=second, [-1]=last</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>for item in list</strong> — loop through every item</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>len()</strong> — number of items in list</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="py-demo">
+    <div class="py-demo-title">data_log.py</div>
+    <code class="py-code"><span class="py-cmt"># Temperature Data Logger</span>
+readings = []
+
+<span class="py-func">print</span>(<span class="py-str">"Enter 5 temperature readings:"</span>)
+<span class="py-kw">for</span> i <span class="py-kw">in</span> <span class="py-func">range</span>(<span class="py-num">5</span>):
+    temp = <span class="py-func">int</span>(<span class="py-func">input</span>(<span class="py-str">"Reading "</span> + <span class="py-func">str</span>(i+<span class="py-num">1</span>) + <span class="py-str">": "</span>))
+    readings.<span class="py-func">append</span>(temp)
+
+<span class="py-func">print</span>(<span class="py-str">"All readings:"</span>, readings)
+<span class="py-func">print</span>(<span class="py-str">"First reading:"</span>, readings[<span class="py-num">0</span>])
+<span class="py-func">print</span>(<span class="py-str">"Last reading:"</span>, readings[-<span class="py-num">1</span>])
+<span class="py-func">print</span>(<span class="py-str">"Average:"</span>, <span class="py-func">sum</span>(readings) / <span class="py-func">len</span>(readings))
+
+<span class="py-cmt"># Find hot spots</span>
+<span class="py-func">print</span>(<span class="py-str">"Hot spots (above 0°C):"</span>)
+<span class="py-kw">for</span> r <span class="py-kw">in</span> readings:
+    <span class="py-kw">if</span> r > <span class="py-num">0</span>:
+        <span class="py-func">print</span>(<span class="py-str">" →"</span>, r, <span class="py-str">"°C"</span>)</code>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Before running</div>
+      <div class="script-block">"If you append 5 numbers, what will readings[0] be? What will readings[-1] be?"</div>
+      <div class="script-label">Indexing question</div>
+      <div class="script-block green">"What happens if you try readings[5] when the list only has 5 items? (Hint: lists count from 0)"</div>
+      <div class="script-label">Big picture</div>
+      <div class="script-block blue">"Real scientific instruments do exactly this — collect data points and calculate statistics. What other statistics could you add?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Creates empty list, appends to it in a loop</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Accesses specific items by index</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Loops through list with for</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Calculates average correctly</div></div>
+      </div>
+      <div class="success-bar">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Find minimum and maximum using a loop (without built-in min/max).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🏠 Between Sessions</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Connect to real data: "Your growth chart tracks your height over years — that's a list! Each birthday adds one reading."</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w8">
+    <span class="qp-label">Week 8 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 9 ══ -->
+<div class="lesson" id="w9">
+  <div class="lesson-hero stripe-green">
+    <div class="hero-number">09</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🚀</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 9 · Capstone Build — Part 1</div>
+        <div class="hero-title">Mars Mission Command Terminal</div>
+        <div class="hero-concept">System integration — all 5 concepts in one program</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">INTEGRATION</span>
+          <span class="tag tag-p">DESIGN</span>
+          <span class="tag tag-p">BUILD</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Focus</div><div class="hs-value">System integration</div></div>
+      <div class="hero-stat"><div class="hs-label">Aiden's Role</div><div class="hs-label">Lead engineer</div></div>
+      <div class="hero-stat"><div class="hs-label">Your Role</div><div class="hs-value">Questions only</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Today you design and build a <strong>text-based Mars Mission Command Terminal.</strong> It uses EVERY concept from Q3: variables store mission state, a while loop runs the mission, if/elif handles commands, functions organize code, and a list logs mission history. <strong>Plan first — code second.</strong>"</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title green">📋 Capstone Requirements</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>Paper design first</strong> — draw variables, functions, control flow before any coding</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>4+ variables</strong> — rover_name, fuel, samples_collected, mission_log (list), active (bool)</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>5+ functions</strong> — show_status, drive_rover, scan_area, collect_sample, mission_report</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>while loop</strong> — <code>while fuel > 0 and active</code></div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>4+ commands</strong> — "drive", "scan", "collect", "status", "report", "quit"</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>Log every action</strong> — mission_log list appends each command</div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🗒 Design Phase (20 min — Paper First)</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">No hardware until the design is done:</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div>Draw the control flow: while loop with if/elif for commands</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div>List all variables: what do they track?</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div>Sketch all functions: inputs and outputs</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div>Write mission_log logic: what gets appended when?</div></div>
+      </div>
+      <div class="py-callout" style="margin-top:12px;">
+        <div class="py-icon">💡</div>
+        <div>Use all 5 concepts: variables (W2), input (W3), loops (W4-W5), conditionals (W6), functions (W7), lists (W8).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;background:rgba(0,204,153,0.04);border-color:rgba(0,204,153,0.2);">
+    <div class="box-title green">⏱ Session Timeline</div>
+    <div class="mini-timeline">
+      <div class="mt-row"><div class="mt-time">0:00–0:20</div><div class="mt-content"><div class="mt-name">PAPER DESIGN (required before coding)</div><div class="mt-desc">Draw the terminal design. What variables? What commands? What functions? What does the while loop condition look like? Aiden writes pseudocode.</div></div></div>
+      <div class="mt-row"><div class="mt-time">0:20–0:55</div><div class="mt-content"><div class="mt-name">BUILD PHASE</div><div class="mt-desc">Aiden builds the terminal using his design. Parent observes — asks questions but doesn't code. If stuck: "Which concept handles this?"</div></div></div>
+      <div class="mt-row"><div class="mt-time">0:55–1:10</div><div class="mt-content"><div class="mt-name">Test & Refine</div><div class="mt-desc">Run the terminal, test every command, fix bugs. Aiden uses 5-step debug protocol independently.</div></div></div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title blue">💬 Mission Control Prompts (That's All You Say)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div class="script-block">"What happens if the rover reaches zero fuel? Which part of your code stops the mission?"</div>
+      <div class="script-block">"Walk me through what happens when someone types 'collect'. Which function does that trigger?"</div>
+      <div class="script-block green">"How does the mission_log list know what to record? What gets appended?"</div>
+      <div class="script-block blue">"If you had to add one more feature, what would make the mission more interesting?"</div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w9">
+    <span class="qp-label">Week 9 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--blue))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ WEEK 10 ══ -->
+<div class="lesson" id="w10">
+  <div class="lesson-hero stripe-green">
+    <div class="hero-number">10</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🎓</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 10 · Demo Day — Graduation</div>
+        <div class="hero-title">Python Graduation & Presentation</div>
+        <div class="hero-concept">Live demo and code walkthrough. Aiden presents to family audience.</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">DEMO</span>
+          <span class="tag tag-p">PRESENTATION</span>
+          <span class="tag tag-p">GRADUATION</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Goal</div><div class="hs-value">Complete & present</div></div>
+      <div class="hero-stat"><div class="hs-label">Audience</div><div class="hs-value">Family / friends</div></div>
+      <div class="hero-stat"><div class="hs-label">Aiden Explains</div><div class="hs-value">Every concept used</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The final test of understanding isn't running code — it's <strong>explaining it to a live audience.</strong> Today Aiden presents his Mars Mission Command Terminal to the family, walks through every concept, and earns his Python Mission Badge. This is how real engineers ship software: with a demo."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title green">⏱ Final Session Structure</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:10</div><div class="mt-content"><div class="mt-name">Set Up & Intro</div><div class="mt-desc">Audience sits. Aiden opens the terminal on screen. Parent explains: "Aiden built this Python program over 10 weeks. He'll explain every part."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:10–0:30</div><div class="mt-content"><div class="mt-name">Live Demo</div><div class="mt-desc">Aiden runs the terminal live, narrating each step. Audience gives commands. Aiden explains what the code does as it runs.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:30–0:50</div><div class="mt-content"><div class="mt-name">Code Walkthrough</div><div class="mt-desc">Aiden opens the file in Thonny. Points to each section: "This is my variables section... this function handles drive... this while loop runs until fuel is zero..."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:00</div><div class="mt-content"><div class="mt-name">Q&A from Audience</div><div class="mt-desc">Family asks prepared questions. Aiden answers unprompted.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:00–1:10</div><div class="mt-content"><div class="mt-name">Graduation Ceremony</div><div class="mt-desc">Check off graduation checklist. Preview Q4 Arduino. "Next quarter: real circuits, real wires, real LEDs."</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🎤 Demo Day Presentation Guide</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">Aiden covers all 5 concepts:</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">1.</div><div><strong>"Here's my variables."</strong> Point to rover_name, fuel, samples. "What they store and why they change."</div></div>
+        <div class="li-item"><div class="li-dot gold">2.</div><div><strong>"Here's my functions."</strong> Show each one. "I use them instead of writing the same code over."</div></div>
+        <div class="li-item"><div class="li-dot gold">3.</div><div><strong>"Here's my while loop — the heart of the mission."</strong> "It keeps running until fuel = 0."</div></div>
+        <div class="li-item"><div class="li-dot gold">4.</div><div><strong>"Here are my if/elif commands."</strong> "Each command type does something different."</div></div>
+        <div class="li-item"><div class="li-dot gold">5.</div><div><strong>"Here's my mission_log list."</strong> "I record every action the rover takes."</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;background:linear-gradient(135deg,rgba(0,204,153,0.06),rgba(0,255,153,0.06));border-color:rgba(0,204,153,0.25);">
+    <div class="box-title green">🎓 Q3 Graduation Checklist</div>
+    <div class="check-list">
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can explain what a variable is and create one from scratch</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can write and use a for loop with range()</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can write a while loop with a condition</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can write a function with parameters and call it</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can create a list and append to it</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Built a complete program using all 5 concepts</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Presented the program to a live audience</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Explained every concept without parent help</div></div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;border-color:rgba(0,204,153,0.3);background:rgba(0,204,153,0.04);">
+    <div class="box-title green">⚡ Preview: Quarter 4</div>
+    <div style="font-size:14px;color:var(--text);line-height:1.7;">
+      "In Quarter 4, we move from software to hardware. Instead of <code>print("LED on")</code>, you'll wire a real LED and write code that turns it on. The same logic — variables, loops, conditionals — but now the output is electricity and light. Install the Arduino IDE at home, and next quarter we'll make the rover glow."
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w10">
+    <span class="qp-label">Week 10 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--green))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<footer>
+  QUARTER 3 · PYTHON · AUTONOMOUS OPERATIONS · MARS ROVER ACADEMY
+</footer>
+
+<script>
+  function showWeek(n, btn) {
+    document.querySelectorAll('.lesson').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.wn-btn').forEach(b => b.classList.remove('active'));
+    const el = document.getElementById('w' + n);
+    if (el) el.classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function updateProgress(weekId) {
+    const lesson = document.getElementById(weekId);
+    if (!lesson) return;
+    const all  = lesson.querySelectorAll('.cl-item');
+    const done = lesson.querySelectorAll('.cl-item.done');
+    if (all.length === 0) return;
+    const pct = Math.round((done.length / all.length) * 100);
+
+    const prog = document.getElementById('prog-' + weekId);
+    if (prog) {
+      prog.querySelector('.qp-fill').style.width = pct + '%';
+      const pctEl = prog.querySelector('.qp-pct');
+      pctEl.textContent = pct + '%';
+      if (pct === 100) {
+        pctEl.style.color = 'var(--green)';
+        prog.querySelector('.qp-fill').style.background = 'linear-gradient(90deg,var(--green),var(--accent))';
+      } else {
+        pctEl.style.color = 'var(--accent)';
+        prog.querySelector('.qp-fill').style.background = 'linear-gradient(90deg,var(--accent),var(--blue))';
+      }
+    }
+
+    const weekNum = weekId.replace('w', '');
+    const navBtn  = document.querySelectorAll('.wn-btn')[parseInt(weekNum) - 1];
+    if (navBtn) {
+      if (pct === 100) navBtn.classList.add('done');
+      else navBtn.classList.remove('done');
+    }
+  }
+
+  function toggleCl(el) {
+    el.classList.toggle('done');
+    const box = el.querySelector('.cl-box');
+    if (el.classList.contains('done')) {
+      box.style.background    = 'var(--accent)';
+      box.style.borderColor   = 'var(--accent)';
+      box.style.color         = '#000';
+    } else {
+      box.style.background    = '';
+      box.style.borderColor   = '';
+      box.style.color         = '';
+    }
+    const lesson = el.closest('.lesson');
+    if (lesson) updateProgress(lesson.id);
+  }
+
+  // Start on week 1
+  document.getElementById('w1').classList.add('active');
+  document.querySelector('.wn-btn').classList.add('active');
+</script>
+</body>
+</html>

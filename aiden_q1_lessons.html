@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aiden — Quarter 1: Training Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c18;
+    --deep: #0b1022;
+    --panel: #0e1628;
+    --card: #111d35;
+    --border: #1a3050;
+    --accent: #00cfff;
+    --gold: #ffcc44;
+    --green: #00ff99;
+    --red: #ff4466;
+    --purple: #b060ff;
+    --orange: #ff8844;
+    --text: #c0d4f0;
+    --muted: #3d5575;
+    --white: #e8f2ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* Animated starfield */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(1px 1px at 5% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 5%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(2px 2px at 75% 8%, rgba(0,207,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 25%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 70%, rgba(255,255,255,0.25) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 85%, rgba(176,96,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 65%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(2px 2px at 40% 45%, rgba(255,204,68,0.2) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,0.3) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+  /* ── HEADER ── */
+  header {
+    padding: 44px 0 32px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .quarter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,207,255,0.08);
+    border: 1px solid rgba(0,207,255,0.25);
+    border-radius: 24px;
+    padding: 6px 16px 6px 10px;
+    margin-bottom: 14px;
+  }
+  .q-icon {
+    width: 28px; height: 28px;
+    background: rgba(0,207,255,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .q-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(26px, 4.5vw, 48px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  h1 em { color: var(--accent); font-style: normal; }
+  .header-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .meta-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .meta-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* ── NAV ── */
+  .week-nav {
+    display: flex;
+    gap: 6px;
+    padding: 20px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .week-nav::-webkit-scrollbar { display: none; }
+  .wn-btn {
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--muted);
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .wn-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .wn-btn.active { background: rgba(0,207,255,0.12); border-color: var(--accent); color: var(--accent); box-shadow: 0 0 12px rgba(0,207,255,0.2); }
+  .wn-btn.done { background: rgba(0,255,153,0.06); border-color: rgba(0,255,153,0.3); color: var(--green); }
+
+  /* ── LESSON CARD ── */
+  .lesson { display: none; }
+  .lesson.active { display: block; animation: fadeUp 0.3s ease; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  .lesson-hero {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .lesson-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .stripe-blue::before { background: linear-gradient(90deg, var(--accent), transparent); }
+  .stripe-purple::before { background: linear-gradient(90deg, var(--purple), transparent); }
+  .stripe-green::before { background: linear-gradient(90deg, var(--green), transparent); }
+  .stripe-gold::before { background: linear-gradient(90deg, var(--gold), transparent); }
+  .stripe-red::before { background: linear-gradient(90deg, var(--red), transparent); }
+
+  .hero-top {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  .hero-number {
+    font-family: 'Orbitron', monospace;
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.08;
+    position: absolute;
+    top: 16px; right: 24px;
+    color: var(--white);
+  }
+  .hero-emoji { font-size: 40px; }
+  .hero-info { flex: 1; }
+  .hero-week {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .hero-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .hero-concept {
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    letter-spacing: 1px;
+  }
+  .tag-b { background: rgba(0,207,255,0.1); color: var(--accent); border: 1px solid rgba(0,207,255,0.2); }
+  .tag-p { background: rgba(176,96,255,0.1); color: var(--purple); border: 1px solid rgba(176,96,255,0.2); }
+  .tag-g { background: rgba(0,255,153,0.1); color: var(--green); border: 1px solid rgba(0,255,153,0.2); }
+  .tag-o { background: rgba(255,136,68,0.1); color: var(--orange); border: 1px solid rgba(255,136,68,0.2); }
+  .tag-gd { background: rgba(255,204,68,0.1); color: var(--gold); border: 1px solid rgba(255,204,68,0.2); }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  @media(max-width: 600px) { .hero-grid { grid-template-columns: 1fr; } }
+  .hero-stat {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+  }
+  .hs-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .hs-value { font-weight: 700; color: var(--white); font-size: 13px; }
+
+  /* ── SECTIONS ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  @media(max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  @media(max-width: 640px) { .three-col { grid-template-columns: 1fr; } }
+
+  .box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 20px;
+  }
+  .box-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .box-title.blue { color: var(--accent); }
+  .box-title.gold { color: var(--gold); }
+  .box-title.green { color: var(--green); }
+  .box-title.red { color: var(--red); }
+  .box-title.purple { color: var(--purple); }
+  .box-title.orange { color: var(--orange); }
+
+  /* Timeline inside box */
+  .mini-timeline { display: flex; flex-direction: column; gap: 12px; }
+  .mt-row { display: flex; gap: 10px; }
+  .mt-time {
+    font-family: 'Orbitron', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    min-width: 55px;
+    padding-top: 1px;
+    flex-shrink: 0;
+  }
+  .mt-content {}
+  .mt-name { font-weight: 700; color: var(--white); font-size: 13px; }
+  .mt-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* List items */
+  .li-list { display: flex; flex-direction: column; gap: 8px; }
+  .li-item {
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .li-dot { color: var(--accent); flex-shrink: 0; margin-top: 2px; font-size: 10px; }
+  .li-dot.gold { color: var(--gold); }
+  .li-dot.green { color: var(--green); }
+  .li-dot.red { color: var(--red); }
+  .li-dot.purple { color: var(--purple); }
+  .li-dot.orange { color: var(--orange); }
+
+  /* Script block */
+  .script-block {
+    background: rgba(0,207,255,0.04);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 14px;
+    margin: 8px 0;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text);
+  }
+  .script-block.gold { border-color: var(--gold); background: rgba(255,204,68,0.04); }
+  .script-block.green { border-color: var(--green); background: rgba(0,255,153,0.04); }
+  .script-block.red { border-color: var(--red); background: rgba(255,68,102,0.04); }
+
+  .script-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  /* Checklist */
+  .check-list { display: flex; flex-direction: column; gap: 6px; }
+  .cl-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.02);
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.15s;
+    user-select: none;
+  }
+  .cl-item:hover { background: rgba(255,255,255,0.04); }
+  .cl-item.done { background: rgba(0,255,153,0.04); }
+  .cl-box {
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    transition: all 0.15s;
+  }
+  .cl-item.done .cl-box { background: var(--green); border-color: var(--green); color: #000; }
+
+  /* Mission brief */
+  .mission-brief {
+    background: linear-gradient(135deg, rgba(0,207,255,0.06), rgba(176,96,255,0.06));
+    border: 1px solid rgba(0,207,255,0.2);
+    border-radius: 13px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .mission-brief::before {
+    content: '🚀 MISSION BRIEF';
+    display: block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+  .mission-brief p { font-size: 14px; line-height: 1.6; color: var(--text); }
+  .mission-brief strong { color: var(--white); }
+
+  /* Scratch concept visual */
+  .scratch-block {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    margin: 3px;
+  }
+  .sb-motion { background: #4C97FF; color: white; }
+  .sb-event { background: #FFAB19; color: white; }
+  .sb-control { background: #FFAB19; color: white; }
+  .sb-looks { background: #9966FF; color: white; }
+  .sb-sound { background: #CF63CF; color: white; }
+  .sb-sensing { background: #5CB1D6; color: white; }
+  .sb-vars { background: #FF8C1A; color: white; }
+
+  .scratch-demo {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    margin: 10px 0;
+    font-size: 12px;
+  }
+  .scratch-demo-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  /* Success criteria */
+  .success-bar {
+    display: flex;
+    gap: 10px;
+    padding: 14px 18px;
+    background: rgba(0,255,153,0.05);
+    border: 1px solid rgba(0,255,153,0.2);
+    border-radius: 10px;
+    align-items: center;
+    font-size: 13px;
+    margin: 8px 0;
+  }
+  .success-bar .sb-icon { font-size: 18px; flex-shrink: 0; }
+
+  /* Progress bar inside lesson */
+  .q-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+  }
+  .qp-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .qp-bar { flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .qp-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+  .qp-pct {
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 36px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 36px 0 28px;
+    color: var(--muted);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    border-top: 1px solid var(--border);
+    margin-top: 48px;
+  }
+  /* ── TOP NAV BAR ── */
+  .top-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,12,24,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+    margin-bottom: 0;
+  }
+  .top-bar-inner {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 14px;
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+  }
+  .back-btn:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .top-bar-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  /* ── ROBO PARENT GUIDE ── */
+  .robo-welcome { display:flex; align-items:flex-start; gap:20px; background:rgba(0,207,255,0.05); border:1px solid rgba(0,207,255,0.2); border-radius:16px; padding:20px 24px; margin:24px 0 0; }
+  .robo-svg-sm { flex-shrink:0; width:72px; height:72px; }
+  .robo-parent-bubble { background:rgba(0,207,255,0.08); border:1px solid rgba(0,207,255,0.25); border-radius:12px; padding:14px 18px; font-size:15px; line-height:1.6; color:#c0d4f0; flex:1; position:relative; }
+  .robo-parent-bubble::before { content:''; position:absolute; left:-10px; top:20px; border:5px solid transparent; border-right-color:rgba(0,207,255,0.25); }
+  .robo-bubble-name { font-family:'Space Mono',monospace; font-size:11px; color:#00cfff; letter-spacing:.08em; margin-bottom:6px; }
+
+  /* ── CONVERSATION STARTERS ── */
+  .convos-panel { background:rgba(0,207,255,0.04); border:1px solid rgba(0,207,255,0.18); border-radius:16px; padding:24px 28px; margin:28px 0; }
+  .convos-title { font-family:'Orbitron',sans-serif; font-size:13px; letter-spacing:.1em; color:#00cfff; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+  .convo-list { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  @media(max-width:640px) { .convo-list { grid-template-columns:1fr; } }
+  .convo-item { background:rgba(255,255,255,0.03); border:1px solid rgba(0,207,255,0.12); border-radius:10px; padding:12px 14px; font-size:14px; color:#c0d4f0; line-height:1.5; }
+  .convo-item::before { content:'"'; color:#00cfff; font-size:20px; font-weight:900; line-height:0.8; display:block; margin-bottom:4px; }
+
+  /* ── PRINT CSS ── */
+  @media print {
+    body::before, .top-bar, .week-nav, .back-btn, .robo-welcome, .print-btn { display:none !important; }
+    body { background:#fff !important; color:#000 !important; }
+    .lesson { display:block !important; page-break-before:always; border:none; }
+    .lesson:first-of-type { page-break-before:avoid; }
+    .box, .lesson-hero, .convos-panel { background:#f5f5f5 !important; border:1px solid #ccc !important; color:#000 !important; break-inside:avoid; }
+    .box-title, .hero-title, .hero-week, .convos-title { color:#000 !important; }
+    .script-block { background:#f0f0f0 !important; color:#000 !important; border-left:3px solid #999 !important; }
+    a { color:#000 !important; }
+    .tag { background:#eee !important; color:#333 !important; border:1px solid #ccc !important; }
+  }
+
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="top-bar-inner">
+    <a href="aiden_curriculum.html" class="back-btn">← Mission Control</a>
+    <span class="top-bar-title">Q1 · Scratch · Training Academy</span>
+    <button class="print-btn" onclick="window.print()" style="background:rgba(0,207,255,0.1);border:1px solid rgba(0,207,255,0.3);color:#00cfff;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.05em;">🖨 PRINT GUIDE</button>
+
+  </div>
+</div>
+
+<div class="wrap">
+
+<header>
+  <div class="quarter-pill">
+    <div class="q-icon">🖥️</div>
+    <span class="q-label">Quarter 1 · Weeks 1–10 · Scratch</span>
+  </div>
+  <h1>Training <em>Academy</em></h1>
+  <p class="header-sub">COMPUTATIONAL FOUNDATIONS · MARS ROVER NARRATIVE · AGE 7</p>
+  <div class="header-meta">
+    <div class="meta-item"><div class="meta-label">Platform</div><div class="meta-value">Scratch</div></div>
+    <div class="meta-item"><div class="meta-label">Weeks</div><div class="meta-value">10</div></div>
+    <div class="meta-item"><div class="meta-label">Session</div><div class="meta-value">60–75 min</div></div>
+    <div class="meta-item"><div class="meta-label">Mission Phase</div><div class="meta-value">Phase 1</div></div>
+    <div class="meta-item"><div class="meta-label">Capstone</div><div class="meta-value">Week 9–10</div></div>
+  </div>
+</header>
+
+  <!-- ROBO WELCOME -->
+  <div class="robo-welcome">
+    <svg class="robo-svg-sm" viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="15" y="30" width="50" height="38" rx="10" fill="#0a1628" stroke="#00cfff" stroke-width="2"/>
+      <rect x="22" y="38" width="36" height="22" rx="6" fill="#0d2040"/>
+      <circle cx="31" cy="49" r="5" fill="#00cfff" opacity="0.9"/>
+      <circle cx="49" cy="49" r="5" fill="#00cfff" opacity="0.9"/>
+      <circle cx="31" cy="49" r="2.5" fill="#001833"/>
+      <circle cx="49" cy="49" r="2.5" fill="#001833"/>
+      <rect x="33" y="20" width="14" height="12" rx="4" fill="#0a1628" stroke="#00cfff" stroke-width="1.5"/>
+      <circle cx="40" cy="16" r="4" fill="#00cfff" opacity="0.8"/>
+      <circle cx="40" cy="16" r="2" fill="#001833"/>
+      <rect x="20" y="68" width="40" height="6" rx="3" fill="#0a1628" stroke="#00cfff" stroke-width="1.5"/>
+      <rect x="10" y="42" width="8" height="16" rx="4" fill="#0a1628" stroke="#00cfff" stroke-width="1.5"/>
+      <rect x="62" y="42" width="8" height="16" rx="4" fill="#0a1628" stroke="#00cfff" stroke-width="1.5"/>
+      <rect x="26" y="74" width="10" height="16" rx="5" fill="#0a1628" stroke="#00cfff" stroke-width="1.5"/>
+      <rect x="44" y="74" width="10" height="16" rx="5" fill="#0a1628" stroke="#00cfff" stroke-width="1.5"/>
+    </svg>
+    <div class="robo-parent-bubble">
+      <div class="robo-bubble-name">ROBO · PARENT BRIEFING</div>
+      Welcome to Q1 — Scratch Crater! This guide gives you everything you need to run great sessions with Aiden. Each week follows a 3-mission structure: <strong>Learn It → Try It → Prove It</strong>. Your job is to sit beside Aiden, ask questions, and celebrate every small win. You don't need to know how to code — curiosity is enough. 🚀
+    </div>
+  </div>
+
+  <!-- CONVERSATION STARTERS -->
+  <div class="convos-panel">
+    <div class="convos-title">💬 CONVERSATION STARTERS · USE ANY TIME</div>
+    <div class="convo-list">
+      <div class="convo-item">What problem is ROBO trying to solve this week?</div>
+      <div class="convo-item">Can you explain what that block does — pretend I'm 5!</div>
+      <div class="convo-item">What do you think will happen if we change this number?</div>
+      <div class="convo-item">How is this like something in real life?</div>
+      <div class="convo-item">What would happen if the rover forgot this step?</div>
+      <div class="convo-item">What's the hardest part? What made it hard?</div>
+      <div class="convo-item">If you were NASA, would you add anything else?</div>
+      <div class="convo-item">What are you most proud of from today?</div>
+    </div>
+  </div>
+
+
+<!-- WEEK NAV -->
+<div class="week-nav">
+  <button class="wn-btn" onclick="showWeek(1,this)">W1</button>
+  <button class="wn-btn" onclick="showWeek(2,this)">W2</button>
+  <button class="wn-btn" onclick="showWeek(3,this)">W3</button>
+  <button class="wn-btn" onclick="showWeek(4,this)">W4</button>
+  <button class="wn-btn" onclick="showWeek(5,this)">W5</button>
+  <button class="wn-btn" onclick="showWeek(6,this)">W6</button>
+  <button class="wn-btn" onclick="showWeek(7,this)">W7</button>
+  <button class="wn-btn" onclick="showWeek(8,this)">W8</button>
+  <button class="wn-btn" onclick="showWeek(9,this)">W9</button>
+  <button class="wn-btn" onclick="showWeek(10,this)">W10</button>
+</div>
+
+<!-- ═══════════════════════════════ WEEK 1 ═══════════════════════════════ -->
+<div class="lesson" id="w1">
+  <div class="lesson-hero stripe-blue">
+    <div class="hero-number">01</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🎬</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 1 · Computational Foundations</div>
+        <div class="hero-title">Sprites, Stage & Events</div>
+        <div class="hero-concept">The rover gets eyes and a body — Aiden meets Scratch for the first time</div>
+        <div class="hero-tags">
+          <span class="tag tag-b">EVENTS</span>
+          <span class="tag tag-b">SEQUENCING</span>
+          <span class="tag tag-b">SPRITES</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Events trigger actions</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Rover boot sequence</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Sprite moves on key press</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Welcome to Training Academy, Rover Pilot. Before we launch to Mars, we have to boot up the rover's operating system. Today you'll teach the rover to listen to commands — when you press a button, the rover <strong>responds</strong>. That's called an event. Events are how every computer program begins."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:05</div><div class="mt-content"><div class="mt-name">Mission Briefing</div><div class="mt-desc">Show Aiden a 60-sec NASA rover video. "What do you think tells it to move?"</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:05–0:15</div><div class="mt-content"><div class="mt-name">Introduce Scratch</div><div class="mt-desc">Open scratch.mit.edu. Tour: Stage, Sprites panel, Block palette. Name each part together.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:15–0:55</div><div class="mt-content"><div class="mt-name">Build: Rover Boot Sequence</div><div class="mt-desc">Choose a rover sprite (rocket or robot). Add "when green flag clicked → say Hello, I'm your rover!" then "move 10 steps." Extend with sounds and looks.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:55–1:05</div><div class="mt-content"><div class="mt-name">Debugging Round</div><div class="mt-desc">Change one block. Ask: "What do you predict happens now?" Run it. Compare.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">Aiden explains the project to you. "What did the rover learn today?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Concepts to Teach</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Sprite</strong> — the character/rover that does things</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Stage</strong> — the world the rover lives in (Mars background)</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Event</strong> — something that causes a reaction ("when flag clicked")</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Sequence</strong> — blocks run top to bottom, in order</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Block categories</strong> — Motion (blue), Events (orange), Looks (purple)</div></div>
+      </div>
+      <div style="margin-top:14px;">
+        <div class="scratch-demo">
+          <div class="scratch-demo-title">Today's Scratch Blocks to Explore</div>
+          <div><span class="scratch-block sb-event">when 🚩 clicked</span></div>
+          <div><span class="scratch-block sb-motion">move (10) steps</span></div>
+          <div><span class="scratch-block sb-looks">say [Hello!] for (2) secs</span></div>
+          <div><span class="scratch-block sb-sound">play sound (meow)</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Before building</div>
+      <div class="script-block">"Before we press anything — what do you think will happen when we click the green flag?"</div>
+      <div class="script-label">When it works</div>
+      <div class="script-block gold">"That's called an event! The green flag is a signal, and the rover heard it. You programmed a response!"</div>
+      <div class="script-label">When something breaks</div>
+      <div class="script-block red">"Interesting — the rover didn't do what we expected. What block do you think controls the movement? Let's find it."</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Aiden can open Scratch and find the block palette without help</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Sprite responds to green flag click with at least one action</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can explain: "When I click the flag, the rover ___"</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Adds at least one block independently without prompting</div></div>
+      </div>
+      <div class="success-bar" style="margin-top:14px;">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Add a second event — "when space key pressed → move 50 steps." Two events, two reactions.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title orange">🏠 Between Sessions (Optional)</div>
+    <div class="li-list">
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Let Aiden show the project to a family member. He explains it.</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Watch: "How Does a Computer Work?" (CS Unplugged YouTube, 5 min)</div></div>
+      <div class="li-item"><div class="li-dot orange">▸</div><div>Ask at dinner: "What's an event that happens in real life? (alarm clock → wake up)" Connect to code.</div></div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w1">
+    <span class="qp-label">Week 1 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--purple))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ WEEK 2 ═══════════════════════════════ -->
+<div class="lesson" id="w2">
+  <div class="lesson-hero stripe-blue">
+    <div class="hero-number">02</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🗺️</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 2 · Computational Foundations</div>
+        <div class="hero-title">Sequencing & Navigation</div>
+        <div class="hero-concept">The rover gets its first mission — navigate a course using precise sequences of commands</div>
+        <div class="hero-tags">
+          <span class="tag tag-b">SEQUENCING</span>
+          <span class="tag tag-b">MOTION</span>
+          <span class="tag tag-gd">ORDER MATTERS</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Order of blocks matters</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Navigate obstacle field</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Rover reaches target by design</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover has landed on Mars — but there's a boulder field between it and the research station. You need to write an <strong>exact sequence of commands</strong> to get it through safely. One wrong step and the mission fails. Plan before you code."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:05</div><div class="mt-content"><div class="mt-name">Debrief Week 1</div><div class="mt-desc">Ask Aiden to open his Week 1 project and explain it to you in 60 seconds.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:05–0:15</div><div class="mt-content"><div class="mt-name">Concept: Sequences</div><div class="mt-desc">Paper activity first: draw a 4×4 grid. "How do I get from A to B in 5 moves?" Aiden writes arrow instructions on paper before touching Scratch.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:15–0:55</div><div class="mt-content"><div class="mt-name">Build: Mars Navigation</div><div class="mt-desc">Set Mars backdrop. Draw boulders with Scratch paint tool. Program exact move/turn sequence to reach a star sprite (the research station). Use degrees for turning.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:55–1:05</div><div class="mt-content"><div class="mt-name">Debug: Wrong Path</div><div class="mt-desc">Ask Aiden to deliberately break one block. Watch what goes wrong. Fix it together using the 5-step protocol.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"Why did the order of the blocks matter today?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Key Lesson: Order Matters</div>
+      <div style="margin-bottom:12px;font-size:13px;color:var(--muted)">The core insight of week 2: swapping blocks changes behavior. Prove it.</div>
+      <div class="scratch-demo">
+        <div class="scratch-demo-title">Version A — Wrong Order</div>
+        <span class="scratch-block sb-motion">turn ↻ (90) degrees</span>
+        <span class="scratch-block sb-motion">move (100) steps</span>
+        <div style="font-size:12px;color:var(--red);margin-top:6px;">→ Rover drives into boulder!</div>
+      </div>
+      <div class="scratch-demo">
+        <div class="scratch-demo-title">Version B — Right Order</div>
+        <span class="scratch-block sb-motion">move (100) steps</span>
+        <span class="scratch-block sb-motion">turn ↻ (90) degrees</span>
+        <div style="font-size:12px;color:var(--green);margin-top:6px;">→ Rover clears boulder, then turns ✓</div>
+      </div>
+      <div style="font-size:13px;color:var(--text);margin-top:10px;">Ask: <em>"What was different? We used the same blocks — just in a different order."</em></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Before coding (paper phase)</div>
+      <div class="script-block">"Before we touch Scratch — can you draw the path on paper first? What are the exact steps the rover needs?"</div>
+      <div class="script-label">When rover goes wrong way</div>
+      <div class="script-block gold">"Interesting data! The rover went right instead of forward. Which block do you think caused that?"</div>
+      <div class="script-label">End of session</div>
+      <div class="script-block green">"If I were a robot with no brain — exactly what would you tell me to do to walk from this chair to the door?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Rover reaches target location through a planned sequence</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Aiden drew or wrote his plan before coding it</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can explain why the order of two specific blocks matters</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Identified which block caused a bug when deliberate error was introduced</div></div>
+      </div>
+      <div class="success-bar" style="margin-top:14px;">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Add a second obstacle. Aiden plans and codes the detour independently.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w2">
+    <span class="qp-label">Week 2 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--purple))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ WEEK 3 ═══════════════════════════════ -->
+<div class="lesson" id="w3">
+  <div class="lesson-hero stripe-purple">
+    <div class="hero-number">03</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🔁</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 3 · Computational Foundations</div>
+        <div class="hero-title">Loops — Repeat Forever</div>
+        <div class="hero-concept">The rover learns to patrol — doing the same thing again and again without being told each time</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">LOOPS</span>
+          <span class="tag tag-p">REPEAT</span>
+          <span class="tag tag-p">FOREVER</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Loops = repeat automatically</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Rover patrol route</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Rover loops patrol without extra blocks</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Mission Control needs the rover to patrol the research perimeter — <strong>over and over</strong> — watching for dust storms. But we can't keep sending it commands. We need the rover to repeat the patrol <strong>on its own</strong>. That's a loop: a superpower that makes computers do repetitive work so we don't have to."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title purple">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:05</div><div class="mt-content"><div class="mt-name">Debrief Week 2</div><div class="mt-desc">Aiden re-runs his navigation mission. "What would happen if we had to do the whole path 10 times?" Show the pain of no loops.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:05–0:15</div><div class="mt-content"><div class="mt-name">Concept: Loops (unplugged)</div><div class="mt-desc">Physical activity: Tell Aiden to clap 5 times. Then: "Now clap until I say stop." Which instruction was easier to give? That's a loop.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:15–0:50</div><div class="mt-content"><div class="mt-name">Build: Patrol Route</div><div class="mt-desc">Start without loops — write 20 blocks for 5 patrol laps. Then delete all and replace with "repeat(5)" or "forever." Feel the power.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:05</div><div class="mt-content"><div class="mt-name">Explore: repeat vs forever</div><div class="mt-desc">What's different? repeat(5) stops. forever never stops. When would you use each? (Patrol vs. always watching for danger)</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"Explain loops to me as if I've never heard the word."</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Concepts to Teach</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>repeat (n)</strong> — do something exactly n times, then stop</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>forever</strong> — do something endlessly until the program stops</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Loop body</strong> — the blocks inside the loop that get repeated</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Why loops matter</strong> — computers are good at repetition; programmers aren't</div></div>
+      </div>
+      <div class="scratch-demo" style="margin-top:12px;">
+        <div class="scratch-demo-title">Without Loop — 20 blocks for 5 laps</div>
+        <span class="scratch-block sb-motion">move 100 steps</span>
+        <span class="scratch-block sb-motion">turn 90°</span>
+        <span class="scratch-block sb-motion">move 100 steps</span>
+        <span class="scratch-block sb-motion">turn 90°</span>
+        <div style="color:var(--muted);font-size:12px;margin-top:4px;">... ×5 more times 😩</div>
+      </div>
+      <div class="scratch-demo">
+        <div class="scratch-demo-title">With Loop — 3 blocks for 5 laps ✨</div>
+        <span class="scratch-block sb-control">repeat (5)</span>
+        <div style="margin-left:16px;">
+          <span class="scratch-block sb-motion">move 100 steps</span>
+          <span class="scratch-block sb-motion">turn 90°</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Introducing loops (unplugged)</div>
+      <div class="script-block">"I want you to take one step forward. Now take another step. Now another… [keep going]. This is annoying, right? What if I could just say 'take 10 steps' once? That's a loop."</div>
+      <div class="script-label">When building repeat block</div>
+      <div class="script-block gold">"Before you run it — how many times do you predict the rover will go around? Let's count together when it runs."</div>
+      <div class="script-label">forever vs repeat</div>
+      <div class="script-block green">"When would you want the rover to patrol forever? When would you want it to stop after 5 times? What's the difference in the mission?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Aiden built the patrol route first without loops (feels the pain)</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Then replaced it with a loop and can explain why it's better</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Predicts correctly how many times rover will loop before running</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can explain the difference between "repeat(5)" and "forever"</div></div>
+      </div>
+      <div class="success-bar" style="margin-top:14px;">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Nest a loop inside a loop — rover spirals outward (patrol expanding perimeters).</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w3">
+    <span class="qp-label">Week 3 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--purple))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ WEEK 4 ═══════════════════════════════ -->
+<div class="lesson" id="w4">
+  <div class="lesson-hero stripe-purple">
+    <div class="hero-number">04</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🔄</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 4 · Computational Foundations</div>
+        <div class="hero-title">Loops — Loop Challenge</div>
+        <div class="hero-concept">Consolidate loops by solving increasingly complex patrol patterns. Mastery through iteration.</div>
+        <div class="hero-tags">
+          <span class="tag tag-p">LOOPS</span>
+          <span class="tag tag-p">PATTERNS</span>
+          <span class="tag tag-gd">MASTERY</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Focus</div><div class="hs-value">Loop mastery challenges</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Geometric patrol patterns</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Draws a square with 4-line loop</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover needs to map the Mars terrain with precise geometric patterns — squares, triangles, hexagons. Each shape can be drawn with a loop. <strong>How few blocks can you use?</strong> Mission Control rewards efficiency."</p>
+  </div>
+
+  <div class="three-col">
+    <div class="box">
+      <div class="box-title purple">🟣 Challenge 1</div>
+      <div style="font-weight:700;color:var(--white);margin-bottom:8px;">Draw a Square</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">Use exactly 1 loop. 4 sides. Each side = 100 steps, each turn = 90°.</div>
+      <div class="scratch-demo">
+        <span class="scratch-block sb-control">repeat (4)</span>
+        <div style="margin-left:16px;">
+          <span class="scratch-block sb-motion">move 100 steps</span>
+          <span class="scratch-block sb-motion">turn 90°</span>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--accent);margin-top:8px;">Ask first: "What number goes in repeat? How do you know?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title purple">🟣 Challenge 2</div>
+      <div style="font-weight:700;color:var(--white);margin-bottom:8px;">Draw a Triangle</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">Same idea, different numbers. 3 sides. Turn angle = 120°. Why 120?</div>
+      <div style="font-size:13px;color:var(--text);padding:8px;background:rgba(255,255,255,0.03);border-radius:8px;">
+        Teach: 360° ÷ number of sides = turn angle.<br><br>
+        Triangle: 360 ÷ 3 = <strong>120°</strong><br>
+        Square: 360 ÷ 4 = <strong>90°</strong>
+      </div>
+      <div style="font-size:12px;color:var(--gold);margin-top:8px;">Let Aiden figure out hexagon (360÷6=60°) on his own.</div>
+    </div>
+    <div class="box">
+      <div class="box-title purple">🟣 Challenge 3</div>
+      <div style="font-weight:700;color:var(--white);margin-bottom:8px;">Draw a Circle (Spiral)</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">Many small moves + small turns = circle. The big reveal: loops can approximate curves.</div>
+      <div class="scratch-demo">
+        <span class="scratch-block sb-control">repeat (36)</span>
+        <div style="margin-left:16px;">
+          <span class="scratch-block sb-motion">move 10 steps</span>
+          <span class="scratch-block sb-motion">turn 10°</span>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--green);margin-top:8px;">Mind-blowing moment: "It's not actually curved — it's 36 tiny straight lines!"</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Before challenge 2</div>
+      <div class="script-block">"Before you touch Scratch — how many sides does a triangle have? So how many times should the loop repeat? And if a full circle is 360°, what's the turn for 3 sides?"</div>
+      <div class="script-label">Discovery moment</div>
+      <div class="script-block gold">"You just used math to program geometry. NASA engineers do exactly this to plan rover paths."</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Draws square using repeat(4) without help</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Calculates triangle turn angle using 360÷3 reasoning</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Attempts hexagon or pentagon independently</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can explain loop body vs. loop count distinction verbally</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w4">
+    <span class="qp-label">Week 4 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--purple))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ WEEK 5 ═══════════════════════════════ -->
+<div class="lesson" id="w5">
+  <div class="lesson-hero stripe-green">
+    <div class="hero-number">05</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🚦</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 5 · Computational Foundations</div>
+        <div class="hero-title">Conditionals — If/Then</div>
+        <div class="hero-concept">The rover gets a brain — it can now make decisions based on what it senses</div>
+        <div class="hero-tags">
+          <span class="tag tag-g">CONDITIONALS</span>
+          <span class="tag tag-g">IF/THEN</span>
+          <span class="tag tag-g">SENSING</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">If condition → action</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Obstacle detection system</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Rover stops when it hits edge</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"The rover is driving autonomously — but what happens when it hits a rock? It needs to <strong>sense</strong> the obstacle and <strong>decide</strong> what to do. That's a conditional: IF something is true, THEN do something. Every smart machine in the world runs on conditionals."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title green">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:05</div><div class="mt-content"><div class="mt-name">Real-life conditionals</div><div class="mt-desc">Ask: "What do you do if it's raining? If you're hungry? If a traffic light is red?" Conditionals are everywhere.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:05–0:15</div><div class="mt-content"><div class="mt-name">Introduce if/then block</div><div class="mt-desc">Show the yellow "if...then" block. Inside goes the condition (sensing). Outside goes the action. Draw it on paper first.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:15–0:50</div><div class="mt-content"><div class="mt-name">Build: Edge Detection</div><div class="mt-desc">"if touching edge → turn 180° and say 'Obstacle detected!'" Wrap in forever loop. Rover now bounces around Mars on its own.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:05</div><div class="mt-content"><div class="mt-name">Extend: Add color sensing</div><div class="mt-desc">Draw a red "danger zone" on Mars backdrop. "if touching color red → stop and flash SOS." Add second conditional.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"What's the difference between the rover always turning vs. only turning when it touches something?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Concepts to Teach</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Condition</strong> — something that's either TRUE or FALSE</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>if...then</strong> — only runs the inner blocks when condition is true</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Sensing blocks</strong> — how the program detects the world (touching edge, touching color, key pressed)</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div><strong>Loop + conditional</strong> — the forever loop keeps checking; conditional decides each time</div></div>
+      </div>
+      <div class="scratch-demo" style="margin-top:12px;">
+        <div class="scratch-demo-title">Rover Obstacle Detection</div>
+        <span class="scratch-block sb-event">when 🚩 clicked</span>
+        <span class="scratch-block sb-control">forever</span>
+        <div style="margin-left:16px;">
+          <span class="scratch-block sb-motion">move 3 steps</span>
+          <span class="scratch-block sb-control">if &lt;touching edge?&gt; then</span>
+          <div style="margin-left:16px;">
+            <span class="scratch-block sb-motion">turn 180°</span>
+            <span class="scratch-block sb-looks">say [Obstacle!] 1 sec</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Building intuition first</div>
+      <div class="script-block">"Before Scratch — I'll walk toward the wall. When should I turn? IF I'm about to hit the wall THEN I turn. That's what we're teaching the rover."</div>
+      <div class="script-label">After it works</div>
+      <div class="script-block gold">"The rover is making a decision on its own now. You didn't tell it to turn at 3 o'clock — you told it the rule. It figured out the rest."</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Rover detects and responds to edge collision autonomously</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can explain: "The if block checks — if true, it does this; if false, it skips"</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Added a second conditional (color detection or key press) independently</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Explains difference between always doing vs. doing only when condition met</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w5">
+    <span class="qp-label">Week 5 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--purple))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ WEEK 6 ═══════════════════════════════ -->
+<div class="lesson" id="w6">
+  <div class="lesson-hero stripe-green">
+    <div class="hero-number">06</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🔀</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 6 · Computational Foundations</div>
+        <div class="hero-title">If/Else — Two-Path Decisions</div>
+        <div class="hero-concept">The rover can now choose between two options — not just react, but decide</div>
+        <div class="hero-tags">
+          <span class="tag tag-g">IF/ELSE</span>
+          <span class="tag tag-g">BRANCHING</span>
+          <span class="tag tag-g">DECISION TREES</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Two branches, one choice</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Day/night mode switching</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Rover behaves differently in 2 conditions</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Mars has day and night. During the day, the rover collects samples. At night, it goes into low-power mode and flashes a beacon. The rover needs to check: <strong>is it day OR night?</strong> And do something DIFFERENT for each. That's if/else — the fork in the road."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title green">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:05</div><div class="mt-content"><div class="mt-name">Debrief + Real-life else</div><div class="mt-desc">"If you're hungry, eat a snack. ELSE, keep playing." Model the full if/else structure verbally before Scratch.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:05–0:15</div><div class="mt-content"><div class="mt-name">if/else block intro</div><div class="mt-desc">Show how the if/else block has two pockets. One for when condition is TRUE, one for FALSE. Compare to if/then which only has one.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:15–0:50</div><div class="mt-content"><div class="mt-name">Build: Day/Night Rover</div><div class="mt-desc">Add a backdrop with day (light) and night (dark). Use a variable "isDay" (true/false) or a key-press toggle. Rover samples during day, beacons at night.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:50–1:05</div><div class="mt-content"><div class="mt-name">Extend: 3-way decision</div><div class="mt-desc">Add a third condition — dust storm! if dustStorm → shelter. Nested if/else preview.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"Draw me the decision tree the rover uses. Show me the forks."</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 The Decision Tree Visual</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">Draw this together on paper before coding:</div>
+      <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;padding:14px;font-family:'Space Mono',monospace;font-size:12px;line-height:2;">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IS IT DAY?<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\<br>
+        &nbsp;&nbsp;YES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO<br>
+        &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|<br>
+        COLLECT&nbsp;&nbsp;BEACON<br>
+        SAMPLES&nbsp;&nbsp;FLASH
+      </div>
+      <div style="font-size:13px;color:var(--text);margin-top:12px;">The key insight: both paths happen — the rover always does SOMETHING. if/then could leave the rover doing nothing half the time.</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Drawing the decision tree</div>
+      <div class="script-block">"Before we code — draw me what the rover should do. If day… draw an arrow. What does it do? Now if NOT day — draw the other arrow. What now?"</div>
+      <div class="script-label">After building</div>
+      <div class="script-block gold">"Your rover can make choices now. Before, it could only react. Now it can decide. What's the difference?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Drew a decision tree on paper before coding</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Rover does different things in two distinct states</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can explain: "The else block runs when the condition is false"</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Distinguishes if/then from if/else unprompted</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w6">
+    <span class="qp-label">Week 6 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--purple))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ WEEK 7 ═══════════════════════════════ -->
+<div class="lesson" id="w7">
+  <div class="lesson-hero stripe-gold">
+    <div class="hero-number">07</div>
+    <div class="hero-top">
+      <div class="hero-emoji">📦</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 7 · Computational Foundations</div>
+        <div class="hero-title">Variables — Rover Telemetry</div>
+        <div class="hero-concept">The rover starts tracking data — fuel, distance, battery — numbers that change over time</div>
+        <div class="hero-tags">
+          <span class="tag tag-gd">VARIABLES</span>
+          <span class="tag tag-gd">DATA</span>
+          <span class="tag tag-gd">COUNTERS</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">One New Concept</div><div class="hs-value">Named boxes that store numbers</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Rover fuel & battery tracker</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">Fuel decreases, rover reacts</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Mission Control is blind — they don't know how much fuel or battery the rover has. We need to build a <strong>telemetry system</strong>: variables that track fuel level, distance traveled, and battery percentage. When fuel hits zero, the rover shuts down. Variables are labeled boxes that hold changing numbers."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title gold">⏱ Session Timeline</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:10</div><div class="mt-content"><div class="mt-name">Physical analogy</div><div class="mt-desc">Get a jar and label it "FUEL." Put 10 beans in it. Each move the rover makes, remove one bean. When empty = shutdown. This is a variable.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:10–0:20</div><div class="mt-content"><div class="mt-name">Create variables in Scratch</div><div class="mt-desc">Variables → Make a variable → "fuel" (set to 100). Show on screen. Set, change, and read the variable. Make fuel show on Stage.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:20–0:55</div><div class="mt-content"><div class="mt-name">Build: Telemetry Dashboard</div><div class="mt-desc">Rover moves in forever loop. Each loop: change fuel by -1. If fuel = 0 → stop all, say "Mission aborted!" Aiden watches the countdown.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:55–1:05</div><div class="mt-content"><div class="mt-name">Extend: Score counter</div><div class="mt-desc">Add a "samples" variable. When rover touches a yellow sprite (sample), samples goes up by 1. Now rover has a goal!</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:05–1:10</div><div class="mt-content"><div class="mt-name">Debrief</div><div class="mt-desc">"What's the variable storing right now? What changes it? What reads it?"</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🧠 Variables = Named Boxes</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:14px;">The mental model that works for 7-year-olds:</div>
+      <div style="background:rgba(255,204,68,0.06);border:1px solid rgba(255,204,68,0.2);border-radius:10px;padding:14px;font-size:13px;">
+        <div style="font-family:'Orbitron',monospace;font-size:11px;color:var(--gold);margin-bottom:8px;">VARIABLE = LABELED BOX</div>
+        📦 Box name: <strong style="color:var(--white)">fuel</strong><br>
+        📦 Contents right now: <strong style="color:var(--white)">87</strong><br>
+        📦 Contents can change: <strong style="color:var(--white)">YES, every loop</strong>
+      </div>
+      <div class="scratch-demo" style="margin-top:12px;">
+        <div class="scratch-demo-title">Telemetry Loop</div>
+        <span class="scratch-block sb-control">forever</span>
+        <div style="margin-left:16px;">
+          <span class="scratch-block sb-motion">move 2 steps</span>
+          <span class="scratch-block sb-vars">change [fuel] by (-1)</span>
+          <span class="scratch-block sb-control">if &lt;fuel = 0&gt; then</span>
+          <div style="margin-left:16px;"><span class="scratch-block sb-control">stop [all]</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Script</div>
+      <div class="script-label">Jar analogy setup</div>
+      <div class="script-block">"This jar is the rover's fuel tank. Each time it moves, it uses fuel. We're going to build a Scratch version of this exact jar. The variable IS the jar."</div>
+      <div class="script-label">When fuel hits 0</div>
+      <div class="script-block gold">"What just happened? Why did it stop? Which block caused that? How would you make it last longer?"</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Created a variable and can explain what it stores</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Fuel variable decrements each loop and triggers shutdown at 0</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can adjust the starting fuel value and predict how long rover runs</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Added a second variable (samples or battery) independently</div></div>
+      </div>
+      <div class="success-bar" style="margin-top:14px;">
+        <div class="sb-icon">🌟</div>
+        <div><strong>Stretch:</strong> Add a "refuel" station sprite. When rover touches it, fuel resets to 100.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w7">
+    <span class="qp-label">Week 7 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--purple))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ WEEK 8 ═══════════════════════════════ -->
+<div class="lesson" id="w8">
+  <div class="lesson-hero stripe-gold">
+    <div class="hero-number">08</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🧩</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 8 · Computational Foundations</div>
+        <div class="hero-title">Integration — All Concepts Together</div>
+        <div class="hero-concept">Loops + Conditionals + Variables working as one system. Rover pre-capstone rehearsal.</div>
+        <div class="hero-tags">
+          <span class="tag tag-gd">INTEGRATION</span>
+          <span class="tag tag-gd">SYSTEMS</span>
+          <span class="tag tag-gd">CAPSTONE PREP</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Focus</div><div class="hs-value">Connect all Q1 concepts</div></div>
+      <div class="hero-stat"><div class="hs-label">Mission Theme</div><div class="hs-value">Autonomous Mars patrol</div></div>
+      <div class="hero-stat"><div class="hs-label">Success Signal</div><div class="hs-value">All three concepts working together</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Pre-mission systems check. Before the big capstone, we build a complete rover brain from scratch — loops make it move continuously, conditionals make decisions, variables track mission status. The rover should be able to <strong>run on its own for 60 seconds</strong> without you touching anything."</p>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title gold">🏗 Integration Build — Full Autonomous Rover</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div style="background:rgba(176,96,255,0.06);border:1px solid rgba(176,96,255,0.2);border-radius:10px;padding:14px;">
+        <div style="font-family:'Orbitron',monospace;font-size:10px;color:var(--purple);margin-bottom:8px;">LOOPS</div>
+        <div style="font-size:13px;color:var(--text);">forever loop keeps rover moving. Repeat(5) to do patrol sweeps.</div>
+      </div>
+      <div style="background:rgba(0,255,153,0.06);border:1px solid rgba(0,255,153,0.2);border-radius:10px;padding:14px;">
+        <div style="font-family:'Orbitron',monospace;font-size:10px;color:var(--green);margin-bottom:8px;">CONDITIONALS</div>
+        <div style="font-size:13px;color:var(--text);">if touching edge → turn. if fuel = 0 → abort. if sample nearby → collect.</div>
+      </div>
+      <div style="background:rgba(255,204,68,0.06);border:1px solid rgba(255,204,68,0.2);border-radius:10px;padding:14px;">
+        <div style="font-family:'Orbitron',monospace;font-size:10px;color:var(--gold);margin-bottom:8px;">VARIABLES</div>
+        <div style="font-size:13px;color:var(--text);">fuel: tracks energy. samples: counts collected. time: counts loops.</div>
+      </div>
+    </div>
+    <div style="margin-top:14px;font-size:13px;color:var(--muted);">Aiden designs this himself. You only ask questions — don't suggest the structure. Let him figure out how to combine them.</div>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title blue">💬 Parent Prompts Only (No Building)</div>
+      <div class="script-block">"How do we make the rover keep moving automatically?" (loops)</div>
+      <div class="script-block gold">"What should happen when it runs out of fuel?" (conditional + variable)</div>
+      <div class="script-block green">"How will we know how many samples it collected?" (variable)</div>
+      <div class="script-block red">"If the rover can see a sample AND has fuel — what should it do?" (compound conditional)</div>
+    </div>
+    <div class="box">
+      <div class="box-title green">✅ Success Criteria</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Rover runs autonomously for 60+ seconds</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>At least one loop, one conditional, one variable each working correctly</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Aiden describes the full system: "The rover loops AND checks AND tracks"</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can identify which concept each part of his code represents</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w8">
+    <span class="qp-label">Week 8 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--purple))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ WEEK 9 ═══════════════════════════════ -->
+<div class="lesson" id="w9">
+  <div class="lesson-hero stripe-red">
+    <div class="hero-number">09</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🚀</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 9 · Capstone Build — Part 1</div>
+        <div class="hero-title">Mars Obstacle Course — Build</div>
+        <div class="hero-concept">Aiden designs and begins building his Q1 capstone project: a complete Mars obstacle course game</div>
+        <div class="hero-tags">
+          <span class="tag tag-b">CAPSTONE</span>
+          <span class="tag tag-b">GAME DESIGN</span>
+          <span class="tag tag-b">CREATIVE FREEDOM</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Type</div><div class="hs-value">Design + Build</div></div>
+      <div class="hero-stat"><div class="hs-label">Aiden's Role</div><div class="hs-value">Lead engineer</div></div>
+      <div class="hero-stat"><div class="hs-label">Your Role</div><div class="hs-value">Mission Control (questions only)</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"This is it — your first real game. Design a Mars Obstacle Course where a player controls the rover and must collect samples before fuel runs out. You've learned everything you need. <strong>You are the engineer. Mission Control will only ask questions.</strong>"</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title red">📋 Required Game Elements</div>
+      <div class="check-list">
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>Rover sprite</strong> controlled by arrow keys</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>Mars backdrop</strong> with obstacles (boulders, craters)</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>Fuel variable</strong> — decreases over time or on collision</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>Samples variable</strong> — increases when rover touches sample sprites</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>Win/lose condition</strong> — message shown when game ends</div></div>
+        <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div><strong>At least one if/else</strong> — e.g., if touching obstacle → lose fuel</div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title gold">🗒 Design Phase (15 min — Paper First)</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">Aiden completes this before opening Scratch:</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot gold">▸</div><div>Draw the Stage layout — where are obstacles? Where do samples spawn?</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div>List your variables: name them, write starting values</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div>Write your win condition and lose condition in words</div></div>
+        <div class="li-item"><div class="li-dot gold">▸</div><div>Draw the if/else decision: what does the rover check, and what does it do each way?</div></div>
+      </div>
+      <div style="font-size:12px;color:var(--accent);margin-top:10px;">No Scratch until the design is on paper. Engineers plan before they build.</div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;">
+    <div class="box-title blue">💬 Mission Control Questions (That's All You Say)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div class="script-block">"What's your win condition? How will the player know they won?"</div>
+      <div class="script-block">"What happens when the fuel reaches zero? Show me the block that handles that."</div>
+      <div class="script-block gold">"Which sprite needs to detect the collision — the rover or the obstacle?"</div>
+      <div class="script-block green">"If you were playing this game, would it be fun? What would make it more exciting?"</div>
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w9">
+    <span class="qp-label">Week 9 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--accent),var(--purple))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ WEEK 10 ═══════════════════════════════ -->
+<div class="lesson" id="w10">
+  <div class="lesson-hero stripe-red">
+    <div class="hero-number">10</div>
+    <div class="hero-top">
+      <div class="hero-emoji">🏆</div>
+      <div class="hero-info">
+        <div class="hero-week">Week 10 · Capstone Complete — Graduation</div>
+        <div class="hero-title">Mars Obstacle Course — Demo Day</div>
+        <div class="hero-concept">Finish, polish, and present. Aiden explains his full project to an audience. Quarter 1 complete.</div>
+        <div class="hero-tags">
+          <span class="tag tag-b">DEMO DAY</span>
+          <span class="tag tag-b">POLISH</span>
+          <span class="tag tag-g">GRADUATION</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-grid">
+      <div class="hero-stat"><div class="hs-label">Goal</div><div class="hs-value">Complete & present</div></div>
+      <div class="hero-stat"><div class="hs-label">Audience</div><div class="hs-value">Family / stuffed animals</div></div>
+      <div class="hero-stat"><div class="hs-label">Aiden Explains</div><div class="hs-value">Every concept used</div></div>
+    </div>
+  </div>
+
+  <div class="mission-brief">
+    <p>"Training Academy graduation. You built a real game from scratch. Today you finish it, polish it, and <strong>present it to Mission Control</strong> (your family). You'll explain every concept you used — loops, conditionals, variables — and what you'd build next. This is what engineers do."</p>
+  </div>
+
+  <div class="two-col">
+    <div class="box">
+      <div class="box-title red">⏱ Final Session Structure</div>
+      <div class="mini-timeline">
+        <div class="mt-row"><div class="mt-time">0:00–0:25</div><div class="mt-content"><div class="mt-name">Final Bug Fixes & Polish</div><div class="mt-desc">Add sound effects, improve backdrop, fix any remaining bugs. Aiden leads all fixes using the 5-step debug protocol independently.</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:25–0:40</div><div class="mt-content"><div class="mt-name">Rehearsal Presentation</div><div class="mt-desc">Aiden presents to you: "Here's my game, here's what each part does, here's what I'm proud of, here's what I'd improve."</div></div></div>
+        <div class="mt-row"><div class="mt-time">0:40–1:00</div><div class="mt-content"><div class="mt-name">Demo Day — Live Audience</div><div class="mt-desc">Invite family. Aiden presents and plays his game live. Audience asks questions. He answers as the expert.</div></div></div>
+        <div class="mt-row"><div class="mt-time">1:00–1:10</div><div class="mt-content"><div class="mt-name">Q1 Graduation</div><div class="mt-desc">Certificate (printable below), review what Aiden learned, preview Quarter 2: "Next we build a REAL robot." 🤖</div></div></div>
+      </div>
+    </div>
+    <div class="box">
+      <div class="box-title green">🎤 Demo Day Presentation Script</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">Aiden should cover all four:</div>
+      <div class="li-list">
+        <div class="li-item"><div class="li-dot green">1.</div><div><strong>"My game is called ___. Here's how you play it."</strong> (Demo the game)</div></div>
+        <div class="li-item"><div class="li-dot green">2.</div><div><strong>"Here's the loop I used and why."</strong> (Show block, explain)</div></div>
+        <div class="li-item"><div class="li-dot green">3.</div><div><strong>"Here's the conditional that makes the rover decide."</strong> (Show block, explain)</div></div>
+        <div class="li-item"><div class="li-dot green">4.</div><div><strong>"I track fuel and samples with variables — here's where."</strong> (Show blocks)</div></div>
+      </div>
+      <div class="success-bar" style="margin-top:12px;">
+        <div class="sb-icon">🏆</div>
+        <div><strong>Graduation criterion:</strong> Aiden explains all three concepts to someone who has never heard of them — without your help.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;background:linear-gradient(135deg,rgba(0,207,255,0.06),rgba(0,255,153,0.06));border-color:rgba(0,207,255,0.25);">
+    <div class="box-title blue">🎓 Q1 Graduation Checklist</div>
+    <div class="check-list">
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Understands events and sequencing (Week 1–2)</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can use loops — repeat and forever — correctly (Week 3–4)</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can write if/then and if/else conditionals (Week 5–6)</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Can create, modify, and read variables (Week 7)</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Built a complete, working game using all concepts (Week 9–10)</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Presented and explained his project to an audience</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Demonstrates debugging composure — stays calm when things break</div></div>
+      <div class="cl-item" onclick="toggleCl(this)"><div class="cl-box">✓</div><div>Shows intrinsic interest — asks to code between sessions</div></div>
+    </div>
+  </div>
+
+  <div class="box" style="margin-bottom:16px;border-color:rgba(255,204,68,0.3);background:rgba(255,204,68,0.04);">
+    <div class="box-title gold">🚀 Preview: Quarter 2</div>
+    <div style="font-size:14px;color:var(--text);line-height:1.7;">
+      "Next quarter, the rover leaves the screen. You'll build a <strong>real, physical robot</strong> using LEGO SPIKE. It will have motors, sensors, and a real brain. Everything you learned in Scratch — loops, conditionals, variables — works the exact same way. The only difference: it'll move in the real world."
+    </div>
+  </div>
+
+  <div class="q-progress" id="prog-w10">
+    <span class="qp-label">Week 10 Progress</span>
+    <div class="qp-bar"><div class="qp-fill" style="width:0%;background:linear-gradient(90deg,var(--green),var(--accent))"></div></div>
+    <span class="qp-pct">0%</span>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<footer>
+  <div class="wrap">
+    AIDEN'S TRAINING ACADEMY · QUARTER 1 · SCRATCH · 10-WEEK CURRICULUM
+  </div>
+</footer>
+
+<script>
+  function showWeek(n, btn) {
+    document.querySelectorAll('.lesson').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.wn-btn').forEach(b => b.classList.remove('active'));
+    const el = document.getElementById('w' + n);
+    if (el) el.classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function updateProgress(weekId) {
+    const lesson = document.getElementById(weekId);
+    if (!lesson) return;
+    const all = lesson.querySelectorAll('.cl-item');
+    const done = lesson.querySelectorAll('.cl-item.done');
+    if (all.length === 0) return;
+    const pct = Math.round((done.length / all.length) * 100);
+
+    // Update the progress bar for this week
+    const prog = document.getElementById('prog-' + weekId);
+    if (prog) {
+      prog.querySelector('.qp-fill').style.width = pct + '%';
+      const pctEl = prog.querySelector('.qp-pct');
+      pctEl.textContent = pct + '%';
+      if (pct === 100) {
+        pctEl.style.color = 'var(--green)';
+        prog.querySelector('.qp-fill').style.background = 'linear-gradient(90deg,var(--green),var(--accent))';
+      } else {
+        pctEl.style.color = 'var(--accent)';
+        prog.querySelector('.qp-fill').style.background = 'linear-gradient(90deg,var(--accent),var(--purple))';
+      }
+    }
+
+    // Mark the nav button green when week is 100% done
+    const weekNum = weekId.replace('w', '');
+    const navBtns = document.querySelectorAll('.wn-btn');
+    const navBtn = navBtns[parseInt(weekNum) - 1];
+    if (navBtn) {
+      if (pct === 100) {
+        navBtn.classList.add('done');
+      } else {
+        navBtn.classList.remove('done');
+      }
+    }
+  }
+
+  function toggleCl(el) {
+    el.classList.toggle('done');
+    const box = el.querySelector('.cl-box');
+    if (el.classList.contains('done')) {
+      box.style.background = 'var(--green)';
+      box.style.borderColor = 'var(--green)';
+      box.style.color = '#000';
+    } else {
+      box.style.background = '';
+      box.style.borderColor = '';
+      box.style.color = '';
+    }
+    // Find which week this item belongs to and update its progress
+    const lesson = el.closest('.lesson');
+    if (lesson) updateProgress(lesson.id);
+  }
+
+  // Start on week 1
+  document.getElementById('w1').classList.add('active');
+  document.querySelector('.wn-btn').classList.add('active');
+</script>
+</body>
+</html>
