@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚀 ROBO Design System · Aiden's Mars Mission</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ────────────────────────────────────── */
+:root {
+  --bg:       #080c18;
+  --surf:     #0e1526;
+  --surf2:    #141e35;
+  --border:   #1e2d4a;
+  --text:     #e8f0ff;
+  --muted:    #4a6080;
+  --q1:       #00cfff;
+  --q2:       #b060ff;
+  --q3:       #00ff99;
+  --q4:       #ff8844;
+  --gold:     #ffcc44;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+/* ── PAGE HEADER ───────────────────────────────── */
+.page-header {
+  background: linear-gradient(135deg, #0d1628 0%, #0a1a40 100%);
+  border-bottom: 2px solid var(--border);
+  padding: 28px 32px 24px;
+  text-align: center;
+}
+.page-header .sys-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.page-header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--q1);
+  text-shadow: 0 0 30px rgba(0,207,255,0.4);
+  letter-spacing: 1px;
+}
+.page-header .subtitle {
+  color: var(--muted);
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+/* ── LAYOUT ────────────────────────────────────── */
+.page-body {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.ds-section {
+  margin-bottom: 60px;
+}
+
+.ds-section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.ds-section-title span {
+  color: var(--q1);
+  margin-right: 8px;
+}
+
+/* ── CARD ──────────────────────────────────────── */
+.card {
+  background: var(--surf);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+}
+
+/* ── GRID ──────────────────────────────────────── */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 680px) {
+  .grid-2, .grid-4 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 420px) {
+  .grid-4 { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════════════════════════════
+   1. ROBO CHARACTER
+══════════════════════════════════════════════════ */
+.robo-showcase {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+@media (max-width: 580px) {
+  .robo-showcase { grid-template-columns: 1fr; }
+}
+
+.robo-stage {
+  background: var(--surf2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px 16px 16px;
+  text-align: center;
+}
+
+/* ROBO SVG */
+.robo-svg {
+  width: 160px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Eye state visibility */
+.eye-state { display: none; }
+.robo-neutral  .eye-neutral     { display: block; }
+.robo-excited  .eye-excited     { display: block; }
+.robo-thinking .eye-thinking    { display: block; }
+.robo-celebrating .eye-celebrating { display: block; }
+
+/* Antenna blinking */
+@keyframes antennaBlink {
+  0%, 85%  { opacity: 1; }
+  90%      { opacity: 0.2; }
+  100%     { opacity: 1; }
+}
+.robo-antenna-dot { animation: antennaBlink 2.4s infinite; }
+
+/* ROBO dance on celebrating */
+@keyframes roboDance {
+  0%   { transform: rotate(0deg) translateY(0); }
+  25%  { transform: rotate(-4deg) translateY(-4px); }
+  50%  { transform: rotate(0deg) translateY(0); }
+  75%  { transform: rotate(4deg) translateY(-4px); }
+  100% { transform: rotate(0deg) translateY(0); }
+}
+.robo-celebrating .robo-svg { animation: roboDance 0.5s infinite; }
+
+/* Thinking wobble */
+@keyframes roboThink {
+  0%, 100% { transform: rotate(0deg); }
+  50%      { transform: rotate(-2deg); }
+}
+.robo-thinking .robo-svg { animation: roboThink 1.2s ease-in-out infinite; }
+
+.robo-speech {
+  margin-top: 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text);
+  min-height: 64px;
+  position: relative;
+}
+.robo-speech::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid var(--border);
+}
+
+.robo-controls {
+  margin-top: 20px;
+}
+.robo-controls h3 {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.mood-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.mood-btn {
+  background: var(--surf2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 8px;
+  cursor: pointer;
+  transition: all 0.18s;
+  text-align: center;
+}
+.mood-btn:hover { border-color: var(--q1); color: var(--q1); }
+.mood-btn.active { border-color: var(--q1); background: rgba(0,207,255,0.08); color: var(--q1); }
+
+.robo-info { font-size: 14px; color: var(--muted); }
+.robo-info p { margin-bottom: 10px; }
+.robo-info strong { color: var(--text); }
+
+/* ══════════════════════════════════════════════════
+   2. SOUND SYSTEM
+══════════════════════════════════════════════════ */
+.sound-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 560px) {
+  .sound-grid { grid-template-columns: 1fr; }
+}
+
+.sound-card {
+  background: var(--surf2);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 24px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.18s;
+  user-select: none;
+}
+.sound-card:hover { border-color: var(--q1); transform: translateY(-2px); }
+.sound-card.playing { border-color: var(--q1); background: rgba(0,207,255,0.07); }
+
+.sound-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+.sound-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--q1);
+  margin-bottom: 6px;
+}
+.sound-when { font-size: 13px; color: var(--muted); }
+
+/* Visualizer bars */
+.sound-viz {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3px;
+  height: 28px;
+  margin-top: 14px;
+}
+.sound-viz .bar {
+  width: 5px;
+  border-radius: 3px;
+  background: var(--q1);
+  height: 4px;
+  transition: height 0.08s;
+}
+.sound-card.playing .bar:nth-child(1) { animation: barPulse 0.3s 0.00s infinite alternate; }
+.sound-card.playing .bar:nth-child(2) { animation: barPulse 0.3s 0.05s infinite alternate; }
+.sound-card.playing .bar:nth-child(3) { animation: barPulse 0.3s 0.10s infinite alternate; }
+.sound-card.playing .bar:nth-child(4) { animation: barPulse 0.3s 0.15s infinite alternate; }
+.sound-card.playing .bar:nth-child(5) { animation: barPulse 0.3s 0.08s infinite alternate; }
+@keyframes barPulse {
+  from { height: 4px; }
+  to   { height: 24px; }
+}
+
+/* ══════════════════════════════════════════════════
+   3. MARS TERRAIN ZONES
+══════════════════════════════════════════════════ */
+.zone-card {
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 18px;
+  position: relative;
+  overflow: hidden;
+  background: var(--surf2);
+}
+.zone-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: 14px 14px 0 0;
+}
+.zone-q1::before { background: var(--q1); }
+.zone-q2::before { background: var(--q2); }
+.zone-q3::before { background: var(--q3); }
+.zone-q4::before { background: var(--q4); }
+
+.zone-icon { font-size: 30px; margin-bottom: 10px; display: block; }
+.zone-q-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.zone-q1 .zone-q-label { color: var(--q1); }
+.zone-q2 .zone-q-label { color: var(--q2); }
+.zone-q3 .zone-q-label { color: var(--q3); }
+.zone-q4 .zone-q-label { color: var(--q4); }
+
+.zone-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--text);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.zone-tool {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.zone-weeks {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Terrain texture (decorative) */
+.zone-terrain {
+  margin-top: 14px;
+  height: 28px;
+  border-radius: 8px;
+  opacity: 0.25;
+}
+.zone-q1 .zone-terrain { background: repeating-linear-gradient(45deg, var(--q1) 0px, var(--q1) 2px, transparent 2px, transparent 8px); }
+.zone-q2 .zone-terrain { background: repeating-radial-gradient(circle at 4px 4px, var(--q2) 0px, var(--q2) 1px, transparent 1px, transparent 8px); }
+.zone-q3 .zone-terrain { background: repeating-linear-gradient(90deg, var(--q3) 0px, var(--q3) 2px, transparent 2px, transparent 8px); }
+.zone-q4 .zone-terrain { background: repeating-linear-gradient(135deg, var(--q4) 0px, var(--q4) 2px, transparent 2px, transparent 8px); }
+
+/* ══════════════════════════════════════════════════
+   4. MINI-MISSION FLOW
+══════════════════════════════════════════════════ */
+.mission-bar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 28px;
+  background: var(--surf2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 20px;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.mission-step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 140px;
+}
+.mission-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: all 0.3s;
+}
+.mission-step.unlocked .mission-dot {
+  border-color: var(--q1);
+  background: rgba(0,207,255,0.12);
+  color: var(--q1);
+}
+.mission-step.done .mission-dot {
+  border-color: var(--q3);
+  background: rgba(0,255,153,0.12);
+  color: var(--q3);
+}
+.mission-step-info { flex: 1; }
+.mission-step-label {
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.mission-step.unlocked .mission-step-label { color: var(--q1); }
+.mission-step.done .mission-step-label { color: var(--q3); }
+
+.mission-step-title {
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--muted);
+  transition: color 0.3s;
+}
+.mission-step.unlocked .mission-step-title { color: var(--text); }
+.mission-step.done .mission-step-title { color: var(--q3); }
+
+.mission-connector {
+  width: 30px;
+  height: 2px;
+  background: var(--border);
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+.mission-connector.lit { background: var(--q1); }
+
+/* Mission panels */
+.mission-panel {
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  transition: all 0.3s;
+}
+.mission-panel.locked {
+  opacity: 0.4;
+  filter: blur(1px);
+  pointer-events: none;
+}
+.mission-panel.unlocked {
+  border-color: var(--q1);
+  opacity: 1;
+  filter: none;
+}
+.mission-panel.done {
+  border-color: var(--q3);
+  opacity: 1;
+  filter: none;
+}
+
+.mission-panel-header {
+  padding: 14px 20px;
+  background: var(--surf2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.mission-panel-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  color: var(--muted);
+}
+.mission-panel.unlocked .mission-panel-title { color: var(--q1); }
+.mission-panel.done .mission-panel-title { color: var(--q3); }
+
+.mission-lock-icon { font-size: 18px; }
+.mission-panel-body {
+  padding: 20px;
+  background: var(--surf);
+  font-size: 15px;
+  color: var(--muted);
+}
+.mission-panel.unlocked .mission-panel-body,
+.mission-panel.done .mission-panel-body { color: var(--text); }
+
+.time-badge {
+  background: rgba(255,204,68,0.12);
+  border: 1px solid rgba(255,204,68,0.3);
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 14px;
+}
+
+.break-prompt {
+  background: rgba(0,255,153,0.07);
+  border: 1.5px solid rgba(0,255,153,0.25);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--q3);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.hint-section { margin-top: 14px; }
+.hint-btn {
+  background: rgba(176,96,255,0.1);
+  border: 1.5px solid rgba(176,96,255,0.3);
+  color: var(--q2);
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.hint-btn:hover { background: rgba(176,96,255,0.2); }
+.hint-text {
+  background: var(--surf2);
+  border-left: 3px solid var(--q2);
+  padding: 10px 14px;
+  margin-top: 10px;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  display: none;
+}
+.hint-text.visible { display: block; }
+
+.complete-btn {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 12px 28px;
+  background: var(--q1);
+  color: #000;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-weight: 900;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: 0.5px;
+}
+.complete-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,207,255,0.3); }
+.complete-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+.complete-btn.green { background: var(--q3); }
+.complete-btn.green:hover { box-shadow: 0 6px 20px rgba(0,255,153,0.3); }
+
+/* ══════════════════════════════════════════════════
+   5. CELEBRATION + MISSION PATCH
+══════════════════════════════════════════════════ */
+.celebration-demo {
+  text-align: center;
+}
+
+/* Confetti */
+#confetti-container {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+.confetti-dot {
+  position: absolute;
+  top: -20px;
+  border-radius: 3px;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+.trigger-btn {
+  display: inline-block;
+  padding: 16px 36px;
+  background: linear-gradient(135deg, var(--q2), var(--q1));
+  color: #000;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 32px;
+}
+.trigger-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(176,96,255,0.4); }
+
+/* Mission Patch */
+.patch-preview {
+  max-width: 320px;
+  margin: 0 auto;
+  background: linear-gradient(145deg, #0e1a35, #162040);
+  border: 3px solid var(--q1);
+  border-radius: 20px;
+  padding: 28px 24px 24px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(0,207,255,0.2), inset 0 0 40px rgba(0,0,0,0.3);
+  position: relative;
+}
+.patch-preview::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(0,207,255,0.2);
+  border-radius: 15px;
+  pointer-events: none;
+}
+
+.patch-corner-star {
+  position: absolute;
+  font-size: 20px;
+}
+.patch-corner-star:nth-child(1) { top: 12px; left: 14px; }
+.patch-corner-star:nth-child(2) { top: 12px; right: 14px; }
+
+.patch-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--q1);
+  margin-bottom: 4px;
+}
+.patch-codename {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+.patch-robo { font-size: 56px; margin-bottom: 8px; display: block; }
+.patch-skill {
+  background: rgba(0,207,255,0.1);
+  border: 1px solid rgba(0,207,255,0.3);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--q1);
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.patch-name {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.patch-week {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.patch-stars { font-size: 22px; letter-spacing: 4px; }
+
+.print-btn {
+  margin-top: 20px;
+  padding: 10px 22px;
+  background: transparent;
+  border: 1.5px solid var(--q1);
+  color: var(--q1);
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.print-btn:hover { background: rgba(0,207,255,0.1); }
+
+/* ── UTILITY ───────────────────────────────────── */
+.pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+}
+.pill-cyan { background: rgba(0,207,255,0.12); color: var(--q1); border: 1px solid rgba(0,207,255,0.3); }
+.pill-green { background: rgba(0,255,153,0.12); color: var(--q3); border: 1px solid rgba(0,255,153,0.3); }
+
+.note-box {
+  background: rgba(255,204,68,0.07);
+  border: 1px solid rgba(255,204,68,0.2);
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--gold);
+  margin-top: 16px;
+}
+</style>
+</head>
+<body>
+
+<!-- ── CONFETTI CONTAINER ── -->
+<div id="confetti-container"></div>
+
+<!-- ── PAGE HEADER ── -->
+<div class="page-header">
+  <div class="sys-label">Phase 1 · Design System Prototype</div>
+  <h1>ROBO Design System</h1>
+  <p class="subtitle">Aiden's Mars Mission · Engagement-First Rebuild · Approve before rebuilding all 45 pages</p>
+</div>
+
+<div class="page-body">
+
+  <!-- ══════════════════════════════════════════
+       SECTION 1: ROBO CHARACTER
+  ══════════════════════════════════════════ -->
+  <div class="ds-section">
+    <div class="ds-section-title"><span>01</span> ROBO the Rover — Character & Expressions</div>
+
+    <div class="card">
+      <div class="robo-showcase">
+
+        <!-- ROBO Stage -->
+        <div>
+          <div class="robo-stage">
+            <!-- ROBO SVG Character -->
+            <svg id="robo-svg" class="robo-svg robo-neutral" viewBox="0 0 160 210" xmlns="http://www.w3.org/2000/svg">
+
+              <!-- Antenna -->
+              <line x1="80" y1="18" x2="80" y2="42" stroke="#3a5580" stroke-width="3" stroke-linecap="round"/>
+              <circle class="robo-antenna-dot" cx="80" cy="12" r="7" fill="#00cfff"/>
+              <circle cx="80" cy="12" r="3.5" fill="white" opacity="0.5"/>
+
+              <!-- Solar panel LEFT -->
+              <rect x="4" y="62" width="30" height="11" rx="3" fill="#0d1630" stroke="#1a3060" stroke-width="1.5"/>
+              <line x1="14" y1="62" x2="14" y2="73" stroke="#1a3060" stroke-width="1"/>
+              <line x1="24" y1="62" x2="24" y2="73" stroke="#1a3060" stroke-width="1"/>
+              <line x1="4"  y1="67.5" x2="34" y2="67.5" stroke="#1a3060" stroke-width="1"/>
+              <rect x="34" y="65" width="12" height="3" rx="1.5" fill="#243a60"/>
+
+              <!-- Solar panel RIGHT -->
+              <rect x="126" y="62" width="30" height="11" rx="3" fill="#0d1630" stroke="#1a3060" stroke-width="1.5"/>
+              <line x1="136" y1="62" x2="136" y2="73" stroke="#1a3060" stroke-width="1"/>
+              <line x1="146" y1="62" x2="146" y2="73" stroke="#1a3060" stroke-width="1"/>
+              <line x1="126" y1="67.5" x2="156" y2="67.5" stroke="#1a3060" stroke-width="1"/>
+              <rect x="114" y="65" width="12" height="3" rx="1.5" fill="#243a60"/>
+
+              <!-- Main body -->
+              <rect x="38" y="42" width="84" height="88" rx="14" fill="#162040" stroke="#2a4070" stroke-width="2"/>
+
+              <!-- Camera mast / neck -->
+              <rect x="68" y="28" width="24" height="22" rx="5" fill="#1a2a50" stroke="#2a4070" stroke-width="1.5"/>
+
+              <!-- ── NEUTRAL EYE ── -->
+              <g class="eye-state eye-neutral">
+                <circle cx="80" cy="80" r="26" fill="#060c1a" stroke="#1e3060" stroke-width="2"/>
+                <circle cx="80" cy="80" r="18" fill="#00cfff" opacity="0.92"/>
+                <circle cx="80" cy="80" r="10" fill="#030810"/>
+                <circle cx="86" cy="74" r="5" fill="white" opacity="0.45"/>
+                <circle cx="76" cy="88" r="2" fill="white" opacity="0.2"/>
+              </g>
+
+              <!-- ── EXCITED EYE ── -->
+              <g class="eye-state eye-excited">
+                <circle cx="80" cy="80" r="26" fill="#060c1a" stroke="#1e3060" stroke-width="2"/>
+                <circle cx="80" cy="80" r="22" fill="#ffcc44" opacity="0.95"/>
+                <circle cx="80" cy="77" r="8" fill="#030810"/>
+                <circle cx="84" cy="73" r="5" fill="white" opacity="0.55"/>
+                <text x="52" y="62" font-size="13" fill="#ffcc44" opacity="0.9">✦</text>
+                <text x="101" y="62" font-size="13" fill="#ffcc44" opacity="0.9">✦</text>
+                <text x="47" y="105" font-size="10" fill="#ffcc44" opacity="0.6">✦</text>
+                <text x="108" y="105" font-size="10" fill="#ffcc44" opacity="0.6">✦</text>
+              </g>
+
+              <!-- ── THINKING EYE ── -->
+              <g class="eye-state eye-thinking">
+                <circle cx="80" cy="80" r="26" fill="#060c1a" stroke="#1e3060" stroke-width="2"/>
+                <circle cx="80" cy="80" r="18" fill="#b060ff" opacity="0.9"/>
+                <circle cx="73" cy="80" r="10" fill="#030810"/>
+                <circle cx="77" cy="74" r="4" fill="white" opacity="0.45"/>
+                <!-- Raised eyebrow -->
+                <path d="M58 60 Q80 53 102 60" stroke="#b060ff" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <text x="50" y="76" font-size="13" fill="#b060ff" opacity="0.7">?</text>
+                <text x="104" y="73" font-size="10" fill="#b060ff" opacity="0.5">?</text>
+              </g>
+
+              <!-- ── CELEBRATING EYE ── -->
+              <g class="eye-state eye-celebrating">
+                <circle cx="80" cy="80" r="26" fill="#060c1a" stroke="#1e3060" stroke-width="2"/>
+                <!-- Star iris -->
+                <polygon points="80,59 83,72 96,74 87,83 90,96 80,89 70,96 73,83 64,74 77,72" fill="#00ff99" opacity="0.95"/>
+                <polygon points="80,65 82,75 91,76 85,82 87,91 80,87 73,91 75,82 69,76 78,75" fill="#030810"/>
+                <circle cx="83" cy="72" r="3" fill="white" opacity="0.6"/>
+                <text x="46" y="64" font-size="15" fill="#ffcc44">⭐</text>
+                <text x="104" y="64" font-size="15" fill="#ffcc44">⭐</text>
+                <text x="50" y="106" font-size="11" fill="#ff8844">✨</text>
+                <text x="103" y="106" font-size="11" fill="#ff8844">✨</text>
+              </g>
+
+              <!-- Body bottom panel -->
+              <rect x="52" y="114" width="56" height="11" rx="4" fill="#0d1530" stroke="#1a2a50" stroke-width="1"/>
+              <!-- Status lights -->
+              <circle cx="65"  cy="119.5" r="3" fill="#00ff99"/>
+              <circle cx="77"  cy="119.5" r="3" fill="#ffcc44"/>
+              <circle cx="89"  cy="119.5" r="3" fill="#2a3a60"/>
+              <circle cx="101" cy="119.5" r="3" fill="#2a3a60"/>
+
+              <!-- Body base stripe -->
+              <rect x="38" y="125" width="84" height="5" rx="0" fill="#1e3060"/>
+
+              <!-- WHEELS — left column -->
+              <ellipse cx="50" cy="150" rx="15" ry="11" fill="#0e1a30" stroke="#2a3a5a" stroke-width="2"/>
+              <ellipse cx="50" cy="150" rx="8"  ry="6"  fill="#152030"/>
+              <line x1="35" y1="150" x2="65" y2="150" stroke="#2a3a5a" stroke-width="1.5"/>
+              <line x1="50" y1="139" x2="50" y2="161" stroke="#2a3a5a" stroke-width="1.5"/>
+
+              <ellipse cx="50" cy="175" rx="15" ry="11" fill="#0e1a30" stroke="#2a3a5a" stroke-width="2"/>
+              <ellipse cx="50" cy="175" rx="8"  ry="6"  fill="#152030"/>
+              <line x1="35" y1="175" x2="65" y2="175" stroke="#2a3a5a" stroke-width="1.5"/>
+              <line x1="50" y1="164" x2="50" y2="186" stroke="#2a3a5a" stroke-width="1.5"/>
+
+              <!-- WHEELS — right column -->
+              <ellipse cx="110" cy="150" rx="15" ry="11" fill="#0e1a30" stroke="#2a3a5a" stroke-width="2"/>
+              <ellipse cx="110" cy="150" rx="8"  ry="6"  fill="#152030"/>
+              <line x1="95"  y1="150" x2="125" y2="150" stroke="#2a3a5a" stroke-width="1.5"/>
+              <line x1="110" y1="139" x2="110" y2="161" stroke="#2a3a5a" stroke-width="1.5"/>
+
+              <ellipse cx="110" cy="175" rx="15" ry="11" fill="#0e1a30" stroke="#2a3a5a" stroke-width="2"/>
+              <ellipse cx="110" cy="175" rx="8"  ry="6"  fill="#152030"/>
+              <line x1="95"  y1="175" x2="125" y2="175" stroke="#2a3a5a" stroke-width="1.5"/>
+              <line x1="110" y1="164" x2="110" y2="186" stroke="#2a3a5a" stroke-width="1.5"/>
+
+              <!-- Body connector to wheels -->
+              <rect x="38" y="130" width="12" height="26" rx="3" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
+              <rect x="110" y="130" width="12" height="26" rx="3" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
+
+              <!-- Ground shadow -->
+              <ellipse cx="80" cy="200" rx="55" ry="5" fill="#000" opacity="0.3"/>
+
+            </svg>
+
+            <!-- Speech bubble -->
+            <div class="robo-speech" id="robo-speech">
+              Ready for today's mission, Aiden! 🚀
+            </div>
+          </div>
+
+          <!-- Mood buttons -->
+          <div style="margin-top:16px;">
+            <div style="font-size:12px;color:var(--muted);text-align:center;margin-bottom:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;">ROBO's Mood</div>
+            <div class="mood-btns">
+              <button class="mood-btn active" onclick="setMood('neutral')">😐 Neutral</button>
+              <button class="mood-btn" onclick="setMood('excited')">🤩 Excited</button>
+              <button class="mood-btn" onclick="setMood('thinking')">🤔 Thinking</button>
+              <button class="mood-btn" onclick="setMood('celebrating')">🎉 Celebrating</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right info panel -->
+        <div class="robo-info">
+          <p><strong>ROBO</strong> is a named rover character who lives on every lesson page and reacts to what Aiden does. ROBO replaces the generic emoji theming with a consistent personality kids can follow week to week.</p>
+
+          <p>Each lesson opens with a short <strong>comic-style panel</strong> showing ROBO in trouble on Mars. Aiden's code is what saves him — making every lesson feel consequential, not like homework.</p>
+
+          <p>ROBO's expressions are <strong>pure SVG + CSS</strong> — zero external images, zero loading time. The 4 states map directly to lesson phases:</p>
+
+          <div style="display:grid;gap:10px;margin:16px 0;">
+            <div style="background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;">😐</span>
+              <div><strong style="display:block;font-size:14px;">Neutral</strong><span style="font-size:13px;color:var(--muted);">Page load, between missions</span></div>
+            </div>
+            <div style="background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;">🤩</span>
+              <div><strong style="display:block;font-size:14px;">Excited</strong><span style="font-size:13px;color:var(--muted);">Try It phase — code time!</span></div>
+            </div>
+            <div style="background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;">🤔</span>
+              <div><strong style="display:block;font-size:14px;">Thinking</strong><span style="font-size:13px;color:var(--muted);">Learn It phase — "process this..."</span></div>
+            </div>
+            <div style="background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:flex;gap:12px;align-items:center;">
+              <span style="font-size:22px;">🎉</span>
+              <div><strong style="display:block;font-size:14px;">Celebrating</strong><span style="font-size:13px;color:var(--muted);">All checkboxes done — dances on screen!</span></div>
+            </div>
+          </div>
+
+          <div class="note-box">💡 ROBO also has a unique weekly <strong>quote</strong> that continues the Mars story arc. By Week 40, Aiden will have followed ROBO's full journey across the planet.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 2: SOUND SYSTEM
+  ══════════════════════════════════════════ -->
+  <div class="ds-section">
+    <div class="ds-section-title"><span>02</span> Sound System — Click to Test</div>
+
+    <div class="sound-grid">
+      <div class="sound-card" onclick="playBlip(this)">
+        <span class="sound-icon">✅</span>
+        <div class="sound-name">BLIP</div>
+        <div class="sound-when">Plays when a checkbox is ticked</div>
+        <div class="sound-viz">
+          <div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+      </div>
+
+      <div class="sound-card" onclick="playChime(this)">
+        <span class="sound-icon">🎯</span>
+        <div class="sound-name">CHIME</div>
+        <div class="sound-when">Plays when a mini-mission unlocks</div>
+        <div class="sound-viz">
+          <div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+      </div>
+
+      <div class="sound-card" onclick="playFanfare(this)">
+        <span class="sound-icon">🏆</span>
+        <div class="sound-name">FANFARE</div>
+        <div class="sound-when">Plays when all missions complete</div>
+        <div class="sound-viz">
+          <div class="bar"></div><div class="bar"></div>
+          <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note-box" style="margin-top:16px;">
+      🔇 All sounds use the browser's built-in <strong>Web Audio API</strong> — no audio files, no loading. Parent can always mute their browser tab. Sounds are respectfully subtle; not jarring.
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 3: MARS TERRAIN ZONES
+  ══════════════════════════════════════════ -->
+  <div class="ds-section">
+    <div class="ds-section-title"><span>03</span> Mars Terrain Zones — One Per Quarter</div>
+
+    <div class="grid-4">
+      <div class="zone-card zone-q1">
+        <span class="zone-icon">🛸</span>
+        <div class="zone-q-label">Q1 · Weeks 1–10</div>
+        <div class="zone-name">Scratch Crater</div>
+        <div class="zone-tool">🎨 Scratch · Block coding</div>
+        <div class="zone-weeks">10 landing pads</div>
+        <div class="zone-terrain"></div>
+      </div>
+
+      <div class="zone-card zone-q2">
+        <span class="zone-icon">🤖</span>
+        <div class="zone-q-label">Q2 · Weeks 11–20</div>
+        <div class="zone-name">SPIKE Valley</div>
+        <div class="zone-tool">🧱 LEGO SPIKE Prime</div>
+        <div class="zone-weeks">10 landing pads</div>
+        <div class="zone-terrain"></div>
+      </div>
+
+      <div class="zone-card zone-q3">
+        <span class="zone-icon">🐍</span>
+        <div class="zone-q-label">Q3 · Weeks 21–30</div>
+        <div class="zone-name">Python Plains</div>
+        <div class="zone-tool">🐍 Python · Text coding</div>
+        <div class="zone-weeks">10 landing pads</div>
+        <div class="zone-terrain"></div>
+      </div>
+
+      <div class="zone-card zone-q4">
+        <span class="zone-icon">⚡</span>
+        <div class="zone-q-label">Q4 · Weeks 31–40</div>
+        <div class="zone-name">Arduino Peaks</div>
+        <div class="zone-tool">⚡ Arduino · Hardware</div>
+        <div class="zone-weeks">10 landing pads</div>
+        <div class="zone-terrain"></div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;background:var(--surf);border:1px solid var(--border);border-radius:14px;padding:20px 24px;">
+      <div style="font-size:14px;font-weight:700;margin-bottom:8px;color:var(--q1);">📍 Mars Map Dashboard</div>
+      <p style="font-size:14px;color:var(--muted);">The master dashboard replaces the current progress table with a <strong style="color:var(--text)">top-down Mars terrain map</strong>. Each zone is a different visual region. Week nodes are landing pads — completed ones show Aiden's mission patch, the current one pulses as a beacon, future ones are dim/locked. The rover leaves tire tracks as it moves across the planet.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 4: MINI-MISSION FLOW
+  ══════════════════════════════════════════ -->
+  <div class="ds-section">
+    <div class="ds-section-title"><span>04</span> Mini-Mission Flow — Interactive Demo</div>
+
+    <!-- Progress bar -->
+    <div class="mission-bar">
+      <div class="mission-step unlocked" id="step1">
+        <div class="mission-dot">1</div>
+        <div class="mission-step-info">
+          <div class="mission-step-label">Learn It</div>
+          <div class="mission-step-title">~5 min</div>
+        </div>
+      </div>
+      <div class="mission-connector" id="conn1"></div>
+      <div class="mission-step locked" id="step2">
+        <div class="mission-dot">2</div>
+        <div class="mission-step-info">
+          <div class="mission-step-label">Try It</div>
+          <div class="mission-step-title">~7 min</div>
+        </div>
+      </div>
+      <div class="mission-connector" id="conn2"></div>
+      <div class="mission-step locked" id="step3">
+        <div class="mission-dot">3</div>
+        <div class="mission-step-info">
+          <div class="mission-step-label">Prove It</div>
+          <div class="mission-step-title">~3 min</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mission 1 -->
+    <div class="mission-panel unlocked" id="panel1">
+      <div class="mission-panel-header">
+        <div class="mission-panel-title">🔴 MISSION 1 — LEARN IT</div>
+        <div><span class="pill pill-cyan">UNLOCKED</span></div>
+      </div>
+      <div class="mission-panel-body">
+        <div class="time-badge">⏱ About 5 minutes</div>
+        <p style="margin-bottom:14px;">ROBO's camera sensor stopped working! He can't see anything on Mars. To fix it, Aiden needs to learn how <strong>sprites</strong> and <strong>events</strong> work in Scratch...</p>
+        <p style="margin-bottom:14px;font-size:14px;color:var(--muted);">[ Lesson content: diagrams, explanation, ROBO "thinking" expression ]</p>
+        <button class="complete-btn" onclick="completeM1()">Got it! ✓ Unlock Mission 2 →</button>
+      </div>
+    </div>
+
+    <!-- Mission 2 -->
+    <div class="mission-panel locked" id="panel2">
+      <div class="mission-panel-header">
+        <div class="mission-panel-title">🟡 MISSION 2 — TRY IT</div>
+        <div><span id="badge2" class="pill" style="background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid var(--border);">🔒 LOCKED</span></div>
+      </div>
+      <div class="mission-panel-body">
+        <div class="time-badge">⏱ About 7 minutes</div>
+        <p style="margin-bottom:16px;">Time to code! Open Scratch and build the block sequence. ROBO is watching — he gets excited when you code! 🤩</p>
+        <p style="margin-bottom:14px;font-size:14px;color:var(--muted);">[ Two-column Try This: instructions left, block sequence right ]</p>
+
+        <div class="hint-section">
+          <button class="hint-btn" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
+          <div class="hint-text" id="hint1">🌟 <strong>Hint 1:</strong> Check the block colours — Events blocks are yellow. Look in the yellow section of the palette!</div>
+
+          <button class="hint-btn" style="margin-top:8px;display:none" id="hintbtn2" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
+          <div class="hint-text" id="hint2">🌟 <strong>Hint 2:</strong> The "When flag clicked" block should be the very first block at the TOP of your stack.</div>
+
+          <button class="hint-btn" style="margin-top:8px;display:none" id="hintbtn3" onclick="showHint(3)">💡 One More Hint</button>
+          <div class="hint-text" id="hint3">🌟 <strong>Full answer:</strong> No worries — ROBO needed a hint too the first time! <em>When flag clicked → move 10 steps → wait 1 sec → repeat 5</em>. Try it and you'll see the sprite move!</div>
+        </div>
+
+        <button class="complete-btn" id="m2btn" style="margin-top:16px;" onclick="completeM2()" disabled>Done! ✓ Unlock Mission 3 →</button>
+        <div style="margin-top:8px;font-size:12px;color:var(--muted);">↑ Click after you've tried the code in Scratch</div>
+      </div>
+    </div>
+
+    <!-- Break prompt (between M2 and M3) -->
+    <div class="break-prompt" id="break-prompt" style="display:none;">
+      🌟 Amazing work, Aiden! Stand up and do 5 big jumps — then come back for your final mission! ROBO is waiting! 🚀
+    </div>
+
+    <!-- Mission 3 -->
+    <div class="mission-panel locked" id="panel3">
+      <div class="mission-panel-header">
+        <div class="mission-panel-title">🟢 MISSION 3 — PROVE IT</div>
+        <div><span id="badge3" class="pill" style="background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid var(--border);">🔒 LOCKED</span></div>
+      </div>
+      <div class="mission-panel-body">
+        <div class="time-badge">⏱ About 3 minutes</div>
+        <p style="margin-bottom:16px;">Almost done! Tick each box as you complete it — ROBO will celebrate when you finish! 🎉</p>
+
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;" id="demo-checks">
+          <div class="demo-cl" onclick="toggleDemoCl(this)" style="display:flex;align-items:center;gap:12px;cursor:pointer;background:var(--surf2);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;transition:all 0.2s;">
+            <div style="width:28px;height:28px;border:2.5px solid #3a5a80;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#00ff99;transition:all 0.2s;"></div>
+            <span style="font-size:15px;">I added a sprite to the Scratch stage</span>
+          </div>
+          <div class="demo-cl" onclick="toggleDemoCl(this)" style="display:flex;align-items:center;gap:12px;cursor:pointer;background:var(--surf2);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;transition:all 0.2s;">
+            <div style="width:28px;height:28px;border:2.5px solid #3a5a80;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#00ff99;transition:all 0.2s;"></div>
+            <span style="font-size:15px;">I used a "When flag clicked" event</span>
+          </div>
+          <div class="demo-cl" onclick="toggleDemoCl(this)" style="display:flex;align-items:center;gap:12px;cursor:pointer;background:var(--surf2);border:1.5px solid var(--border);border-radius:10px;padding:12px 16px;transition:all 0.2s;">
+            <div style="width:28px;height:28px;border:2.5px solid #3a5a80;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#00ff99;transition:all 0.2s;"></div>
+            <span style="font-size:15px;">My sprite actually moved! 🚀</span>
+          </div>
+        </div>
+
+        <p id="all-done-msg" style="display:none;color:var(--q3);font-weight:900;font-size:16px;margin-bottom:8px;">🎉 ROBO's camera is fixed! Mission complete!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 5: CELEBRATION + MISSION PATCH
+  ══════════════════════════════════════════ -->
+  <div class="ds-section">
+    <div class="ds-section-title"><span>05</span> Celebration System + Printable Mission Patch</div>
+
+    <div class="grid-2" style="align-items:start;">
+      <div class="card">
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;">🎊 Lesson Complete Celebration</div>
+        <p style="font-size:14px;color:var(--muted);margin-bottom:20px;">When all 3 missions finish: ROBO dances (CSS animation), confetti bursts across the full screen, fanfare plays, and the mission patch is revealed below. Try it:</p>
+
+        <div class="celebration-demo">
+          <button class="trigger-btn" onclick="triggerCelebration()">
+            🚀 SIMULATE LESSON COMPLETE!
+          </button>
+        </div>
+
+        <div style="margin-top:4px;">
+          <div style="font-size:13px;color:var(--muted);margin-bottom:10px;font-weight:700;">What happens automatically:</div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;gap:10px;align-items:center;font-size:14px;">
+              <span style="color:var(--q3);font-size:16px;">✓</span> ROBO switches to celebrating expression + dances
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;font-size:14px;">
+              <span style="color:var(--q3);font-size:16px;">✓</span> Confetti burst fills the screen (60 coloured dots)
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;font-size:14px;">
+              <span style="color:var(--q3);font-size:16px;">✓</span> Fanfare sound plays (3 ascending chords)
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;font-size:14px;">
+              <span style="color:var(--q3);font-size:16px;">✓</span> Mission patch appears with print button
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;font-size:14px;">
+              <span style="color:var(--q3);font-size:16px;">✓</span> Progress saved to localStorage for dashboard
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:16px;">🏅 Printable Mission Patch</div>
+        <div class="patch-preview" id="patch-preview">
+          <span class="patch-corner-star">⭐</span>
+          <span class="patch-corner-star">⭐</span>
+
+          <div class="patch-title">MARS MISSION · CERTIFIED</div>
+          <div class="patch-codename">Sprites, Stage<br>&amp; Events</div>
+          <span class="patch-robo">🛸</span>
+          <div class="patch-skill">Scratch Coding · Week 1</div>
+          <div class="patch-name">AIDEN</div>
+          <div class="patch-week">Q1 · SCRATCH CRATER · WEEK 1 OF 10</div>
+          <div class="patch-stars">⭐⭐⭐</div>
+
+          <button class="print-btn" onclick="window.print()">🖨️ Print This Patch</button>
+        </div>
+
+        <div class="note-box" style="margin-top:16px;">
+          📌 By Week 40, Aiden has a collection of 40 patches — one for every mission. Put them on the fridge, make a poster, or keep a scrapbook!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       SECTION 6: WHAT'S NEXT
+  ══════════════════════════════════════════ -->
+  <div class="ds-section">
+    <div class="ds-section-title"><span>06</span> Approval → Next Phases</div>
+    <div class="card">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;">
+        <div style="background:var(--surf2);border:1px solid rgba(0,207,255,0.3);border-radius:12px;padding:18px;">
+          <div style="color:var(--q1);font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:2px;margin-bottom:8px;">PHASE 2</div>
+          <div style="font-weight:900;font-size:15px;margin-bottom:6px;">Mars Map Dashboard</div>
+          <div style="font-size:13px;color:var(--muted);">Replace progress table with SVG Mars terrain map + rover tracker</div>
+        </div>
+        <div style="background:var(--surf2);border:1px solid var(--border);border-radius:12px;padding:18px;">
+          <div style="color:var(--muted);font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:2px;margin-bottom:8px;">PHASE 3</div>
+          <div style="font-weight:900;font-size:15px;margin-bottom:6px;">Q1 W1 Prototype</div>
+          <div style="font-size:13px;color:var(--muted);">Rebuild one lesson with ROBO + mini-missions + sounds + patch</div>
+        </div>
+        <div style="background:var(--surf2);border:1px solid var(--border);border-radius:12px;padding:18px;">
+          <div style="color:var(--muted);font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:2px;margin-bottom:8px;">PHASE 4</div>
+          <div style="font-weight:900;font-size:15px;margin-bottom:6px;">All 39 Remaining</div>
+          <div style="font-size:13px;color:var(--muted);">Parallel agents rebuild all 40 lesson pages from approved template</div>
+        </div>
+        <div style="background:var(--surf2);border:1px solid var(--border);border-radius:12px;padding:18px;">
+          <div style="color:var(--muted);font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:2px;margin-bottom:8px;">PHASE 5</div>
+          <div style="font-weight:900;font-size:15px;margin-bottom:6px;">Parent Guides</div>
+          <div style="font-size:13px;color:var(--muted);">Update 4 parent guides with ROBO, conversation starters, print CSS</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;padding:16px;background:rgba(0,207,255,0.06);border:1px solid rgba(0,207,255,0.2);border-radius:10px;font-size:14px;">
+        ✅ <strong>If ROBO, sounds, zones, and mini-mission flow all look right to you</strong> — give the thumbs up and we move to Phase 2 (Dashboard) immediately. If anything needs changing, this is the place to do it before we build 45 more files.
+      </div>
+    </div>
+  </div>
+
+</div><!-- end page-body -->
+
+<script>
+// ── AudioContext ──────────────────────────────
+let audioCtx = null;
+function getAudio() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playBlip(card) {
+  const ctx = getAudio();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(1047, ctx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.08);
+  gain.gain.setValueAtTime(0.25, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+  osc.start(); osc.stop(ctx.currentTime + 0.12);
+  flashCard(card);
+}
+
+function playChime(card) {
+  const ctx = getAudio();
+  [[523,0],[659,0.12],[784,0.24],[1047,0.36]].forEach(([freq, delay]) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+    gain.gain.setValueAtTime(0.18, ctx.currentTime + delay);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.5);
+    osc.start(ctx.currentTime + delay);
+    osc.stop(ctx.currentTime + delay + 0.5);
+  });
+  flashCard(card);
+}
+
+function playFanfare(card) {
+  const ctx = getAudio();
+  [[523,0,'square'],[659,0.1,'square'],[784,0.2,'square'],[1047,0.35,'square'],[1047,0.5,'sine'],[784,0.6,'sine']].forEach(([freq, delay, type]) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+    gain.gain.setValueAtTime(0.12, ctx.currentTime + delay);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.4);
+    osc.start(ctx.currentTime + delay);
+    osc.stop(ctx.currentTime + delay + 0.4);
+  });
+  flashCard(card);
+}
+
+function flashCard(card) {
+  if (!card) return;
+  card.classList.add('playing');
+  setTimeout(() => card.classList.remove('playing'), 800);
+}
+
+// ── ROBO Moods ────────────────────────────────
+const moods = {
+  neutral:     "Ready for today's mission, Aiden! 🚀",
+  excited:     "OOH OOH! I see new code coming! Time to build! 🤩",
+  thinking:    "Hmm... processing... let me think about that... 🤔",
+  celebrating: "WE DID IT! MISSION COMPLETE! You're a real Mars coder! ⭐⭐⭐"
+};
+
+function setMood(mood) {
+  const svg = document.getElementById('robo-svg');
+  svg.className = 'robo-svg robo-' + mood;
+  document.getElementById('robo-speech').textContent = moods[mood];
+  document.querySelectorAll('.mood-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase().includes(mood));
+  });
+}
+
+// ── Mini-mission unlock ───────────────────────
+function completeM1() {
+  // M1 done
+  document.getElementById('step1').className = 'mission-step done';
+  document.getElementById('conn1').classList.add('lit');
+  document.getElementById('panel1').className = 'mission-panel done';
+  // Unlock M2
+  document.getElementById('step2').className = 'mission-step unlocked';
+  document.getElementById('panel2').className = 'mission-panel unlocked';
+  document.getElementById('badge2').className = 'pill pill-cyan';
+  document.getElementById('badge2').textContent = '✓ UNLOCKED';
+  document.getElementById('m2btn').disabled = false;
+  setMood('excited');
+  playChime(null);
+  getAudio(); // ensure context
+}
+
+function completeM2() {
+  // M2 done
+  document.getElementById('step2').className = 'mission-step done';
+  document.getElementById('conn2').classList.add('lit');
+  document.getElementById('panel2').className = 'mission-panel done';
+  // Break prompt
+  document.getElementById('break-prompt').style.display = 'block';
+  // Unlock M3
+  document.getElementById('step3').className = 'mission-step unlocked';
+  document.getElementById('panel3').className = 'mission-panel unlocked';
+  document.getElementById('badge3').className = 'pill pill-cyan';
+  document.getElementById('badge3').textContent = '✓ UNLOCKED';
+  setMood('neutral');
+  playChime(null);
+}
+
+// Demo checkboxes in M3
+let demoChecked = 0;
+function toggleDemoCl(el) {
+  const box = el.querySelector('div');
+  const done = el.classList.toggle('done');
+  el.style.borderColor = done ? 'var(--q3)' : 'var(--border)';
+  el.style.background   = done ? 'rgba(0,255,153,0.06)' : 'var(--surf2)';
+  box.textContent = done ? '✓' : '';
+  if (done) { demoChecked++; playBlip(null); }
+  else demoChecked--;
+  if (demoChecked >= 3) {
+    document.getElementById('all-done-msg').style.display = 'block';
+    triggerCelebration();
+  }
+}
+
+// ── Celebration ───────────────────────────────
+function triggerCelebration() {
+  setMood('celebrating');
+  playFanfare(null);
+  triggerConfetti();
+  document.getElementById('patch-preview').scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function triggerConfetti() {
+  const container = document.getElementById('confetti-container');
+  container.innerHTML = '';
+  const colors = ['#00cfff','#b060ff','#00ff99','#ff8844','#ffcc44','#ff6688','#ffffff'];
+  for (let i = 0; i < 70; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'confetti-dot';
+    const size = Math.random() * 10 + 5;
+    const isRect = Math.random() > 0.5;
+    dot.style.cssText = `
+      left: ${Math.random() * 100}%;
+      width: ${isRect ? size * 0.5 : size}px;
+      height: ${size}px;
+      border-radius: ${isRect ? '2px' : '50%'};
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      animation-delay: ${Math.random() * 0.4}s;
+      animation-duration: ${Math.random() * 1.8 + 1.2}s;
+    `;
+    container.appendChild(dot);
+  }
+  setTimeout(() => { container.innerHTML = ''; }, 3500);
+}
+
+// ── Hint system ───────────────────────────────
+let hintsShown = 0;
+function showHint(n) {
+  document.getElementById('hint' + n).classList.add('visible');
+  if (n === 1) document.getElementById('hintbtn2').style.display = 'inline-block';
+  if (n === 2) document.getElementById('hintbtn3').style.display = 'inline-block';
+  hintsShown = n;
+}
+</script>
+
+</body>
+</html>
