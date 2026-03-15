@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q1 Week 6: Events & Broadcasting</title>
+<title>Aiden's Mission — Q1 Week 6: Custom Blocks</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -519,10 +519,10 @@ footer {
     <div>
       <div class="quarter-pill">
         <div class="q-icon">🛸</div>
-        <span class="q-label">🛸 Q1 · SCRATCH · WEEK 6 OF 10</span>
+        <span class="q-label">Q1 · SCRATCH · WEEK 6 OF 10</span>
       </div>
-      <h1>Events &amp; <em>Broadcasting</em></h1>
-      <p class="header-sub">WAKE UP THE ROVER — IT'S TIME TO CODE!</p>
+      <h1><em>Custom</em> Blocks</h1>
+      <p class="header-sub">BUILD YOUR OWN BLOCKS LIKE A PRO!</p>
       <div class="time-badge">⏱ About 15 minutes &nbsp;·&nbsp; 3 Missions</div>
       <div class="nav-links">
         <a href="aiden_q1_lessons.html">← Parent Guide</a>
@@ -610,7 +610,7 @@ footer {
           <ellipse cx="80" cy="200" rx="55" ry="5" fill="#000" opacity="0.25"/>
         </svg>
         <div class="robo-bubble" id="robo-bubble">
-          Hmm… cameras offline!<br>Can you fix my code? 🤔
+          I keep repeating the same patrol code!<br>Help me make a custom block! 🧩
         </div>
       </div>
     </div>
@@ -662,25 +662,25 @@ footer {
     <div class="comic-panel">
       <div class="comic-robo">🛸</div>
       <div class="comic-text">
-        <div class="comic-caption">ROBO SAYS · WEEK 6 EMERGENCY</div>
+        <div class="comic-caption">ROBO SAYS · WEEK 6 CODE OVERLOAD</div>
         <div class="comic-story">
-          <strong>ROBO sent a signal but no one heard it! The rover needs to broadcast a message so all its parts work together. Scratch broadcasts to the rescue!</strong>
-          I need you to write the <strong>boot-up code</strong> so my systems come back online.
-          Every rover needs a pilot — and today, that pilot is you! 🚀
+          My code is getting huge — I keep copying the <strong>same patrol sequence</strong> over and over!
+          There must be a smarter way — a block I can reuse like a recipe!
+          Help me create a <strong>custom block</strong> called patrol so my code stays tidy! 🧩
         </div>
       </div>
     </div>
 
     <!-- Mission brief -->
     <div class="mission-brief">
-      <p><strong>Your Mission:</strong> Master events and broadcasts! You'll learn how sprites can send custom messages to each other. This is how all the parts of a rover communicate!</p>
+      <p>Today ROBO builds its own Scratch block! A <strong>custom block</strong> (called "My Blocks") lets you package instructions into one reusable command. Write it once, call it a hundred times — the code only lives in one place!</p>
     </div>
 
     <!-- Lesson hero card -->
     <div style="background:var(--surf2);border:1px solid var(--bdr);border-radius:12px;padding:20px 22px;margin-bottom:16px;">
-      <span style="font-size:44px;display:block;margin-bottom:10px;">🎬</span>
-      <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--white);margin-bottom:6px;">Sprites, Stage &amp; <span style="color:var(--accent)">Events</span></div>
-      <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--muted)">Wake up the rover — it's time to code!</div>
+      <span style="font-size:44px;display:block;margin-bottom:10px;">🧩</span>
+      <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--white);margin-bottom:6px;">Custom Blocks</div>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--muted)">Write it once. Call it anywhere.</div>
     </div>
 
     <!-- What you'll discover -->
@@ -688,19 +688,20 @@ footer {
       <div class="learn-title">🧠 What You'll Discover</div>
       <div class="learn-items">
         <div class="learn-item">
-          <div class="learn-icon">📡</div>
-          <div class="learn-text"><strong>Broadcast []</strong> — Sends a message to ALL sprites at once — like a radio signal!</div>
+          <div class="learn-icon">🧩</div>
+          <div class="learn-text"><strong>My Blocks → Make a Block</strong> — Creates a brand-new block with your chosen name. Like inventing a new Scratch command!</div>
         </div>
         <div class="learn-item">
-          <div class="learn-icon">📻</div>
-          <div class="learn-text"><strong>When I receive []</strong> — A sprite listens for a broadcast and reacts when it arrives.</div>
+          <div class="learn-icon">📋</div>
+          <div class="learn-text"><strong>Define []</strong> — The define hat block — everything stacked below runs when your custom block is called.</div>
         </div>
         <div class="learn-item">
-          <div class="learn-icon">🎯</div>
-          <div class="learn-text"><strong>Custom Messages</strong> — You create the message names — like "launch!", "alert!", or "dance!"</div>
+          <div class="learn-icon">♻️</div>
+          <div class="learn-text"><strong>Reusability</strong> — Call the block 10 times → it runs your sequence 10 times — no copying needed!</div>
         </div>
       </div>
     </div>
+
     <button class="unlock-btn" onclick="unlockM2()">✓ Got It! Unlock Mission 2 →</button>
   </div>
 </div>
@@ -715,34 +716,37 @@ footer {
   </div>
   <div class="mc-body">
     <div class="mc-time">⏱ About 7 minutes</div>
-    <p style="margin-bottom:16px;">Time to broadcast! Make one sprite send a signal and another react to it. <strong style="color:var(--accent)">ROBO's communication array lights up when you broadcast! 📡</strong></p>
+    <p style="margin-bottom:16px;">Time to engineer! Create a <em>patrol</em> custom block and call it multiple times. <strong style="color:var(--accent)">ROBO beams when it runs tidy, reusable code! 🤩</strong></p>
 
     <div class="two-col">
       <div class="box">
         <div class="box-title">⚡ Try This!</div>
         <div class="instructions">
-          <p style="margin-bottom:12px;">Connect two sprites with a broadcast:</p>
+          <p style="margin-bottom:12px;">Follow these steps:</p>
           <ol>
-            <li>1. Open Scratch with TWO sprites on the stage</li>
-            <li>2. On Sprite 1: add "when clicked → broadcast [go!]"</li>
-            <li>3. On Sprite 2: add "when I receive [go!] → start dancing"</li>
-            <li>4. Click Sprite 1 — does Sprite 2 react?</li>
-            <li>5. Try making Sprite 2 say something AND dance!</li>
+            <li>Open Scratch — go to <strong>My Blocks → Make a Block</strong></li>
+            <li>Name your block <strong>patrol</strong> and click OK</li>
+            <li>Under <em>define patrol</em>: add <em>move 100 steps → turn 90°</em> twice</li>
+            <li>Now add a <em>repeat 4</em> loop with your new <em>patrol</em> block inside</li>
+            <li>Click ▶️ — ROBO runs the full route using your custom block!</li>
           </ol>
         </div>
       </div>
 
       <div class="box">
         <div class="box-title">🎬 Block Sequence</div>
-        <div class="code-label">ROBO's Signal System</div>
+        <div class="code-label">ROBO's Custom Patrol Block</div>
         <div class="code-demo">
-          <div class="sb-line"><span class="sb sb-event">when this sprite clicked  ← Sprite 1</span></div>
-          <div class="sb-line"><span class="sb sb-event">broadcast [go!]</span></div>
-          <div class="sb-line"><span class="sb sb-event">when I receive [go!]  ← Sprite 2</span></div>
-          <div class="sb-line"><span class="sb sb-motion">move 50 steps</span></div>
-          <div class="sb-line"><span class="sb sb-looks">say [Signal received!] for 2 secs</span></div>
+          <div class="sb-line"><span class="sb sb-event">define patrol</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-motion">move 100 steps</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-motion">turn ↻ 90 degrees</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-motion">move 100 steps</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-motion">turn ↻ 90 degrees</span></div>
+          <div class="sb-line"><span class="sb sb-event">when 🚩 clicked</span></div>
+          <div class="sb-line"><span class="sb sb-control">repeat 4</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-looks">patrol</span></div>
         </div>
-        <p style="font-size:13px;color:var(--muted);margin-top:8px;">Sprite 1 broadcasts. Sprite 2 listens and reacts!</p>
+        <p style="font-size:13px;color:var(--muted);margin-top:8px;">Define patrol once → call it inside repeat 4 → full route runs!</p>
       </div>
     </div>
 
@@ -750,16 +754,16 @@ footer {
     <div class="hint-zone">
       <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
       <div class="hint-text" id="htxt1">
-        🌟 <strong>Hint 1:</strong> Broadcasts are in <strong>orange Events</strong>. Look for "broadcast []" and "when I receive []"!
+        🌟 <strong>Hint 1:</strong> My Blocks is at the <strong>bottom of the block palette</strong>. Click <em>Make a Block</em>, type the name, and a pink <em>define</em> hat block appears!
       </div>
       <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
       <div class="hint-text" id="htxt2">
-        🌟 <strong>Hint 2:</strong> First create a new message: click the dropdown in "broadcast []" → "New Message" → type "go!"
+        🌟 <strong>Hint 2:</strong> The <em>define patrol</em> hat is where you build what the block does. Drag move/turn blocks under it — the <em>patrol</em> block in the palette will run all of them!
       </div>
       <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
       <div class="hint-text" id="htxt3">
         🌟 <strong>Full answer:</strong> No shame — even ROBO needed help!<br>
-        Add "broadcast [go!]" to Sprite 1. Then click Sprite 2 and add "when I receive [go!]" with actions below it.
+        Define: <em>define patrol → move 100 → turn 90 → move 100 → turn 90</em>. Then: <em>when flag clicked → repeat 4 → patrol</em>. Clean and reusable!
       </div>
     </div>
 
@@ -769,8 +773,8 @@ footer {
 
 <!-- Break prompt -->
 <div class="break-prompt" id="break-prompt">
-  🌟 ROBO says: <strong>"Amazing work, Aiden!"</strong><br>
-  Stand up, do 5 big jumps, then come back for your final mission! 🚀
+  🌟 ROBO says: <strong>"Custom block deployed, Aiden!"</strong><br>
+  Build something with real blocks for 2 minutes, then come back! 🧩
 </div>
 
 <!-- ══════════════════════════════════════
@@ -791,29 +795,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Created a broadcast message</div>
-            <div class="cl-sub">I can create custom messages!</div>
+            <div class="cl-main">I created a custom block using My Blocks</div>
+            <div class="cl-sub">You invented a new Scratch command — ROBO is proud!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">One sprite broadcasts the message</div>
-            <div class="cl-sub">Sprite 1 is the sender</div>
+            <div class="cl-main">The block runs a sequence of moves</div>
+            <div class="cl-sub">Your patrol route lives inside one tidy block!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Another sprite receives and reacts</div>
-            <div class="cl-sub">Sprite 2 is the listener</div>
+            <div class="cl-main">I called the block more than once</div>
+            <div class="cl-sub">One definition, many calls — the power of custom blocks!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">The timing works correctly</div>
-            <div class="cl-sub">Broadcast and receive are connected</div>
+            <div class="cl-main">I can explain why custom blocks are useful</div>
+            <div class="cl-sub">Say: "Custom blocks let me reuse code without copying it!"</div>
           </div>
         </div>
       </div>
@@ -829,9 +833,9 @@ footer {
         <span class="patch-corner">⭐</span>
         <span class="patch-corner">⭐</span>
         <div class="patch-header">MARS MISSION · CERTIFIED</div>
-        <div class="patch-title">Events &<br>Broadcasting</div>
+        <div class="patch-title">Custom<br>Blocks</div>
         <span class="patch-robo">🛸</span>
-        <div class="patch-skill">Signal Sender</div>
+        <div class="patch-skill">Block Architect · Scratch Coding · Week 6</div>
         <div class="patch-name">AIDEN</div>
         <div class="patch-week">Q1 · SCRATCH CRATER · WEEK 6 OF 10</div>
         <div class="patch-stars">⭐⭐⭐</div>
@@ -847,13 +851,13 @@ footer {
 ══════════════════════════════════════ -->
 <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">🔍</span>
-  <div class="vr-title">ROBO found a special<br><strong>Scratch sensing & if-else</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=scratch+sensing+if+else+conditions+kids+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">🧩</span>
+  <div class="vr-title">ROBO found a special<br><strong>Scratch custom blocks &amp; functions</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=scratch+my+blocks+custom+functions+kids+coding+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-  Real rovers receive broadcast commands from Earth — radio signals that travel through space at the speed of light! It takes about 11 minutes for a signal to reach Mars from Earth. 📡
+  Real programmers call custom blocks <strong>functions</strong> — and use them constantly. NASA's Mars rover software has hundreds of functions, each doing one job really well. You just wrote your first function! 🧩
 </div>
 
 <!-- ══════════════════════════════════════
@@ -866,7 +870,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 6 · EVENTS &amp; BROADCASTING · Q1 SCRATCH CRATER · MISSION 6 OF 40</footer>
+<footer>WEEK 6 · CUSTOM BLOCKS · Q1 SCRATCH CRATER · MISSION 6 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────
@@ -995,7 +999,7 @@ function allDone() {
   try {
     const key = 'aidenDoneWeeks';
     const done = JSON.parse(localStorage.getItem(key)) || [];
-    if (!done.includes('q1w6')) { done.push('q1w6'); localStorage.setItem(key, JSON.stringify(done)); }
+    if (!done.includes('q1w6')) { done.push('q1w1'); localStorage.setItem(key, JSON.stringify(done)); }
   } catch(e) {}
 }
 

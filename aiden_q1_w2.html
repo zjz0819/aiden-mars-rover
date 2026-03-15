@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q1 Week 2: Costumes & Looks</title>
+<title>Aiden's Mission — Q1 Week 2: Loops — Patrol Routes</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -519,10 +519,10 @@ footer {
     <div>
       <div class="quarter-pill">
         <div class="q-icon">🛸</div>
-        <span class="q-label">🛸 Q1 · SCRATCH · WEEK 2 OF 10</span>
+        <span class="q-label">Q1 · SCRATCH · WEEK 2 OF 10</span>
       </div>
-      <h1>Costumes &amp; <em>Looks</em></h1>
-      <p class="header-sub">WAKE UP THE ROVER — IT'S TIME TO CODE!</p>
+      <h1>Loops — <em>Patrol Routes</em></h1>
+      <p class="header-sub">MAKE ROBO PATROL MARS ON REPEAT!</p>
       <div class="time-badge">⏱ About 15 minutes &nbsp;·&nbsp; 3 Missions</div>
       <div class="nav-links">
         <a href="aiden_q1_lessons.html">← Parent Guide</a>
@@ -610,7 +610,7 @@ footer {
           <ellipse cx="80" cy="200" rx="55" ry="5" fill="#000" opacity="0.25"/>
         </svg>
         <div class="robo-bubble" id="robo-bubble">
-          Hmm… cameras offline!<br>Can you fix my code? 🤔
+          I keep running off the edge of Mars!<br>Help me loop my patrol route! 🔄
         </div>
       </div>
     </div>
@@ -662,25 +662,25 @@ footer {
     <div class="comic-panel">
       <div class="comic-robo">🛸</div>
       <div class="comic-text">
-        <div class="comic-caption">ROBO SAYS · WEEK 2 EMERGENCY</div>
+        <div class="comic-caption">ROBO SAYS · WEEK 2 PATROL CRISIS</div>
         <div class="comic-story">
-          <strong>ROBO's display screen is blank! The rover needs to change its appearance to send visual signals back to base. Only Scratch Looks blocks can fix this!</strong>
-          I need you to write the <strong>boot-up code</strong> so my systems come back online.
-          Every rover needs a pilot — and today, that pilot is you! 🚀
+          I crashed into a wall at <strong>Curiosity Canyon</strong> — no loop means no patrol!
+          Without a repeat block, I can't circle the crater automatically.
+          I need you to write a <strong>loop</strong> so I patrol safely! 🔄
         </div>
       </div>
     </div>
 
     <!-- Mission brief -->
     <div class="mission-brief">
-      <p><strong>Your Mission:</strong> Learn how to change a sprite's costume to animate it. You'll use the Scratch Looks category to make ROBO display different images, say messages to base, and even change size!</p>
+      <p>Today you'll teach ROBO to patrol Mars in circles — automatically! A <strong>loop</strong> is like saying "do this again and again." Without loops, you'd copy the same code hundreds of times. Let's make ROBO smarter!</p>
     </div>
 
     <!-- Lesson hero card -->
     <div style="background:var(--surf2);border:1px solid var(--bdr);border-radius:12px;padding:20px 22px;margin-bottom:16px;">
-      <span style="font-size:44px;display:block;margin-bottom:10px;">🎬</span>
-      <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--white);margin-bottom:6px;">Sprites, Stage &amp; <span style="color:var(--accent)">Events</span></div>
-      <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--muted)">Wake up the rover — it's time to code!</div>
+      <span style="font-size:44px;display:block;margin-bottom:10px;">🔄</span>
+      <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--white);margin-bottom:6px;">Loops — Patrol Routes</div>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--muted)">Repeat. Repeat. Repeat!</div>
     </div>
 
     <!-- What you'll discover -->
@@ -688,19 +688,20 @@ footer {
       <div class="learn-title">🧠 What You'll Discover</div>
       <div class="learn-items">
         <div class="learn-item">
-          <div class="learn-icon">🎨</div>
-          <div class="learn-text"><strong>Costumes</strong> — Different looks for your sprite — like outfits! Switch them to animate ROBO.</div>
-        </div>
-        <div class="learn-item">
           <div class="learn-icon">🔄</div>
-          <div class="learn-text"><strong>Switch Costume</strong> — The <strong>switch costume to []</strong> block changes ROBO's look instantly!</div>
+          <div class="learn-text"><strong>Repeat []</strong> — Runs blocks a fixed number of times. Repeat 4 → move + turn = a square patrol!</div>
         </div>
         <div class="learn-item">
-          <div class="learn-icon">▶️</div>
-          <div class="learn-text"><strong>Next Costume</strong> — The <strong>next costume</strong> block cycles through outfits one by one.</div>
+          <div class="learn-icon">♾️</div>
+          <div class="learn-text"><strong>Forever</strong> — Runs blocks endlessly until you stop. Great for continuous patrols!</div>
+        </div>
+        <div class="learn-item">
+          <div class="learn-icon">🧱</div>
+          <div class="learn-text"><strong>Loop body</strong> — The blocks <em>inside</em> the loop. Change them to change ROBO's patrol route!</div>
         </div>
       </div>
     </div>
+
     <button class="unlock-btn" onclick="unlockM2()">✓ Got It! Unlock Mission 2 →</button>
   </div>
 </div>
@@ -715,33 +716,33 @@ footer {
   </div>
   <div class="mc-body">
     <div class="mc-time">⏱ About 7 minutes</div>
-    <p style="margin-bottom:16px;">Time to style ROBO! Open Scratch and make your sprite change costumes to animate. <strong style="color:var(--accent)">ROBO gets excited when it sees itself animate! 🤩</strong></p>
+    <p style="margin-bottom:16px;">Time to patrol! Open Scratch and make ROBO loop a square path. <strong style="color:var(--accent)">ROBO gets dizzy-excited watching itself loop! 🤩</strong></p>
 
     <div class="two-col">
       <div class="box">
         <div class="box-title">⚡ Try This!</div>
         <div class="instructions">
-          <p style="margin-bottom:12px;">Make a sprite animate using costumes:</p>
+          <p style="margin-bottom:12px;">Follow these steps:</p>
           <ol>
-            <li>1. Open Scratch at scratch.mit.edu</li>
-            <li>2. Click the Costumes tab (top left) to see your sprite's costumes</li>
-            <li>3. Add the blocks shown on the right</li>
-            <li>4. Click ▶️ — does your sprite animate?</li>
-            <li>5. Try drawing a new costume of your own!</li>
+            <li>Open Scratch at <strong>scratch.mit.edu</strong> and pick a rover sprite</li>
+            <li>Drag out a <strong>repeat 4</strong> block from the Control section</li>
+            <li>Inside the loop: snap in <em>move 100 steps</em> then <em>turn ↻ 90 degrees</em></li>
+            <li>Click ▶️ — does ROBO trace a square?</li>
+            <li>Try <strong>repeat 3</strong> for a triangle or <strong>repeat 6</strong> for a hexagon!</li>
           </ol>
         </div>
       </div>
 
       <div class="box">
         <div class="box-title">🎬 Block Sequence</div>
-        <div class="code-label">ROBO's Animation Loop</div>
+        <div class="code-label">ROBO's Square Patrol</div>
         <div class="code-demo">
           <div class="sb-line"><span class="sb sb-event">when 🚩 clicked</span></div>
-          <div class="sb-line"><span class="sb sb-control">forever</span></div>
-          <div class="sb-line sb-indent"><span class="sb sb-looks">next costume</span></div>
-          <div class="sb-line sb-indent"><span class="sb sb-control">wait 0.2 secs</span></div>
+          <div class="sb-line"><span class="sb sb-control">repeat 4</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-motion">move 100 steps</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-motion">turn ↻ 90 degrees</span></div>
         </div>
-        <p style="font-size:13px;color:var(--muted);margin-top:8px;">The forever loop makes ROBO animate non-stop!</p>
+        <p style="font-size:13px;color:var(--muted);margin-top:8px;">Repeat 4 × (move + turn) = one perfect square patrol!</p>
       </div>
     </div>
 
@@ -749,16 +750,16 @@ footer {
     <div class="hint-zone">
       <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
       <div class="hint-text" id="htxt1">
-        🌟 <strong>Hint 1:</strong> Looks blocks are <strong>purple</strong>. Find "next costume" in the purple Looks section!
+        🌟 <strong>Hint 1:</strong> Control blocks are <strong>orange</strong>. Look for the curved <strong>repeat</strong> block — it has a slot inside for other blocks!
       </div>
       <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
       <div class="hint-text" id="htxt2">
-        🌟 <strong>Hint 2:</strong> Put "next costume" and "wait" <strong>inside</strong> the forever loop — they need to be nested!
+        🌟 <strong>Hint 2:</strong> Drag <em>move 100 steps</em> and <em>turn ↻ 90 degrees</em> <strong>inside</strong> the repeat block so they snap into the curved slot.
       </div>
       <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
       <div class="hint-text" id="htxt3">
         🌟 <strong>Full answer:</strong> No shame — even ROBO needed help!<br>
-        Stack: When flag clicked → forever → next costume → wait 0.2 secs. Click ▶️ to see ROBO animate!
+        Stack: <em>When flag clicked → repeat 4 → (move 100 steps, turn 90°)</em>. Click ▶️ and ROBO traces a square. Try repeat 3 for a triangle!
       </div>
     </div>
 
@@ -768,8 +769,8 @@ footer {
 
 <!-- Break prompt -->
 <div class="break-prompt" id="break-prompt">
-  🌟 ROBO says: <strong>"Amazing work, Aiden!"</strong><br>
-  Stand up, do 5 big jumps, then come back for your final mission! 🚀
+  🌟 ROBO says: <strong>"Loop de loop, Aiden!"</strong><br>
+  Do 5 spinning jumps, then come back for your final mission! 🔄
 </div>
 
 <!-- ══════════════════════════════════════
@@ -790,29 +791,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Added at least 2 costumes to my sprite</div>
-            <div class="cl-sub">I can find and use the Costumes tab</div>
+            <div class="cl-main">I used a repeat block in Scratch</div>
+            <div class="cl-sub">Loops save you from copying the same code over and over!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Used the "next costume" block</div>
-            <div class="cl-sub">I know what "next costume" does</div>
+            <div class="cl-main">ROBO patrolled a shape (square, triangle, etc.)</div>
+            <div class="cl-sub">You programmed a patrol route — mission navigator!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">My sprite animates when the flag is clicked</div>
-            <div class="cl-sub">My animation loop works!</div>
+            <div class="cl-main">I changed the number inside the repeat</div>
+            <div class="cl-sub">What happens with repeat 3? Repeat 10?</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Added a "say" block to give ROBO a voice</div>
-            <div class="cl-sub">ROBO can speak AND move!</div>
+            <div class="cl-main">I can explain what a loop does</div>
+            <div class="cl-sub">Tell someone: "A loop runs the same steps again and again!"</div>
           </div>
         </div>
       </div>
@@ -828,9 +829,9 @@ footer {
         <span class="patch-corner">⭐</span>
         <span class="patch-corner">⭐</span>
         <div class="patch-header">MARS MISSION · CERTIFIED</div>
-        <div class="patch-title">Costumes &<br>Looks</div>
+        <div class="patch-title">Loops —<br>Patrol Routes</div>
         <span class="patch-robo">🛸</span>
-        <div class="patch-skill">Costume Engineer</div>
+        <div class="patch-skill">Loop Engineer · Scratch Coding · Week 2</div>
         <div class="patch-name">AIDEN</div>
         <div class="patch-week">Q1 · SCRATCH CRATER · WEEK 2 OF 10</div>
         <div class="patch-stars">⭐⭐⭐</div>
@@ -846,13 +847,13 @@ footer {
 ══════════════════════════════════════ -->
 <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">⚡</span>
-  <div class="vr-title">ROBO found a special<br><strong>Scratch events & sequences</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=scratch+events+sequences+coding+kids+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">🔄</span>
+  <div class="vr-title">ROBO found a special<br><strong>Scratch loops &amp; repeat</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=scratch+repeat+loop+forever+coding+kids+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-  Real Mars rovers send images back to Earth using antennas — their "costumes" change with every new photo taken! Perseverance has 23 cameras capturing new views constantly. 📡
+  NASA programs Mars rovers with loops! Curiosity's driving software repeats a <strong>sense → plan → move</strong> cycle thousands of times per second. Loops keep ROBO safe on Mars! 🔄
 </div>
 
 <!-- ══════════════════════════════════════
@@ -865,7 +866,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 2 · COSTUMES &amp; LOOKS · Q1 SCRATCH CRATER · MISSION 2 OF 40</footer>
+<footer>WEEK 2 · LOOPS — PATROL ROUTES · Q1 SCRATCH CRATER · MISSION 2 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────
@@ -994,7 +995,7 @@ function allDone() {
   try {
     const key = 'aidenDoneWeeks';
     const done = JSON.parse(localStorage.getItem(key)) || [];
-    if (!done.includes('q1w2')) { done.push('q1w2'); localStorage.setItem(key, JSON.stringify(done)); }
+    if (!done.includes('q1w2')) { done.push('q1w1'); localStorage.setItem(key, JSON.stringify(done)); }
   } catch(e) {}
 }
 

@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q1 Week 3: Loops & Repeat</title>
+<title>Aiden's Mission — Q1 Week 3: Conditionals — Obstacles</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -519,10 +519,10 @@ footer {
     <div>
       <div class="quarter-pill">
         <div class="q-icon">🛸</div>
-        <span class="q-label">🛸 Q1 · SCRATCH · WEEK 3 OF 10</span>
+        <span class="q-label">Q1 · SCRATCH · WEEK 3 OF 10</span>
       </div>
-      <h1>Loops &amp; <em>Repeat</em></h1>
-      <p class="header-sub">WAKE UP THE ROVER — IT'S TIME TO CODE!</p>
+      <h1>Conditionals — <em>Obstacles</em></h1>
+      <p class="header-sub">TEACH ROBO TO DODGE ROCKS!</p>
       <div class="time-badge">⏱ About 15 minutes &nbsp;·&nbsp; 3 Missions</div>
       <div class="nav-links">
         <a href="aiden_q1_lessons.html">← Parent Guide</a>
@@ -610,7 +610,7 @@ footer {
           <ellipse cx="80" cy="200" rx="55" ry="5" fill="#000" opacity="0.25"/>
         </svg>
         <div class="robo-bubble" id="robo-bubble">
-          Hmm… cameras offline!<br>Can you fix my code? 🤔
+          There are rocks everywhere!<br>Teach me to swerve with an IF block! 🪨
         </div>
       </div>
     </div>
@@ -662,25 +662,25 @@ footer {
     <div class="comic-panel">
       <div class="comic-robo">🛸</div>
       <div class="comic-text">
-        <div class="comic-caption">ROBO SAYS · WEEK 3 EMERGENCY</div>
+        <div class="comic-caption">ROBO SAYS · WEEK 3 ROCK ALERT</div>
         <div class="comic-story">
-          <strong>ROBO is stuck repeating the same command over and over in its code! The mission clock is ticking. We need Scratch loops to make ROBO efficient again!</strong>
-          I need you to write the <strong>boot-up code</strong> so my systems come back online.
-          Every rover needs a pilot — and today, that pilot is you! 🚀
+          I was speeding across <strong>Boulder Basin</strong> — CRUNCH — I hit a rock!
+          ROBO can't make decisions without <strong>if blocks</strong>.
+          Code me a sensor check so I swerve when danger is near! 🪨
         </div>
       </div>
     </div>
 
     <!-- Mission brief -->
     <div class="mission-brief">
-      <p><strong>Your Mission:</strong> Master Scratch loops! You'll learn how to use repeat [] and forever blocks to run code multiple times. Loops are how real robots save space and power!</p>
+      <p>Today ROBO learns to make decisions! An <strong>if block</strong> is a question your code asks: "Is this true?" If yes, do something — if not, keep going. That's how real rovers dodge rocks on Mars!</p>
     </div>
 
     <!-- Lesson hero card -->
     <div style="background:var(--surf2);border:1px solid var(--bdr);border-radius:12px;padding:20px 22px;margin-bottom:16px;">
-      <span style="font-size:44px;display:block;margin-bottom:10px;">🎬</span>
-      <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--white);margin-bottom:6px;">Sprites, Stage &amp; <span style="color:var(--accent)">Events</span></div>
-      <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--muted)">Wake up the rover — it's time to code!</div>
+      <span style="font-size:44px;display:block;margin-bottom:10px;">🪨</span>
+      <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--white);margin-bottom:6px;">Conditionals — Obstacles</div>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--muted)">If rock ahead → swerve!</div>
     </div>
 
     <!-- What you'll discover -->
@@ -688,19 +688,20 @@ footer {
       <div class="learn-title">🧠 What You'll Discover</div>
       <div class="learn-items">
         <div class="learn-item">
-          <div class="learn-icon">🔁</div>
-          <div class="learn-text"><strong>Repeat []</strong> — Runs the blocks inside it a set number of times. Perfect for patterns!</div>
+          <div class="learn-icon">❓</div>
+          <div class="learn-text"><strong>If &lt;condition&gt; then</strong> — Checks if something is true. YES → run blocks inside. NO → skip them!</div>
         </div>
         <div class="learn-item">
-          <div class="learn-icon">♾️</div>
-          <div class="learn-text"><strong>Forever</strong> — Runs the blocks inside it forever — until you stop the program.</div>
+          <div class="learn-icon">🎨</div>
+          <div class="learn-text"><strong>Touching color []?</strong> — Returns TRUE if the sprite touches a specific colour. Use red for rocks!</div>
         </div>
         <div class="learn-item">
-          <div class="learn-icon">💡</div>
-          <div class="learn-text"><strong>Why Loops?</strong> — Instead of 100 blocks, one loop does the same thing in 3 blocks. <strong>Loops save time!</strong></div>
+          <div class="learn-icon">🔀</div>
+          <div class="learn-text"><strong>If / Else</strong> — Two paths: condition true → one thing, else → another. ROBO's decision engine!</div>
         </div>
       </div>
     </div>
+
     <button class="unlock-btn" onclick="unlockM2()">✓ Got It! Unlock Mission 2 →</button>
   </div>
 </div>
@@ -715,33 +716,36 @@ footer {
   </div>
   <div class="mc-body">
     <div class="mc-time">⏱ About 7 minutes</div>
-    <p style="margin-bottom:16px;">Time to loop! Draw a square using loops in Scratch. <strong style="color:var(--accent)">ROBO's mapping sensors activate when you use loops! 🗺️</strong></p>
+    <p style="margin-bottom:16px;">Time to dodge! Paint a red rock, then code ROBO to swerve. <strong style="color:var(--accent)">ROBO's sensors light up when it detects a rock! 🤩</strong></p>
 
     <div class="two-col">
       <div class="box">
         <div class="box-title">⚡ Try This!</div>
         <div class="instructions">
-          <p style="margin-bottom:12px;">Draw a square with ROBO using loops:</p>
+          <p style="margin-bottom:12px;">Follow these steps:</p>
           <ol>
-            <li>1. Open Scratch and choose a sprite</li>
-            <li>2. Turn on the pen: Add Extensions → Pen</li>
-            <li>3. Use a "repeat 4" loop with the blocks on the right</li>
-            <li>4. Click ▶️ — does your sprite draw a square?</li>
-            <li>5. Try repeat 3 for a triangle, or repeat 6 for a hexagon!</li>
+            <li>Open Scratch — paint a <strong>red rock</strong> shape on the stage background</li>
+            <li>Add a rover sprite with a <strong>forever</strong> loop</li>
+            <li>Inside: add an <strong>if &lt;touching color red?&gt; then / else</strong> block</li>
+            <li>If touching: <em>turn 45° + move 10</em> — else: <em>move 5 steps</em></li>
+            <li>Click ▶️ — does ROBO swerve when it reaches the red rock?</li>
           </ol>
         </div>
       </div>
 
       <div class="box">
         <div class="box-title">🎬 Block Sequence</div>
-        <div class="code-label">ROBO's Square Loop</div>
+        <div class="code-label">ROBO's Rock Detector</div>
         <div class="code-demo">
           <div class="sb-line"><span class="sb sb-event">when 🚩 clicked</span></div>
-          <div class="sb-line"><span class="sb sb-control">repeat 4</span></div>
-          <div class="sb-line sb-indent"><span class="sb sb-motion">move 100 steps</span></div>
-          <div class="sb-line sb-indent"><span class="sb sb-motion">turn ↻ 90 degrees</span></div>
+          <div class="sb-line"><span class="sb sb-control">forever</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-control">if &lt;touching color [red]?&gt; then</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-motion">turn ↻ 45 degrees</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-motion">move 10 steps</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-control">else</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-motion">move 5 steps</span></div>
         </div>
-        <p style="font-size:13px;color:var(--muted);margin-top:8px;">A square has 4 equal sides — so repeat 4!</p>
+        <p style="font-size:13px;color:var(--muted);margin-top:8px;">Forever check: touching red? → swerve! Otherwise → move forward.</p>
       </div>
     </div>
 
@@ -749,16 +753,16 @@ footer {
     <div class="hint-zone">
       <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
       <div class="hint-text" id="htxt1">
-        🌟 <strong>Hint 1:</strong> Control blocks are <strong>orange</strong>. Find "repeat []" in the orange Control section!
+        🌟 <strong>Hint 1:</strong> Paint your rock <strong>solid red</strong> using the bucket fill tool. Then pick the <em>touching color?</em> block from Sensing and click the colour picker to match the red.
       </div>
       <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
       <div class="hint-text" id="htxt2">
-        🌟 <strong>Hint 2:</strong> "Move" and "turn" blocks go <strong>inside</strong> the repeat loop. They need to be indented!
+        🌟 <strong>Hint 2:</strong> The <strong>forever</strong> block keeps checking every frame. Without it, ROBO only checks once!
       </div>
       <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
       <div class="hint-text" id="htxt3">
         🌟 <strong>Full answer:</strong> No shame — even ROBO needed help!<br>
-        Stack: When flag clicked → repeat 4 → move 100 steps → turn 90 degrees. Run it to draw your square!
+        Stack: <em>When flag clicked → forever → if touching red? → turn 45 + move 10 / else → move 5</em>. ROBO swerves at every red rock!
       </div>
     </div>
 
@@ -768,8 +772,8 @@ footer {
 
 <!-- Break prompt -->
 <div class="break-prompt" id="break-prompt">
-  🌟 ROBO says: <strong>"Amazing work, Aiden!"</strong><br>
-  Stand up, do 5 big jumps, then come back for your final mission! 🚀
+  🌟 ROBO says: <strong>"Rock dodged, Aiden!"</strong><br>
+  Do 5 zigzag jumps around the room, then come back! 🪨
 </div>
 
 <!-- ══════════════════════════════════════
@@ -790,29 +794,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Used a "repeat" block</div>
-            <div class="cl-sub">I know how to make a loop!</div>
+            <div class="cl-main">I painted a red obstacle on the stage</div>
+            <div class="cl-sub">ROBO's colour sensor needs something red to detect!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">My sprite moves in a repeating pattern</div>
-            <div class="cl-sub">My loop runs correctly</div>
+            <div class="cl-main">ROBO moves forward on clear terrain</div>
+            <div class="cl-sub">Smooth sailing on open Mars terrain!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">The pattern repeats at least 3 times</div>
-            <div class="cl-sub">My loop runs enough times</div>
+            <div class="cl-main">ROBO swerves when it touches the red rock</div>
+            <div class="cl-sub">Obstacle avoided — ROBO's collision sensor works!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Used a motion block inside the loop</div>
-            <div class="cl-sub">Blocks go inside the loop!</div>
+            <div class="cl-main">I can explain what an if block does</div>
+            <div class="cl-sub">Say: "If this is true, do this — otherwise do that!"</div>
           </div>
         </div>
       </div>
@@ -828,9 +832,9 @@ footer {
         <span class="patch-corner">⭐</span>
         <span class="patch-corner">⭐</span>
         <div class="patch-header">MARS MISSION · CERTIFIED</div>
-        <div class="patch-title">Loops &<br>Repeat</div>
+        <div class="patch-title">Conditionals —<br>Obstacles</div>
         <span class="patch-robo">🛸</span>
-        <div class="patch-skill">Loop Master</div>
+        <div class="patch-skill">Obstacle Analyst · Scratch Coding · Week 3</div>
         <div class="patch-name">AIDEN</div>
         <div class="patch-week">Q1 · SCRATCH CRATER · WEEK 3 OF 10</div>
         <div class="patch-stars">⭐⭐⭐</div>
@@ -846,13 +850,13 @@ footer {
 ══════════════════════════════════════ -->
 <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">🔄</span>
-  <div class="vr-title">ROBO found a special<br><strong>Scratch loops</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=scratch+loops+repeat+forever+kids+coding+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">🪨</span>
+  <div class="vr-title">ROBO found a special<br><strong>Scratch if blocks &amp; conditionals</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=scratch+if+else+conditionals+sensing+color+kids+coding+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-  Mars rovers use programmed loops to automatically take photos every few minutes! Perseverance uses timed loops to survey the terrain without humans needing to send a command each time. 🔁
+  Real Mars rovers use <strong>hazard-avoidance software</strong> full of if-statements! Perseverance checks over 20 danger conditions every second before moving even one centimetre. Your if block is real rover engineering! 🪨
 </div>
 
 <!-- ══════════════════════════════════════
@@ -865,7 +869,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 3 · LOOPS &amp; REPEAT · Q1 SCRATCH CRATER · MISSION 3 OF 40</footer>
+<footer>WEEK 3 · CONDITIONALS — OBSTACLES · Q1 SCRATCH CRATER · MISSION 3 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────
@@ -994,7 +998,7 @@ function allDone() {
   try {
     const key = 'aidenDoneWeeks';
     const done = JSON.parse(localStorage.getItem(key)) || [];
-    if (!done.includes('q1w3')) { done.push('q1w3'); localStorage.setItem(key, JSON.stringify(done)); }
+    if (!done.includes('q1w3')) { done.push('q1w1'); localStorage.setItem(key, JSON.stringify(done)); }
   } catch(e) {}
 }
 

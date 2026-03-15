@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q1 Week 9: Cloning</title>
+<title>Aiden's Mission — Q1 Week 9: Capstone Part 1</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -519,10 +519,10 @@ footer {
     <div>
       <div class="quarter-pill">
         <div class="q-icon">🛸</div>
-        <span class="q-label">🛸 Q1 · SCRATCH · WEEK 9 OF 10</span>
+        <span class="q-label">Q1 · SCRATCH · WEEK 9 OF 10</span>
       </div>
-      <h1><em>Cloning</em></h1>
-      <p class="header-sub">WAKE UP THE ROVER — IT'S TIME TO CODE!</p>
+      <h1>Capstone — <em>Part 1</em></h1>
+      <p class="header-sub">BUILD THE BIG GAME — PART 1!</p>
       <div class="time-badge">⏱ About 15 minutes &nbsp;·&nbsp; 3 Missions</div>
       <div class="nav-links">
         <a href="aiden_q1_lessons.html">← Parent Guide</a>
@@ -610,7 +610,7 @@ footer {
           <ellipse cx="80" cy="200" rx="55" ry="5" fill="#000" opacity="0.25"/>
         </svg>
         <div class="robo-bubble" id="robo-bubble">
-          Hmm… cameras offline!<br>Can you fix my code? 🤔
+          It's time for the big mission, Aiden!<br>Let's start building our Mars game! 🏗️
         </div>
       </div>
     </div>
@@ -662,25 +662,25 @@ footer {
     <div class="comic-panel">
       <div class="comic-robo">🛸</div>
       <div class="comic-text">
-        <div class="comic-caption">ROBO SAYS · WEEK 9 EMERGENCY</div>
+        <div class="comic-caption">ROBO SAYS · WEEK 9 BIG BUILD BEGINS</div>
         <div class="comic-story">
-          <strong>ROBO needs backup! The base is surrounded and one rover isn't enough. Scratch cloning can create an army of ROBO helpers instantly!</strong>
-          I need you to write the <strong>boot-up code</strong> so my systems come back online.
-          Every rover needs a pilot — and today, that pilot is you! 🚀
+          We've learned loops, conditionals, variables, broadcasts, custom blocks, clones, and lists!
+          Now it's time to put it <strong>ALL together</strong> in one epic game.
+          Today we start building: <strong>Mars Base Escape!</strong> 🏗️
         </div>
       </div>
     </div>
 
     <!-- Mission brief -->
     <div class="mission-brief">
-      <p><strong>Your Mission:</strong> Master cloning! You'll learn how to create copies of sprites and control them independently. Clones are perfect for bullets, enemies, and collectibles!</p>
+      <p>Capstone time! You're building a real Scratch game called <strong>Mars Base Escape</strong> — ROBO navigates from the crash site to the base using everything we've learned. Today: set up the stage, movement, and fuel system!</p>
     </div>
 
     <!-- Lesson hero card -->
     <div style="background:var(--surf2);border:1px solid var(--bdr);border-radius:12px;padding:20px 22px;margin-bottom:16px;">
-      <span style="font-size:44px;display:block;margin-bottom:10px;">🎬</span>
-      <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--white);margin-bottom:6px;">Sprites, Stage &amp; <span style="color:var(--accent)">Events</span></div>
-      <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--muted)">Wake up the rover — it's time to code!</div>
+      <span style="font-size:44px;display:block;margin-bottom:10px;">🏗️</span>
+      <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--white);margin-bottom:6px;">Capstone Part 1</div>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--muted)">Plan it. Build it. Play it.</div>
     </div>
 
     <!-- What you'll discover -->
@@ -688,19 +688,20 @@ footer {
       <div class="learn-title">🧠 What You'll Discover</div>
       <div class="learn-items">
         <div class="learn-item">
-          <div class="learn-icon">🧬</div>
-          <div class="learn-text"><strong>Create Clone of []</strong> — Makes an instant copy of a sprite! The clone acts independently.</div>
+          <div class="learn-icon">🗺️</div>
+          <div class="learn-text"><strong>Game design</strong> — Before coding, plan on paper: What's the goal? What obstacles? What does winning look like?</div>
         </div>
         <div class="learn-item">
-          <div class="learn-icon">🤖</div>
-          <div class="learn-text"><strong>When I Start as a Clone</strong> — Code that runs for EACH clone when it's created — gives clones their own behavior.</div>
+          <div class="learn-icon">🎮</div>
+          <div class="learn-text"><strong>Player movement</strong> — Arrow keys + change x/y = the core of every Scratch game. ROBO needs smooth controls!</div>
         </div>
         <div class="learn-item">
-          <div class="learn-icon">💨</div>
-          <div class="learn-text"><strong>Delete This Clone</strong> — Removes a clone when it's done — keeps things tidy and fast!</div>
+          <div class="learn-icon">⛽</div>
+          <div class="learn-text"><strong>Game variables</strong> — Fuel, score, lives — all variables. Set them at the start and update during play!</div>
         </div>
       </div>
     </div>
+
     <button class="unlock-btn" onclick="unlockM2()">✓ Got It! Unlock Mission 2 →</button>
   </div>
 </div>
@@ -715,37 +716,38 @@ footer {
   </div>
   <div class="mc-body">
     <div class="mc-time">⏱ About 7 minutes</div>
-    <p style="margin-bottom:16px;">Time to clone! Build a space shooter where ROBO fires clone bullets. <strong style="color:var(--accent)">ROBO's replication matrix engages when you use cloning! 🧬</strong></p>
+    <p style="margin-bottom:16px;">Time to build! Set up the Mars Base Escape — background, ROBO, movement, and fuel. <strong style="color:var(--accent)">ROBO is pumped to star in his own game! 🤩</strong></p>
 
     <div class="two-col">
       <div class="box">
         <div class="box-title">⚡ Try This!</div>
         <div class="instructions">
-          <p style="margin-bottom:12px;">Build a space shooter using clones:</p>
+          <p style="margin-bottom:12px;">Follow these steps:</p>
           <ol>
-            <li>1. Create a small bullet sprite (circle or star)</li>
-            <li>2. Hide it at the start — clones will appear instead</li>
-            <li>3. Add the blocks shown on the right</li>
-            <li>4. Press SPACE — do bullets fly across the screen?</li>
-            <li>5. Try making them delete when they reach the edge!</li>
+            <li>Choose or paint a <strong>Mars landscape background</strong> (red/orange with craters!)</li>
+            <li>Add your ROBO sprite — position it at the <strong>bottom-left</strong> of the stage</li>
+            <li>Create a <strong>fuel variable</strong> → set to 100 at the start</li>
+            <li>Add arrow-key movement: right → change x +4 and change fuel -1</li>
+            <li>Add a warning: if fuel &lt; 10 → say 'FUEL CRITICAL!' — test it all!</li>
           </ol>
         </div>
       </div>
 
       <div class="box">
         <div class="box-title">🎬 Block Sequence</div>
-        <div class="code-label">ROBO's Clone Blaster</div>
+        <div class="code-label">Mars Base Escape — Part 1</div>
         <div class="code-demo">
-          <div class="sb-line"><span class="sb sb-event">when 🚩 clicked  ← bullet sprite</span></div>
-          <div class="sb-line"><span class="sb sb-looks">hide</span></div>
-          <div class="sb-line"><span class="sb sb-event">when [space] key pressed</span></div>
-          <div class="sb-line"><span class="sb sb-control">create clone of [myself]</span></div>
-          <div class="sb-line"><span class="sb sb-event">when I start as a clone</span></div>
-          <div class="sb-line"><span class="sb sb-looks">show</span></div>
-          <div class="sb-line"><span class="sb sb-motion">move 10 steps until edge</span></div>
-          <div class="sb-line"><span class="sb sb-control">delete this clone</span></div>
+          <div class="sb-line"><span class="sb sb-event">when 🚩 clicked</span></div>
+          <div class="sb-line"><span class="sb sb-variable">set [fuel] to (100)</span></div>
+          <div class="sb-line"><span class="sb sb-motion">go to x: (-180) y: (-130)</span></div>
+          <div class="sb-line"><span class="sb sb-control">forever</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-control">if &lt;key [right arrow] pressed?&gt; then</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-motion">change x by (4)</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-variable">change [fuel] by (-1)</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-control">if &lt;(fuel) &lt; (10)&gt; then</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-looks">say [FUEL CRITICAL!] for (1) secs</span></div>
         </div>
-        <p style="font-size:13px;color:var(--muted);margin-top:8px;">Space bar fires a clone bullet that moves and deletes!</p>
+        <p style="font-size:13px;color:var(--muted);margin-top:8px;">ROBO starts bottom-left, moves with arrow keys, fuel drains with every step!</p>
       </div>
     </div>
 
@@ -753,16 +755,16 @@ footer {
     <div class="hint-zone">
       <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
       <div class="hint-text" id="htxt1">
-        🌟 <strong>Hint 1:</strong> "Create clone of myself" is in <strong>orange Control</strong>. "When I start as a clone" is also in Control!
+        🌟 <strong>Hint 1:</strong> Start on <strong>paper</strong> — sketch where ROBO starts, where the base is, and where the rocks are. A 2-minute plan saves 20 minutes of confusion!
       </div>
       <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
       <div class="hint-text" id="htxt2">
-        🌟 <strong>Hint 2:</strong> The ORIGINAL sprite should be hidden at start. Only the CLONES become visible using "show"!
+        🌟 <strong>Hint 2:</strong> For movement, add <strong>all four arrow keys</strong>: right (x+4), left (x-4), up (y+4), down (y-4). Each one drains fuel by -1!
       </div>
       <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
       <div class="hint-text" id="htxt3">
         🌟 <strong>Full answer:</strong> No shame — even ROBO needed help!<br>
-        Stack 1: When flag clicked → hide. Stack 2: When space pressed → create clone. Stack 3: When I start as clone → show → glide to edge → delete.
+        Stack: <em>when flag clicked → set fuel 100 → go to start → forever → if right pressed → change x 4 + fuel -1 → if fuel &lt;10 → say critical</em>.
       </div>
     </div>
 
@@ -772,8 +774,8 @@ footer {
 
 <!-- Break prompt -->
 <div class="break-prompt" id="break-prompt">
-  🌟 ROBO says: <strong>"Amazing work, Aiden!"</strong><br>
-  Stand up, do 5 big jumps, then come back for your final mission! 🚀
+  🌟 ROBO says: <strong>"The build has begun, Aiden!"</strong><br>
+  Do 5 builder squats, then come back! 🏗️
 </div>
 
 <!-- ══════════════════════════════════════
@@ -794,29 +796,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Used "create clone of myself" block</div>
-            <div class="cl-sub">I can make clones!</div>
+            <div class="cl-main">I chose a Mars background for the stage</div>
+            <div class="cl-sub">Scratch Crater looks amazing — ROBO feels at home!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Clones do something when created</div>
-            <div class="cl-sub">"When I start as a clone" works!</div>
+            <div class="cl-main">ROBO moves with arrow keys</div>
+            <div class="cl-sub">Controls working — player one has entered the game!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Clones are deleted when done</div>
-            <div class="cl-sub">No clone gets left behind!</div>
+            <div class="cl-main">Fuel drains as ROBO moves</div>
+            <div class="cl-sub">The fuel gauge counts down — mission timer is live!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Project uses clones effectively</div>
-            <div class="cl-sub">Cloning makes something cool!</div>
+            <div class="cl-main">I have a plan for what Part 2 will add</div>
+            <div class="cl-sub">Great engineers plan ahead. What comes next?</div>
           </div>
         </div>
       </div>
@@ -832,9 +834,9 @@ footer {
         <span class="patch-corner">⭐</span>
         <span class="patch-corner">⭐</span>
         <div class="patch-header">MARS MISSION · CERTIFIED</div>
-        <div class="patch-title">Cloning</div>
+        <div class="patch-title">Capstone<br>Part 1</div>
         <span class="patch-robo">🛸</span>
-        <div class="patch-skill">Clone Commander</div>
+        <div class="patch-skill">Game Architect · Scratch Coding · Week 9</div>
         <div class="patch-name">AIDEN</div>
         <div class="patch-week">Q1 · SCRATCH CRATER · WEEK 9 OF 10</div>
         <div class="patch-stars">⭐⭐⭐</div>
@@ -850,13 +852,13 @@ footer {
 ══════════════════════════════════════ -->
 <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">🧩</span>
-  <div class="vr-title">ROBO found a special<br><strong>Scratch custom blocks</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=scratch+my+blocks+custom+functions+kids+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">🏗️</span>
+  <div class="vr-title">ROBO found a special<br><strong>Scratch game design &amp; project</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=scratch+game+design+kids+project+tutorial+platformer" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-  Scientists sometimes "clone" code modules so the same program controls multiple rover systems at once! One code → many actions, just like your Scratch clones. 🧬
+  NASA engineers spend <strong>months designing</strong> a Mars mission before writing a single line of code — just like your planning today! Perseverance's landing was simulated thousands of times before the real attempt. Planning is engineering! 🏗️
 </div>
 
 <!-- ══════════════════════════════════════
@@ -869,7 +871,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 9 · CLONING · Q1 SCRATCH CRATER · MISSION 9 OF 40</footer>
+<footer>WEEK 9 · CAPSTONE PART 1 · Q1 SCRATCH CRATER · MISSION 9 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────
@@ -998,7 +1000,7 @@ function allDone() {
   try {
     const key = 'aidenDoneWeeks';
     const done = JSON.parse(localStorage.getItem(key)) || [];
-    if (!done.includes('q1w9')) { done.push('q1w9'); localStorage.setItem(key, JSON.stringify(done)); }
+    if (!done.includes('q1w9')) { done.push('q1w1'); localStorage.setItem(key, JSON.stringify(done)); }
   } catch(e) {}
 }
 

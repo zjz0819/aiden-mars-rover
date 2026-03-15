@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q1 Week 4: Conditionals (If/Then)</title>
+<title>Aiden's Mission — Q1 Week 4: Variables — Fuel Tracking</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -519,10 +519,10 @@ footer {
     <div>
       <div class="quarter-pill">
         <div class="q-icon">🛸</div>
-        <span class="q-label">🛸 Q1 · SCRATCH · WEEK 4 OF 10</span>
+        <span class="q-label">Q1 · SCRATCH · WEEK 4 OF 10</span>
       </div>
-      <h1>Conditionals <em>(If/Then)</em></h1>
-      <p class="header-sub">WAKE UP THE ROVER — IT'S TIME TO CODE!</p>
+      <h1>Variables — <em>Fuel Tracking</em></h1>
+      <p class="header-sub">TRACK ROBO'S FUEL OR GET STRANDED!</p>
       <div class="time-badge">⏱ About 15 minutes &nbsp;·&nbsp; 3 Missions</div>
       <div class="nav-links">
         <a href="aiden_q1_lessons.html">← Parent Guide</a>
@@ -610,7 +610,7 @@ footer {
           <ellipse cx="80" cy="200" rx="55" ry="5" fill="#000" opacity="0.25"/>
         </svg>
         <div class="robo-bubble" id="robo-bubble">
-          Hmm… cameras offline!<br>Can you fix my code? 🤔
+          My fuel gauge is broken!<br>Help me track my energy with a variable! ⛽
         </div>
       </div>
     </div>
@@ -662,25 +662,25 @@ footer {
     <div class="comic-panel">
       <div class="comic-robo">🛸</div>
       <div class="comic-text">
-        <div class="comic-caption">ROBO SAYS · WEEK 4 EMERGENCY</div>
+        <div class="comic-caption">ROBO SAYS · WEEK 4 FUEL EMERGENCY</div>
         <div class="comic-story">
-          <strong>ROBO hit a rock! The rover needs to make decisions — if there's an obstacle, turn left. Only conditional blocks can teach ROBO to think!</strong>
-          I need you to write the <strong>boot-up code</strong> so my systems come back online.
-          Every rover needs a pilot — and today, that pilot is you! 🚀
+          I'm stranded in <strong>Fuel Flats</strong> — I ran out of energy with no warning!
+          Without a variable tracking my fuel, I can't know how much power I have left.
+          Code me a <strong>fuel gauge</strong> so I never get stranded again! ⛽
         </div>
       </div>
     </div>
 
     <!-- Mission brief -->
     <div class="mission-brief">
-      <p><strong>Your Mission:</strong> Learn conditional blocks! You'll use if <> then and if <> then else to make your sprite react differently based on conditions. This is how real robots navigate!</p>
+      <p>Today ROBO gets a fuel gauge! A <strong>variable</strong> is a named box that stores a number — like a score or fuel level. You can watch it change live on screen. No more running out of power mid-mission!</p>
     </div>
 
     <!-- Lesson hero card -->
     <div style="background:var(--surf2);border:1px solid var(--bdr);border-radius:12px;padding:20px 22px;margin-bottom:16px;">
-      <span style="font-size:44px;display:block;margin-bottom:10px;">🎬</span>
-      <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--white);margin-bottom:6px;">Sprites, Stage &amp; <span style="color:var(--accent)">Events</span></div>
-      <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--muted)">Wake up the rover — it's time to code!</div>
+      <span style="font-size:44px;display:block;margin-bottom:10px;">⛽</span>
+      <div style="font-family:'Orbitron',sans-serif;font-size:20px;font-weight:900;color:var(--white);margin-bottom:6px;">Variables — Fuel Tracking</div>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--muted)">Store numbers. Track everything.</div>
     </div>
 
     <!-- What you'll discover -->
@@ -688,19 +688,20 @@ footer {
       <div class="learn-title">🧠 What You'll Discover</div>
       <div class="learn-items">
         <div class="learn-item">
-          <div class="learn-icon">🤔</div>
-          <div class="learn-text"><strong>If &lt;&gt; Then</strong> — Checks a condition. If TRUE, runs the blocks inside. If FALSE, skips them.</div>
+          <div class="learn-icon">📦</div>
+          <div class="learn-text"><strong>Variable</strong> — A named box that stores a value. Like a labelled jar — you can change what's inside!</div>
         </div>
         <div class="learn-item">
-          <div class="learn-icon">↔️</div>
-          <div class="learn-text"><strong>If/Else</strong> — Checks a condition. If TRUE, does one thing. If FALSE, does something DIFFERENT.</div>
+          <div class="learn-icon">🔢</div>
+          <div class="learn-text"><strong>Set [] to []</strong> — Puts a specific number into the variable. <em>Set fuel to 100</em> fills the tank!</div>
         </div>
         <div class="learn-item">
-          <div class="learn-icon">🔵</div>
-          <div class="learn-text"><strong>Boolean Blocks</strong> — Blue diamond-shaped blocks that are either TRUE or FALSE — like "key pressed?"</div>
+          <div class="learn-icon">➕</div>
+          <div class="learn-text"><strong>Change [] by []</strong> — Adds to (or subtracts from) the variable. Moving → <em>change fuel by -1</em> drains it!</div>
         </div>
       </div>
     </div>
+
     <button class="unlock-btn" onclick="unlockM2()">✓ Got It! Unlock Mission 2 →</button>
   </div>
 </div>
@@ -715,35 +716,37 @@ footer {
   </div>
   <div class="mc-body">
     <div class="mc-time">⏱ About 7 minutes</div>
-    <p style="margin-bottom:16px;">Time to decide! Make ROBO react to arrow keys using if-then blocks. <strong style="color:var(--accent)">ROBO's navigation system activates when you use conditionals! 🧭</strong></p>
+    <p style="margin-bottom:16px;">Time to fuel up! Create a fuel variable and watch it drain as ROBO moves. <strong style="color:var(--accent)">ROBO's eyes flash when the fuel runs low! 🤩</strong></p>
 
     <div class="two-col">
       <div class="box">
         <div class="box-title">⚡ Try This!</div>
         <div class="instructions">
-          <p style="margin-bottom:12px;">Make ROBO move with arrow keys:</p>
+          <p style="margin-bottom:12px;">Follow these steps:</p>
           <ol>
-            <li>1. Open Scratch with a rover sprite</li>
-            <li>2. Add the blocks shown on the right</li>
-            <li>3. Click ▶️ and press your arrow keys</li>
-            <li>4. Does ROBO move left and right?</li>
-            <li>5. Try adding UP and DOWN arrow keys too!</li>
+            <li>Open Scratch — go to Variables → <strong>Make a Variable</strong> → name it <em>fuel</em></li>
+            <li>At the start: <em>set fuel to 100</em></li>
+            <li>Inside a forever loop: if right arrow pressed → <em>change x by 5</em> + <em>change fuel by -1</em></li>
+            <li>Add: if fuel = 0 → <em>say 'OUT OF FUEL!' for 2 secs</em></li>
+            <li>Click ▶️ — watch the fuel number count down as ROBO moves!</li>
           </ol>
         </div>
       </div>
 
       <div class="box">
         <div class="box-title">🎬 Block Sequence</div>
-        <div class="code-label">ROBO's Control System</div>
+        <div class="code-label">ROBO's Fuel Gauge</div>
         <div class="code-demo">
           <div class="sb-line"><span class="sb sb-event">when 🚩 clicked</span></div>
+          <div class="sb-line"><span class="sb sb-variable">set [fuel] to (100)</span></div>
           <div class="sb-line"><span class="sb sb-control">forever</span></div>
           <div class="sb-line sb-indent"><span class="sb sb-control">if &lt;key [right arrow] pressed?&gt; then</span></div>
-          <div class="sb-line sb-indent"><span class="sb sb-motion">change x by 5</span></div>
-          <div class="sb-line sb-indent"><span class="sb sb-control">if &lt;key [left arrow] pressed?&gt; then</span></div>
-          <div class="sb-line sb-indent"><span class="sb sb-motion">change x by -5</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-motion">change x by (5)</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-variable">change [fuel] by (-1)</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-control">if &lt;(fuel) = (0)&gt; then</span></div>
+          <div class="sb-line sb-indent"><span class="sb sb-looks">say [OUT OF FUEL!] for (2) secs</span></div>
         </div>
-        <p style="font-size:13px;color:var(--muted);margin-top:8px;">Two if-blocks inside a forever loop checks keys every frame!</p>
+        <p style="font-size:13px;color:var(--muted);margin-top:8px;">Fuel starts at 100 and drains by 1 with every move. Zero = stranded!</p>
       </div>
     </div>
 
@@ -751,16 +754,16 @@ footer {
     <div class="hint-zone">
       <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
       <div class="hint-text" id="htxt1">
-        🌟 <strong>Hint 1:</strong> The "if &lt;&gt; then" block is in <strong>orange Control</strong>. The "key pressed?" condition is in <strong>teal Sensing</strong>!
+        🌟 <strong>Hint 1:</strong> Variables are in the <strong>orange Variables section</strong>. Click <em>Make a Variable</em> and name it <strong>fuel</strong>. Tick the box to show it on screen!
       </div>
       <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
       <div class="hint-text" id="htxt2">
-        🌟 <strong>Hint 2:</strong> Put both "if" blocks <strong>inside</strong> the forever loop so they check the keys every instant!
+        🌟 <strong>Hint 2:</strong> Use <em>change fuel by -1</em> (negative one) to <strong>subtract</strong> from the fuel each time ROBO moves — not +1!
       </div>
       <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
       <div class="hint-text" id="htxt3">
         🌟 <strong>Full answer:</strong> No shame — even ROBO needed help!<br>
-        Stack: When flag clicked → forever → if right arrow pressed → change x by 5. Then add another if for left arrow!
+        Stack: <em>When flag clicked → set fuel 100 → forever → if right arrow → change x 5 + change fuel -1 → if fuel=0 → say 'OUT OF FUEL!'</em>
       </div>
     </div>
 
@@ -770,8 +773,8 @@ footer {
 
 <!-- Break prompt -->
 <div class="break-prompt" id="break-prompt">
-  🌟 ROBO says: <strong>"Amazing work, Aiden!"</strong><br>
-  Stand up, do 5 big jumps, then come back for your final mission! 🚀
+  🌟 ROBO says: <strong>"Fuel low — recharge time, Aiden!"</strong><br>
+  Run to the kitchen, grab a snack, then come back! ⛽
 </div>
 
 <!-- ══════════════════════════════════════
@@ -792,29 +795,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Used an "if then" block</div>
-            <div class="cl-sub">I can make decisions in code!</div>
+            <div class="cl-main">I created a variable called fuel</div>
+            <div class="cl-sub">Your rover now has a fuel tank — it exists in memory!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">My sprite reacts to a key press</div>
-            <div class="cl-sub">Keyboard controls work!</div>
+            <div class="cl-main">Fuel starts at 100 when I click the green flag</div>
+            <div class="cl-sub">Full tank! ROBO is ready for the mission.</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Used a condition (like "key pressed?")</div>
-            <div class="cl-sub">I know what a Boolean is</div>
+            <div class="cl-main">Fuel drains as ROBO moves</div>
+            <div class="cl-sub">Every step costs energy — just like a real rover!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Tested what happens when key is NOT pressed</div>
-            <div class="cl-sub">I understand if vs. else</div>
+            <div class="cl-main">I can explain what a variable does</div>
+            <div class="cl-sub">Say: "A variable stores a number I can change!"</div>
           </div>
         </div>
       </div>
@@ -830,9 +833,9 @@ footer {
         <span class="patch-corner">⭐</span>
         <span class="patch-corner">⭐</span>
         <div class="patch-header">MARS MISSION · CERTIFIED</div>
-        <div class="patch-title">Conditionals<br>(If/Then)</div>
+        <div class="patch-title">Variables —<br>Fuel Tracking</div>
         <span class="patch-robo">🛸</span>
-        <div class="patch-skill">Decision Maker</div>
+        <div class="patch-skill">Data Engineer · Scratch Coding · Week 4</div>
         <div class="patch-name">AIDEN</div>
         <div class="patch-week">Q1 · SCRATCH CRATER · WEEK 4 OF 10</div>
         <div class="patch-stars">⭐⭐⭐</div>
@@ -848,13 +851,13 @@ footer {
 ══════════════════════════════════════ -->
 <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">🚀</span>
-  <div class="vr-title">ROBO found a special<br><strong>Scratch motion & direction</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=scratch+motion+direction+coding+kids+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">⛽</span>
+  <div class="vr-title">ROBO found a special<br><strong>Scratch variables &amp; score</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=scratch+variables+score+counter+kids+coding+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-  Real Mars rovers use "if-then" logic to automatically avoid rocks they detect with sensors! They make over 200 decisions per second — if obstacle detected, then stop and reroute. 🪨
+  NASA engineers track over <strong>1,000 variables</strong> on a real Mars rover — battery level, wheel temperature, camera exposure, and more. All live in mission control, just like your fuel gauge! ⛽
 </div>
 
 <!-- ══════════════════════════════════════
@@ -867,7 +870,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 4 · CONDITIONALS · Q1 SCRATCH CRATER · MISSION 4 OF 40</footer>
+<footer>WEEK 4 · VARIABLES — FUEL TRACKING · Q1 SCRATCH CRATER · MISSION 4 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────
@@ -996,7 +999,7 @@ function allDone() {
   try {
     const key = 'aidenDoneWeeks';
     const done = JSON.parse(localStorage.getItem(key)) || [];
-    if (!done.includes('q1w4')) { done.push('q1w4'); localStorage.setItem(key, JSON.stringify(done)); }
+    if (!done.includes('q1w4')) { done.push('q1w1'); localStorage.setItem(key, JSON.stringify(done)); }
   } catch(e) {}
 }
 
