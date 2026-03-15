@@ -1,7 +1,7 @@
 // Aiden's Mars Rover Academy — Service Worker
 // Caches all lesson files for offline use
 
-const CACHE_NAME = 'mars-rover-academy-v1';
+const CACHE_NAME = 'mars-rover-academy-v2';
 
 const FILES_TO_CACHE = [
   './',
