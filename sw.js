@@ -1,7 +1,7 @@
 // Aiden's Mars Rover Academy — Service Worker
 // Caches all lesson files for offline use
 
-const CACHE_NAME = 'mars-rover-academy-v2';
+const CACHE_NAME = 'mars-rover-academy-v3';
 
 const FILES_TO_CACHE = [
   './',
@@ -26,7 +26,7 @@ const FILES_TO_CACHE = [
   './aiden_q1_w8.html',
   './aiden_q1_w9.html',
   './aiden_q1_w10.html',
-  // Q2 — SPIKE Prime
+  // Q2 — SPIKE Essential
   './aiden_q2_w1.html',
   './aiden_q2_w2.html',
   './aiden_q2_w3.html',
