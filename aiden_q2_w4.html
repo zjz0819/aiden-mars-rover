@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q2 Week 4: Conditionals & Decisions</title>
+<title>Aiden's Mission — Q2 Week 4: Obstacle Sensor</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -528,10 +528,10 @@ footer {
       <div>
         <div class="quarter-pill">
           <div class="q-icon">🤖</div>
-          <div class="q-label">Q2 · SPIKE PRIME · WEEK 4 OF 10</div>
+          <div class="q-label">Q2 · SPIKE ESSENTIAL · WEEK 4 OF 10</div>
         </div>
-        <h1><em>Conditionals & Decisions</em></h1>
-        <div class="header-sub">SPIKE Valley Sector</div>
+        <h1>Obstacle <em>Sensor</em></h1>
+        <div class="header-sub">TEACH ROBO TO STOP BEFORE CRASHING!</div>
         <div class="time-badge">⏱ About 45 minutes</div>
         <div class="nav-links">
           <a href="aiden_q2_lessons.html">📚 Parent Guide</a>
@@ -666,13 +666,13 @@ footer {
         <div class="comic-robo">🤖</div>
         <div class="comic-text">
           <div class="comic-caption">⚡ ROBO's Transmission</div>
-          <div class="comic-story">ROBO reached a fork in the path — turn left or turn right? Only an if-then decision can help ROBO choose the right route through SPIKE Valley!</div>
+          <div class="comic-story">ROBO is speeding through SPIKE Valley and there's a <strong>crater wall dead ahead</strong>! Without a distance sensor, ROBO will crash and the mission is over. I need obstacle detection — fast!</div>
         </div>
       </div>
 
       <!-- Your Mission! -->
       <div class="mission-brief">
-        <p>Learn 'if <> then' block with sensor conditions, 'if <> then [] else []', combining sensors with conditionals.</p>
+        <p>Today ROBO gets eyes! You'll add the <strong>distance sensor</strong> and programme ROBO to automatically stop before hitting anything. No more crashes — just like the real rovers that use radar to avoid boulders on Mars!</p>
       </div>
 
       <!-- Learn section -->
@@ -680,16 +680,16 @@ footer {
         <div class="learn-title">🎓 Let's Learn!</div>
         <div class="learn-items">
           <div class="learn-item">
-            <div class="learn-icon">🧩</div>
-            <div class="learn-text">Understand <strong>SPIKE Prime blocks</strong> and how they control motors, sensors, and more.</div>
+            <div class="learn-icon">👁️</div>
+            <div class="learn-text"><strong>Distance Sensor</strong> — Measures how far away something is in centimetres. Plug it into port C and it watches for obstacles!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">⚙️</div>
-            <div class="learn-text">See how <strong>block types work together</strong> to make SPIKE move and respond.</div>
+            <div class="learn-icon">⏸️</div>
+            <div class="learn-text"><strong>Wait until...</strong> — <em>Wait until distance sensor closer than 15 cm</em> pauses the programme until the condition is true.</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">🎯</div>
-            <div class="learn-text">Know what to look for when <strong>building your program</strong> in Mission 2.</div>
+            <div class="learn-icon">🛑</div>
+            <div class="learn-text"><strong>Stop moving</strong> — <em>Stop moving</em> cuts power to both drive motors instantly — ROBO freezes in place.</div>
           </div>
         </div>
       </div>
@@ -708,36 +708,35 @@ footer {
     </div>
     <div class="mc-body">
       <div class="mc-time">⏱ About 20 minutes</div>
-      <p style="margin-bottom:16px;">Make SPIKE turn left if the left color sensor sees black, else go straight.</p>
+      <p style="margin-bottom:16px;">Time to add sensors! Connect the distance sensor and programme ROBO to stop before hitting a wall. <strong style="color:var(--accent)">ROBO's sensor eye glows blue when it spots an obstacle! 🤩</strong></p>
 
       <div class="two-col">
         <div class="box">
           <div class="box-title">⚡ Try This!</div>
           <div class="instructions">
-            <p style="margin-bottom:12px;">Build this in LEGO Education SPIKE App:</p>
+            <p style="margin-bottom:12px;">Follow these steps:</p>
             <ol>
-              <li>Connect your SPIKE Prime robot to the SPIKE app</li>
-              <li>Start a new project</li>
-              <li>Drag the blocks you learned into the coding area</li>
-              <li>Click the green play button to run your code</li>
-              <li>Did SPIKE do what you expected? Try tweaking the numbers!</li>
+              <li>Attach the <strong>distance sensor</strong> to port C at the front of ROBO</li>
+              <li>Add <em>Start moving forward</em> (not 'Move forward X cm' — this one drives continuously!)</li>
+              <li>Add <em>Wait until distance sensor is closer than 10 cm</em></li>
+              <li>Add <em>Stop moving</em> and <em>Set hub light to red</em></li>
+              <li>Put a book 30 cm in front of ROBO and tap ▶️ — does ROBO stop before hitting it?</li>
             </ol>
           </div>
         </div>
 
         <div class="box">
           <div class="box-title">🎬 Block Sequence</div>
-          <div class="code-label">Sample: Motor Forward</div>
+          <div class="code-label">ROBO's Auto-Brake</div>
           <div class="code-demo">
-            <div class="sb-line"><span class="spike-block spk-event">when started</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">forever</span></div>
-            <div class="sb-line sb-indent sb-indent"><span class="spike-block spk-control">if</span> <span class="spike-block spk-sensor">distance &lt; 20 cm</span> <span class="spike-block spk-control">then</span></div>
-            <div class="sb-line sb-indent sb-indent sb-indent"><span class="spike-block spk-motor">Motor A + B stop</span></div>
-            <div class="sb-line sb-indent sb-indent sb-indent"><span class="spike-block spk-light">light matrix show ⚠️</span></div>
-            <div class="sb-line sb-indent sb-indent"><span class="spike-block spk-control">else</span></div>
-            <div class="sb-line sb-indent sb-indent sb-indent"><span class="spike-block spk-motor">Motor A + B run forward</span></div>
+            <div class="sb-line"><span class="spike-block spk-event">When program starts</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement motors to A and B</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Start moving forward</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-control">Wait until distance sensor closer than 10 cm</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Stop moving</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-light">Set hub light to red</span></div>
           </div>
-          <p style="font-size:13px;color:var(--muted);margin-top:8px;">The rover decides: stop or go!</p>
+          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Drive forward → wait until obstacle detected 10 cm away → stop + red warning light!</p>
         </div>
       </div>
 
@@ -745,17 +744,16 @@ footer {
       <div class="hint-zone">
         <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
         <div class="hint-text" id="htxt1">
-          🌟 <strong>Hint 1:</strong> Motor blocks are usually <strong>red/orange</strong> in the SPIKE app. Look for the "Motor" section in the block palette!
+          🌟 <strong>Hint 1:</strong> Use <em>Start moving forward</em> (not <em>Move forward 20 cm</em>). The <em>Start moving</em> block drives continuously until told to stop — perfect for sensor detection!
         </div>
         <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
         <div class="hint-text" id="htxt2">
-          🌟 <strong>Hint 2:</strong> You need to <strong>specify the motor port</strong> (usually A, B, C, D, E, or F) and the <strong>action</strong> (run for rotations, run for seconds, run at speed, etc.).
+          🌟 <strong>Hint 2:</strong> The distance sensor block is in the <strong>Sensing</strong> category. Look for <em>Distance sensor</em> and choose <em>closer than</em>, then set the value to <strong>10</strong>.
         </div>
         <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
         <div class="hint-text" id="htxt3">
-          🌟 <strong>Full answer:</strong> No shame — ROBO needed help learning too!<br>
-          Use: <em>Motor [port] run for [X] rotations</em> to move, and <em>wait [X] seconds</em> to pause.<br>
-          Click ▶️ and watch SPIKE go!
+          🌟 <strong>Full answer:</strong> No shame — ROBO needed help too!<br>
+          Stack: <em>When program starts → Set motors A and B → Start moving forward → Wait until distance &lt;10 cm → Stop moving → Light red</em>.
         </div>
       </div>
 
@@ -765,8 +763,8 @@ footer {
 
   <!-- Break prompt -->
   <div class="break-prompt" id="break-prompt">
-    🌟 ROBO says: <strong>"Excellent work, Aiden!"</strong><br>
-    Stand up, do 5 big jumps, then come back for your final mission! 🚀
+    🌟 ROBO says: <strong>"Obstacle avoided, Aiden!"</strong><br>
+    Play 'freeze!' — walk around then stop suddenly on 'freeze', 5 times! 🛑
   </div>
 
   <!-- ══════════════════════════════════════
@@ -787,29 +785,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Used an if-then block</div>
-            <div class="cl-sub">Logic unlocked!</div>
+            <div class="cl-main">I attached the distance sensor to port C</div>
+            <div class="cl-sub">Sensor connected — ROBO can now see obstacles!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Robot makes a decision based on sensor input</div>
-            <div class="cl-sub">Smart decisions!</div>
+            <div class="cl-main">ROBO drives forward automatically</div>
+            <div class="cl-sub">Continuous drive mode activated!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Tested both outcomes of the condition</div>
-            <div class="cl-sub">Thoroughly tested!</div>
+            <div class="cl-main">ROBO stops before hitting the obstacle</div>
+            <div class="cl-sub">Auto-brake works — mission safety system online!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Used else OR two different if blocks</div>
-            <div class="cl-sub">Branching paths!</div>
+            <div class="cl-main">I can explain how the distance sensor works</div>
+            <div class="cl-sub">Say: "It measures distance and stops ROBO when something is too close!"</div>
           </div>
         </div>
         </div>
@@ -825,9 +823,9 @@ footer {
           <span class="patch-corner">⭐</span>
           <span class="patch-corner">⭐</span>
           <div class="patch-header">MARS MISSION · CERTIFIED</div>
-          <div class="patch-title">Conditionals & Decisions</div>
+          <div class="patch-title">Obstacle<br>Sensor</div>
           <span class="patch-robo">🤖</span>
-          <div class="patch-skill">SPIKE Prime Coding · Week 4</div>
+          <div class="patch-skill">SPIKE Essential · Week 4</div>
           <div class="patch-name">AIDEN</div>
           <div class="patch-week">Q2 · SPIKE VALLEY · WEEK 4 OF 10</div>
           <div class="patch-stars">⭐⭐⭐</div>
@@ -843,13 +841,13 @@ footer {
   ══════════════════════════════════════ -->
   <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">🔀</span>
-  <div class="vr-title">ROBO found a special<br><strong>SPIKE conditionals</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=lego+spike+prime+if+else+sensor+robot+kids+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">👁️</span>
+  <div class="vr-title">ROBO found a special<br><strong>LEGO SPIKE Essential distance sensor</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=lego+spike+essential+distance+sensor+obstacle+avoidance+kids+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-    <strong>Fun Fact:</strong> Real rovers make 200+ automatic decisions per second while navigating rough Mars terrain!
+    Perseverance has <strong>7 cameras and a radar system</strong> to detect obstacles — it can spot a rock the size of a tennis ball from 5 metres away. Your distance sensor today does the same job, just with sound waves! 👁️
   </div>
 
   <!-- ══════════════════════════════════════
@@ -862,7 +860,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 4 · CONDITIONALS & DECISIONS · Q2 SPIKE VALLEY · MISSION 4 OF 40</footer>
+<footer>WEEK 4 · OBSTACLE SENSOR · Q2 SPIKE VALLEY · MISSION 14 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────

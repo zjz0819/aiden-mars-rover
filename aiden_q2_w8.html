@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q2 Week 8: Sound & Feedback</title>
+<title>Aiden's Mission — Q2 Week 8: Integration Challenge</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -528,10 +528,10 @@ footer {
       <div>
         <div class="quarter-pill">
           <div class="q-icon">🤖</div>
-          <div class="q-label">Q2 · SPIKE PRIME · WEEK 8 OF 10</div>
+          <div class="q-label">Q2 · SPIKE ESSENTIAL · WEEK 8 OF 10</div>
         </div>
-        <h1><em>Sound & Feedback</em></h1>
-        <div class="header-sub">SPIKE Valley Sector</div>
+        <h1><em>Integration</em> Challenge</h1>
+        <div class="header-sub">COMBINE EVERYTHING — ONE FULL MISSION!</div>
         <div class="time-badge">⏱ About 45 minutes</div>
         <div class="nav-links">
           <a href="aiden_q2_lessons.html">📚 Parent Guide</a>
@@ -666,13 +666,13 @@ footer {
         <div class="comic-robo">🤖</div>
         <div class="comic-text">
           <div class="comic-caption">⚡ ROBO's Transmission</div>
-          <div class="comic-story">ROBO can't communicate with sound! The speaker systems need reprogramming. Sound feedback helps ROBO signal success, danger, and completion of tasks to the whole crew!</div>
+          <div class="comic-story">The ultimate test has arrived! ROBO must navigate the entire SPIKE Valley challenge course: <strong>drive a path, detect obstacles, follow a color trail, and control speed</strong> — all in one programme. This is the real mission!</div>
         </div>
       </div>
 
       <!-- Your Mission! -->
       <div class="mission-brief">
-        <p>Learn sound blocks in SPIKE — 'play beep at [] Hz for [] seconds', 'play sound []', different frequencies for different meanings, creating audio signals.</p>
+        <p>Today it all comes together! You'll design and code a <strong>full obstacle course programme</strong> using everything from Weeks 1–7 — movement, sensors, speed control, loops, and conditionals. Real engineering means making everything work together!</p>
       </div>
 
       <!-- Learn section -->
@@ -680,16 +680,16 @@ footer {
         <div class="learn-title">🎓 Let's Learn!</div>
         <div class="learn-items">
           <div class="learn-item">
-            <div class="learn-icon">🧩</div>
-            <div class="learn-text">Understand <strong>SPIKE Prime blocks</strong> and how they control motors, sensors, and more.</div>
+            <div class="learn-icon">🗺️</div>
+            <div class="learn-text"><strong>Programme design</strong> — Plan your course on paper first: what sequence of movements? Where are the sensors? What triggers what?</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">⚙️</div>
-            <div class="learn-text">See how <strong>block types work together</strong> to make SPIKE move and respond.</div>
+            <div class="learn-icon">🔗</div>
+            <div class="learn-text"><strong>Combining skills</strong> — Chain movement, loops, conditionals, and sensors into one programme — that's full robot integration!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">🎯</div>
-            <div class="learn-text">Know what to look for when <strong>building your program</strong> in Mission 2.</div>
+            <div class="learn-icon">🐛</div>
+            <div class="learn-text"><strong>Debugging</strong> — When something goes wrong, test one block at a time. Isolate the problem, then fix it.</div>
           </div>
         </div>
       </div>
@@ -708,34 +708,38 @@ footer {
     </div>
     <div class="mc-body">
       <div class="mc-time">⏱ About 20 minutes</div>
-      <p style="margin-bottom:16px;">Create a warning system — normal beep when moving, fast high beep when something is detected within 5 cm.</p>
+      <p style="margin-bottom:16px;">Time for the big challenge! Design your course, then code and run the full programme. <strong style="color:var(--accent)">ROBO is in full mission mode — sensors blazing! 🤩</strong></p>
 
       <div class="two-col">
         <div class="box">
           <div class="box-title">⚡ Try This!</div>
           <div class="instructions">
-            <p style="margin-bottom:12px;">Build this in LEGO Education SPIKE App:</p>
+            <p style="margin-bottom:12px;">Follow these steps:</p>
             <ol>
-              <li>Connect your SPIKE Prime robot to the SPIKE app</li>
-              <li>Start a new project</li>
-              <li>Drag the blocks you learned into the coding area</li>
-              <li>Click the green play button to run your code</li>
-              <li>Did SPIKE do what you expected? Try tweaking the numbers!</li>
+              <li>On paper, draw your challenge course — mark where ROBO starts, turns, and stops</li>
+              <li>Set speed to 50% and add your square patrol (Repeat 4 with move + turn)</li>
+              <li>After the patrol: add obstacle detection to stop ROBO at the final wall</li>
+              <li>Add a sound and light effect for mission complete</li>
+              <li>Test it 3 times, tweak values each time to make it more accurate!</li>
             </ol>
           </div>
         </div>
 
         <div class="box">
           <div class="box-title">🎬 Block Sequence</div>
-          <div class="code-label">Sample: Motor Forward</div>
+          <div class="code-label">ROBO's Full Mission</div>
           <div class="code-demo">
-            <div class="sb-line"><span class="spike-block spk-event">when started</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-sound">play sound [beep] until done</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">wait 0.5 seconds</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-sound">play sound [confirmation] until done</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motor">Motor A run for 2 rotations</span></div>
+            <div class="sb-line"><span class="spike-block spk-event">When program starts</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement motors to A and B</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement speed to 50%</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-control">Repeat 4</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Move forward 20 cm</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Turn right 90 degrees</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-control">Wait until distance sensor closer than 10 cm</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Stop moving</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-sound">Play sound Tada</span></div>
           </div>
-          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Beep — then move! Sound + action together!</p>
+          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Square patrol at 50% speed → auto-stop at obstacle → celebrate!</p>
         </div>
       </div>
 
@@ -743,17 +747,16 @@ footer {
       <div class="hint-zone">
         <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
         <div class="hint-text" id="htxt1">
-          🌟 <strong>Hint 1:</strong> Motor blocks are usually <strong>red/orange</strong> in the SPIKE app. Look for the "Motor" section in the block palette!
+          🌟 <strong>Hint 1:</strong> Start simple! Get the movement working first, then add sensor detection, then add sound/lights. Build up layer by layer.
         </div>
         <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
         <div class="hint-text" id="htxt2">
-          🌟 <strong>Hint 2:</strong> You need to <strong>specify the motor port</strong> (usually A, B, C, D, E, or F) and the <strong>action</strong> (run for rotations, run for seconds, run at speed, etc.).
+          🌟 <strong>Hint 2:</strong> If ROBO isn't stopping at the right distance, adjust the cm value in the distance sensor block — try 12 cm or 15 cm if 10 cm isn't triggering correctly.
         </div>
         <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
         <div class="hint-text" id="htxt3">
-          🌟 <strong>Full answer:</strong> No shame — ROBO needed help learning too!<br>
-          Use: <em>Motor [port] run for [X] rotations</em> to move, and <em>wait [X] seconds</em> to pause.<br>
-          Click ▶️ and watch SPIKE go!
+          🌟 <strong>Full answer:</strong> No shame — ROBO needed help too!<br>
+          Full stack: <em>Set speed 50% → Repeat 4 (Move forward 20 cm + Turn right 90°) → Wait until distance &lt;10 cm → Stop → Sound Tada</em>.
         </div>
       </div>
 
@@ -763,8 +766,8 @@ footer {
 
   <!-- Break prompt -->
   <div class="break-prompt" id="break-prompt">
-    🌟 ROBO says: <strong>"Excellent work, Aiden!"</strong><br>
-    Stand up, do 5 big jumps, then come back for your final mission! 🚀
+    🌟 ROBO says: <strong>"Integration successful, Aiden!"</strong><br>
+    Do 5 star jumps — you just built a fully integrated robot system! 🔗
   </div>
 
   <!-- ══════════════════════════════════════
@@ -785,29 +788,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Used a sound/beep block</div>
-            <div class="cl-sub">Audio online!</div>
+            <div class="cl-main">I planned my course on paper before coding</div>
+            <div class="cl-sub">Engineering design process — plan before you build!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Different sounds for different events</div>
-            <div class="cl-sub">Multiple signals!</div>
+            <div class="cl-main">My programme uses movement AND at least one sensor</div>
+            <div class="cl-sub">Integration achieved — systems working together!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Sound changes based on sensor data</div>
-            <div class="cl-sub">Reactive feedback!</div>
+            <div class="cl-main">I ran the programme at least 3 times and improved it</div>
+            <div class="cl-sub">Iteration complete — that's real engineering!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Has a completion sound</div>
-            <div class="cl-sub">Task confirmation!</div>
+            <div class="cl-main">ROBO completed the full course without crashing</div>
+            <div class="cl-sub">Mission accomplished — SPIKE Valley conquered!</div>
           </div>
         </div>
         </div>
@@ -823,9 +826,9 @@ footer {
           <span class="patch-corner">⭐</span>
           <span class="patch-corner">⭐</span>
           <div class="patch-header">MARS MISSION · CERTIFIED</div>
-          <div class="patch-title">Sound & Feedback</div>
+          <div class="patch-title">Integration<br>Challenge</div>
           <span class="patch-robo">🤖</span>
-          <div class="patch-skill">SPIKE Prime Coding · Week 8</div>
+          <div class="patch-skill">SPIKE Essential · Week 8</div>
           <div class="patch-name">AIDEN</div>
           <div class="patch-week">Q2 · SPIKE VALLEY · WEEK 8 OF 10</div>
           <div class="patch-stars">⭐⭐⭐</div>
@@ -841,13 +844,13 @@ footer {
   ══════════════════════════════════════ -->
   <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">🔊</span>
-  <div class="vr-title">ROBO found a special<br><strong>SPIKE sound</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=lego+spike+prime+sound+music+robot+kids+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">🔗</span>
+  <div class="vr-title">ROBO found a special<br><strong>LEGO SPIKE Essential challenge course</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=lego+spike+essential+obstacle+course+challenge+kids+robot+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-    <strong>Fun Fact:</strong> NASA engineers listen to audio alerts when rover battery gets low — sound is a critical part of mission control!
+    NASA engineers run Mars rover simulations <strong>thousands of times</strong> in software before sending a single command to the real rover. Each run finds bugs to fix. Your 3 test runs today is the exact same engineering process! 🧪
   </div>
 
   <!-- ══════════════════════════════════════
@@ -860,7 +863,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 8 · SOUND & FEEDBACK · Q2 SPIKE VALLEY · MISSION 8 OF 40</footer>
+<footer>WEEK 8 · INTEGRATION CHALLENGE · Q2 SPIKE VALLEY · MISSION 18 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────

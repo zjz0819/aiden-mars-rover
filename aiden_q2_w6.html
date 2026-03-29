@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q2 Week 6: Light Matrix & Display</title>
+<title>Aiden's Mission — Q2 Week 6: Speed Control</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -528,10 +528,10 @@ footer {
       <div>
         <div class="quarter-pill">
           <div class="q-icon">🤖</div>
-          <div class="q-label">Q2 · SPIKE PRIME · WEEK 6 OF 10</div>
+          <div class="q-label">Q2 · SPIKE ESSENTIAL · WEEK 6 OF 10</div>
         </div>
-        <h1><em>Light Matrix & Display</em></h1>
-        <div class="header-sub">SPIKE Valley Sector</div>
+        <h1><em>Speed</em> Control</h1>
+        <div class="header-sub">FAST ROBO, SLOW ROBO, PERFECT ROBO!</div>
         <div class="time-badge">⏱ About 45 minutes</div>
         <div class="nav-links">
           <a href="aiden_q2_lessons.html">📚 Parent Guide</a>
@@ -666,13 +666,13 @@ footer {
         <div class="comic-robo">🤖</div>
         <div class="comic-text">
           <div class="comic-caption">⚡ ROBO's Transmission</div>
-          <div class="comic-story">ROBO needs to send status signals but the radio is broken! The light matrix display on SPIKE Prime can show messages, faces, and symbols to communicate with the base crew!</div>
+          <div class="comic-story">ROBO is racing through SPIKE Valley at full speed — but the path is getting narrow and twisty! Going too fast means spinning out. I need you to code <strong>variable speed control</strong> so ROBO slows down for tight corners!</div>
         </div>
       </div>
 
       <!-- Your Mission! -->
       <div class="mission-brief">
-        <p>Learn light matrix blocks — 'show image []', 'show text []', 'set pixel [] [] to brightness []', turning matrix on/off, animating the display.</p>
+        <p>Today ROBO learns to control its speed! You'll use the <strong>Set movement speed</strong> block to programme slow careful navigation and fast dashes. Understanding speed is how real engineers make robots precise and safe!</p>
       </div>
 
       <!-- Learn section -->
@@ -680,16 +680,16 @@ footer {
         <div class="learn-title">🎓 Let's Learn!</div>
         <div class="learn-items">
           <div class="learn-item">
-            <div class="learn-icon">🧩</div>
-            <div class="learn-text">Understand <strong>SPIKE Prime blocks</strong> and how they control motors, sensors, and more.</div>
+            <div class="learn-icon">🐢</div>
+            <div class="learn-text"><strong>Set movement speed to []%</strong> — Changes how fast ROBO drives. 30% = careful crawl, 100% = full speed. Lower speed = more precision!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">⚙️</div>
-            <div class="learn-text">See how <strong>block types work together</strong> to make SPIKE move and respond.</div>
+            <div class="learn-icon">⚡</div>
+            <div class="learn-text"><strong>Speed vs accuracy</strong> — Faster isn't always better — slow speeds let ROBO stop exactly on a line.</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">🎯</div>
-            <div class="learn-text">Know what to look for when <strong>building your program</strong> in Mission 2.</div>
+            <div class="learn-icon">📊</div>
+            <div class="learn-text"><strong>Percentage</strong> — Speed is a percentage of maximum power. 50% = half speed. You can mix speeds in one programme!</div>
           </div>
         </div>
       </div>
@@ -708,35 +708,37 @@ footer {
     </div>
     <div class="mc-body">
       <div class="mc-time">⏱ About 20 minutes</div>
-      <p style="margin-bottom:16px;">Create a mood indicator — show a happy face when the distance sensor detects nothing, show a worried face when something is close.</p>
+      <p style="margin-bottom:16px;">Time to find the right speed! Programme ROBO to crawl slowly then dash fast. <strong style="color:var(--accent)">ROBO revs up like a rocket at full speed! 🤩</strong></p>
 
       <div class="two-col">
         <div class="box">
           <div class="box-title">⚡ Try This!</div>
           <div class="instructions">
-            <p style="margin-bottom:12px;">Build this in LEGO Education SPIKE App:</p>
+            <p style="margin-bottom:12px;">Follow these steps:</p>
             <ol>
-              <li>Connect your SPIKE Prime robot to the SPIKE app</li>
-              <li>Start a new project</li>
-              <li>Drag the blocks you learned into the coding area</li>
-              <li>Click the green play button to run your code</li>
-              <li>Did SPIKE do what you expected? Try tweaking the numbers!</li>
+              <li>Add <em>Set movement speed to 30%</em> before your first move</li>
+              <li>Add <em>Move forward 20 cm</em> — ROBO should creep slowly</li>
+              <li>Add <em>Set movement speed to 100%</em> then <em>Move forward 30 cm</em> — full dash!</li>
+              <li>Add <em>Set movement speed to 30%</em> then <em>Turn right 90 degrees</em></li>
+              <li>Tap ▶️ — can you hear and see the speed difference?</li>
             </ol>
           </div>
         </div>
 
         <div class="box">
           <div class="box-title">🎬 Block Sequence</div>
-          <div class="code-label">Sample: Motor Forward</div>
+          <div class="code-label">ROBO's Speed Run</div>
           <div class="code-demo">
-            <div class="sb-line"><span class="spike-block spk-event">when started</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-light">light matrix show image ❤️</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">wait 1 second</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-light">light matrix show pixel (3,3)</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">wait 1 second</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-light">light matrix clear</span></div>
+            <div class="sb-line"><span class="spike-block spk-event">When program starts</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement motors to A and B</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement speed to 30%</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Move forward 20 cm</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement speed to 100%</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Move forward 30 cm</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement speed to 30%</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Turn right 90 degrees</span></div>
           </div>
-          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Make ROBO's face light up!</p>
+          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Slow crawl 20 cm → full speed dash 30 cm → slow careful turn!</p>
         </div>
       </div>
 
@@ -744,17 +746,16 @@ footer {
       <div class="hint-zone">
         <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
         <div class="hint-text" id="htxt1">
-          🌟 <strong>Hint 1:</strong> Motor blocks are usually <strong>red/orange</strong> in the SPIKE app. Look for the "Motor" section in the block palette!
+          🌟 <strong>Hint 1:</strong> Speed blocks are in the <strong>Movement</strong> category. Look for <em>Set movement speed to</em> and type in a percentage. Try 20% for very slow, 100% for maximum speed!
         </div>
         <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
         <div class="hint-text" id="htxt2">
-          🌟 <strong>Hint 2:</strong> You need to <strong>specify the motor port</strong> (usually A, B, C, D, E, or F) and the <strong>action</strong> (run for rotations, run for seconds, run at speed, etc.).
+          🌟 <strong>Hint 2:</strong> You need to set the speed <strong>before</strong> the move command — the speed setting stays until you change it again. Think of it like setting cruise control!
         </div>
         <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
         <div class="hint-text" id="htxt3">
-          🌟 <strong>Full answer:</strong> No shame — ROBO needed help learning too!<br>
-          Use: <em>Motor [port] run for [X] rotations</em> to move, and <em>wait [X] seconds</em> to pause.<br>
-          Click ▶️ and watch SPIKE go!
+          🌟 <strong>Full answer:</strong> No shame — ROBO needed help too!<br>
+          Stack: <em>Set speed 30% → Move forward 20 cm → Set speed 100% → Move forward 30 cm → Set speed 30% → Turn right 90°</em>.
         </div>
       </div>
 
@@ -764,8 +765,8 @@ footer {
 
   <!-- Break prompt -->
   <div class="break-prompt" id="break-prompt">
-    🌟 ROBO says: <strong>"Excellent work, Aiden!"</strong><br>
-    Stand up, do 5 big jumps, then come back for your final mission! 🚀
+    🌟 ROBO says: <strong>"Speed calibrated, Aiden!"</strong><br>
+    Walk in slow motion for 10 steps then sprint — feel the difference! ⚡
   </div>
 
   <!-- ══════════════════════════════════════
@@ -786,29 +787,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Used show image or show text block</div>
-            <div class="cl-sub">Display active!</div>
+            <div class="cl-main">I used Set movement speed to change ROBO's speed</div>
+            <div class="cl-sub">Speed control mastered — ROBO drives at your command!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Display changes based on sensor or condition</div>
-            <div class="cl-sub">Dynamic feedback!</div>
+            <div class="cl-main">ROBO drove noticeably slower at 30% vs 100%</div>
+            <div class="cl-sub">Speed difference detected — mission engineer!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">At least 2 different displays shown</div>
-            <div class="cl-sub">Multiple states!</div>
+            <div class="cl-main">I used at least 2 different speeds in one programme</div>
+            <div class="cl-sub">Multi-speed programme written — advanced driver!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Makes sense as a signal</div>
-            <div class="cl-sub">Communication achieved!</div>
+            <div class="cl-main">I can explain why speed control matters</div>
+            <div class="cl-sub">Say: "Slower is more precise, faster covers more ground!"</div>
           </div>
         </div>
         </div>
@@ -824,9 +825,9 @@ footer {
           <span class="patch-corner">⭐</span>
           <span class="patch-corner">⭐</span>
           <div class="patch-header">MARS MISSION · CERTIFIED</div>
-          <div class="patch-title">Light Matrix & Display</div>
+          <div class="patch-title">Speed<br>Control</div>
           <span class="patch-robo">🤖</span>
-          <div class="patch-skill">SPIKE Prime Coding · Week 6</div>
+          <div class="patch-skill">SPIKE Essential · Week 6</div>
           <div class="patch-name">AIDEN</div>
           <div class="patch-week">Q2 · SPIKE VALLEY · WEEK 6 OF 10</div>
           <div class="patch-stars">⭐⭐⭐</div>
@@ -842,13 +843,13 @@ footer {
   ══════════════════════════════════════ -->
   <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">💡</span>
-  <div class="vr-title">ROBO found a special<br><strong>SPIKE light matrix</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=lego+spike+prime+light+matrix+display+kids+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">⚡</span>
+  <div class="vr-title">ROBO found a special<br><strong>LEGO SPIKE Essential speed control</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=lego+spike+essential+speed+motor+control+kids+tutorial+robot" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-    <strong>Fun Fact:</strong> Real Mars rovers have status LED lights that engineers use to tell if systems are OK — like a robot's face!
+    Mars rovers drive at a maximum speed of just <strong>4.2 cm per second</strong> — slower than a tortoise! They go slowly to avoid tipping on rocks. Your 30% slow mode is actually faster than Perseverance at full speed! 🐢
   </div>
 
   <!-- ══════════════════════════════════════
@@ -861,7 +862,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 6 · LIGHT MATRIX & DISPLAY · Q2 SPIKE VALLEY · MISSION 6 OF 40</footer>
+<footer>WEEK 6 · SPEED CONTROL · Q2 SPIKE VALLEY · MISSION 16 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────

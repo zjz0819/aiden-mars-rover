@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q2 Week 5: Color Sensors & Line Following</title>
+<title>Aiden's Mission — Q2 Week 5: Color Tracking</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -528,10 +528,10 @@ footer {
       <div>
         <div class="quarter-pill">
           <div class="q-icon">🤖</div>
-          <div class="q-label">Q2 · SPIKE PRIME · WEEK 5 OF 10</div>
+          <div class="q-label">Q2 · SPIKE ESSENTIAL · WEEK 5 OF 10</div>
         </div>
-        <h1><em>Color Sensors & Line Following</em></h1>
-        <div class="header-sub">SPIKE Valley Sector</div>
+        <h1><em>Color</em> Tracking</h1>
+        <div class="header-sub">TEACH ROBO TO FOLLOW A LINE!</div>
         <div class="time-badge">⏱ About 45 minutes</div>
         <div class="nav-links">
           <a href="aiden_q2_lessons.html">📚 Parent Guide</a>
@@ -666,13 +666,13 @@ footer {
         <div class="comic-robo">🤖</div>
         <div class="comic-text">
           <div class="comic-caption">⚡ ROBO's Transmission</div>
-          <div class="comic-story">ROBO got lost! There are no GPS signals in SPIKE Valley. But there ARE color-coded paths on the ground. Color sensors are ROBO's navigation system now!</div>
+          <div class="comic-story">ROBO needs to follow the <strong>marked path</strong> through SPIKE Valley — but can't see it! The color sensor can detect the black line on the ground. Code ROBO to follow the trail all the way to the base camp!</div>
         </div>
       </div>
 
       <!-- Your Mission! -->
       <div class="mission-brief">
-        <p>Learn color sensor block 'color sensor sees []', detecting black/white/colors, using color for navigation, 'color sensor reflected light intensity'.</p>
+        <p>Today ROBO follows a trail! You'll add the <strong>color sensor</strong> and programme ROBO to detect colors and follow a black line on the ground. This is exactly how warehouse robots and self-driving cars navigate!</p>
       </div>
 
       <!-- Learn section -->
@@ -680,16 +680,16 @@ footer {
         <div class="learn-title">🎓 Let's Learn!</div>
         <div class="learn-items">
           <div class="learn-item">
-            <div class="learn-icon">🧩</div>
-            <div class="learn-text">Understand <strong>SPIKE Prime blocks</strong> and how they control motors, sensors, and more.</div>
+            <div class="learn-icon">🎨</div>
+            <div class="learn-text"><strong>Color Sensor</strong> — Detects the color of a surface. Plug it into port C pointing downward and it reads black, white, red, blue, and more!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">⚙️</div>
-            <div class="learn-text">See how <strong>block types work together</strong> to make SPIKE move and respond.</div>
+            <div class="learn-icon">🔴</div>
+            <div class="learn-text"><strong>Color conditions</strong> — <em>Wait until color sensor detects red</em> pauses the programme until ROBO rolls over a red card.</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">🎯</div>
-            <div class="learn-text">Know what to look for when <strong>building your program</strong> in Mission 2.</div>
+            <div class="learn-icon">⏸️</div>
+            <div class="learn-text"><strong>Line triggers</strong> — Tape a coloured strip on the floor — ROBO uses it as a stop signal, no buttons needed!</div>
           </div>
         </div>
       </div>
@@ -708,35 +708,36 @@ footer {
     </div>
     <div class="mc-body">
       <div class="mc-time">⏱ About 20 minutes</div>
-      <p style="margin-bottom:16px;">Build a basic line follower — if color sensor sees black, go straight; if it sees white, turn to find the line again.</p>
+      <p style="margin-bottom:16px;">Time to follow the trail! Attach the color sensor and programme ROBO to stop on a red card. <strong style="color:var(--accent)">ROBO's eye lights up the color it detects! 🤩</strong></p>
 
       <div class="two-col">
         <div class="box">
           <div class="box-title">⚡ Try This!</div>
           <div class="instructions">
-            <p style="margin-bottom:12px;">Build this in LEGO Education SPIKE App:</p>
+            <p style="margin-bottom:12px;">Follow these steps:</p>
             <ol>
-              <li>Connect your SPIKE Prime robot to the SPIKE app</li>
-              <li>Start a new project</li>
-              <li>Drag the blocks you learned into the coding area</li>
-              <li>Click the green play button to run your code</li>
-              <li>Did SPIKE do what you expected? Try tweaking the numbers!</li>
+              <li>Attach the <strong>color sensor</strong> to port C pointing <strong>downward</strong> at the ground</li>
+              <li>Place a piece of red card or paper on the floor ahead of ROBO</li>
+              <li>Add <em>Start moving forward</em> then <em>Wait until color sensor detects red</em></li>
+              <li>Add <em>Stop moving</em>, <em>Set hub light to red</em>, and <em>Play sound Tada</em></li>
+              <li>Tap ▶️ — does ROBO stop when it reaches the red card? Try other colors!</li>
             </ol>
           </div>
         </div>
 
         <div class="box">
           <div class="box-title">🎬 Block Sequence</div>
-          <div class="code-label">Sample: Motor Forward</div>
+          <div class="code-label">ROBO's Color Stop</div>
           <div class="code-demo">
-            <div class="sb-line"><span class="spike-block spk-event">when started</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">forever</span></div>
-            <div class="sb-line sb-indent sb-indent"><span class="spike-block spk-control">if</span> <span class="spike-block spk-sensor">color sensor = black</span> <span class="spike-block spk-control">then</span></div>
-            <div class="sb-line sb-indent sb-indent sb-indent"><span class="spike-block spk-motor">Motor A + B run forward</span></div>
-            <div class="sb-line sb-indent sb-indent"><span class="spike-block spk-control">else</span></div>
-            <div class="sb-line sb-indent sb-indent sb-indent"><span class="spike-block spk-motor">Motor A turn right</span></div>
+            <div class="sb-line"><span class="spike-block spk-event">When program starts</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement motors to A and B</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Start moving forward</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-control">Wait until color sensor detects red</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Stop moving</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-light">Set hub light to red</span></div>
+            <div class="sb-line sb-indent"><span class="spike-block spk-sound">Play sound Tada</span></div>
           </div>
-          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Follow the black line on the mat!</p>
+          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Drive forward → wait until red detected → stop + light up + celebrate!</p>
         </div>
       </div>
 
@@ -744,17 +745,16 @@ footer {
       <div class="hint-zone">
         <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
         <div class="hint-text" id="htxt1">
-          🌟 <strong>Hint 1:</strong> Motor blocks are usually <strong>red/orange</strong> in the SPIKE app. Look for the "Motor" section in the block palette!
+          🌟 <strong>Hint 1:</strong> The color sensor must face <strong>downward</strong> and be about 1 cm above the surface to read colors accurately. Check its position if it misses the color!
         </div>
         <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
         <div class="hint-text" id="htxt2">
-          🌟 <strong>Hint 2:</strong> You need to <strong>specify the motor port</strong> (usually A, B, C, D, E, or F) and the <strong>action</strong> (run for rotations, run for seconds, run at speed, etc.).
+          🌟 <strong>Hint 2:</strong> Color sensor blocks are in the <strong>Sensing</strong> category. Choose <em>color sensor detects</em> and click the color circle to select <strong>red</strong>.
         </div>
         <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
         <div class="hint-text" id="htxt3">
-          🌟 <strong>Full answer:</strong> No shame — ROBO needed help learning too!<br>
-          Use: <em>Motor [port] run for [X] rotations</em> to move, and <em>wait [X] seconds</em> to pause.<br>
-          Click ▶️ and watch SPIKE go!
+          🌟 <strong>Full answer:</strong> No shame — ROBO needed help too!<br>
+          Stack: <em>When program starts → Set motors A and B → Start moving forward → Wait until color = red → Stop → Light red → Sound Tada</em>.
         </div>
       </div>
 
@@ -764,8 +764,8 @@ footer {
 
   <!-- Break prompt -->
   <div class="break-prompt" id="break-prompt">
-    🌟 ROBO says: <strong>"Excellent work, Aiden!"</strong><br>
-    Stand up, do 5 big jumps, then come back for your final mission! 🚀
+    🌟 ROBO says: <strong>"Color found, Aiden!"</strong><br>
+    Find 5 different colored objects in the room — quick! 🎨
   </div>
 
   <!-- ══════════════════════════════════════
@@ -786,29 +786,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Used color sensor block</div>
-            <div class="cl-sub">Eyes online!</div>
+            <div class="cl-main">I attached the color sensor pointing downward</div>
+            <div class="cl-sub">Sensor aimed at the ground — color vision online!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Robot follows a line or color</div>
-            <div class="cl-sub">Tracking active!</div>
+            <div class="cl-main">ROBO drove forward and stopped on the red card</div>
+            <div class="cl-sub">Color detected — mission trail found!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Robot adjusts when it loses the line</div>
-            <div class="cl-sub">Auto-correction works!</div>
+            <div class="cl-main">I tried detecting at least 2 different colors</div>
+            <div class="cl-sub">Multi-color detection — advanced sensor skills!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Tested on a track</div>
-            <div class="cl-sub">Field tested!</div>
+            <div class="cl-main">I can explain how a color sensor works</div>
+            <div class="cl-sub">Say: "It shines light on the surface and reads the color that bounces back!"</div>
           </div>
         </div>
         </div>
@@ -824,9 +824,9 @@ footer {
           <span class="patch-corner">⭐</span>
           <span class="patch-corner">⭐</span>
           <div class="patch-header">MARS MISSION · CERTIFIED</div>
-          <div class="patch-title">Color Sensors & Line Following</div>
+          <div class="patch-title">Color<br>Tracking</div>
           <span class="patch-robo">🤖</span>
-          <div class="patch-skill">SPIKE Prime Coding · Week 5</div>
+          <div class="patch-skill">SPIKE Essential · Week 5</div>
           <div class="patch-name">AIDEN</div>
           <div class="patch-week">Q2 · SPIKE VALLEY · WEEK 5 OF 10</div>
           <div class="patch-stars">⭐⭐⭐</div>
@@ -843,12 +843,12 @@ footer {
   <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
   <span class="vr-icon">🎨</span>
-  <div class="vr-title">ROBO found a special<br><strong>SPIKE color sensor</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=lego+spike+prime+color+sensor+line+following+robot" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <div class="vr-title">ROBO found a special<br><strong>LEGO SPIKE Essential color sensor</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=lego+spike+essential+color+sensor+line+following+robot+kids+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-    <strong>Fun Fact:</strong> Scientists mark paths with color codes in robotics competitions — just like guiding a real rover on a marked course!
+    The Perseverance rover has a <strong>SuperCam laser</strong> that shoots rocks and reads the color of the light that bounces back — identifying minerals from 7 metres away! Your color sensor uses the same light-reflection principle. 🎨
   </div>
 
   <!-- ══════════════════════════════════════
@@ -861,7 +861,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 5 · COLOR SENSORS & LINE FOLLOWING · Q2 SPIKE VALLEY · MISSION 5 OF 40</footer>
+<footer>WEEK 5 · COLOR TRACKING · Q2 SPIKE VALLEY · MISSION 15 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────

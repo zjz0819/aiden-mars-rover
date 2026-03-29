@@ -998,7 +998,7 @@ function allDone() {
   try {
     const key = 'aidenDoneWeeks';
     const done = JSON.parse(localStorage.getItem(key)) || [];
-    if (!done.includes('q1w3')) { done.push('q1w1'); localStorage.setItem(key, JSON.stringify(done)); }
+    if (!done.includes('q1w3')) { done.push('q1w3'); localStorage.setItem(key, JSON.stringify(done)); }
   } catch(e) {}
 }
 
