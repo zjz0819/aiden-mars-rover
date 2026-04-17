@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q2 Week 7: Dual Sensors</title>
+<title>Q2 Week 7: Conditionals</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -306,6 +306,21 @@ h1 em { color: var(--accent); font-style: normal; }
 .spk-sound   { border-color: #ff66cc; background: #2a0020; }
 .spk-light   { border-color: #00ff99; background: #002a15; }
 .spk-motor   { border-color: #ff4444; background: #2a0000; }
+/* Coding Canvas Block styling (CS & AI Kit) */
+.cc-block {
+  display: inline-block; background: #001a2a;
+  border-radius: 6px; padding: 4px 10px;
+  font-size: 14px; font-weight: 700; color: #fff;
+  margin: 3px; border-left: 4px solid #00aaff;
+}
+.cc-event    { border-color: #ffcc00; background: #2a2000; }
+.cc-motion   { border-color: #0088ff; background: #001a30; }
+.cc-control  { border-color: #ff8800; background: #2a1800; }
+.cc-sense    { border-color: #00ffcc; background: #002a20; }
+.cc-variable { border-color: #ff6600; background: #2a1000; }
+.cc-ai       { border-color: #00ff66; background: #002a10; }
+.cc-sound    { border-color: #dd44ff; background: #1a0030; }
+
 
 /* Unlock button */
 .unlock-btn {
@@ -528,10 +543,10 @@ footer {
       <div>
         <div class="quarter-pill">
           <div class="q-icon">🤖</div>
-          <div class="q-label">Q2 · SPIKE ESSENTIAL · WEEK 7 OF 10</div>
+          <div class="q-label">Q2 · CS &amp; AI KIT · WEEK 7 OF 10</div>
         </div>
-        <h1><em>Dual</em> Sensors</h1>
-        <div class="header-sub">SEE AND FEEL — ROBO USES TWO SENSORS!</div>
+        <h1><em>Conditionals</em> — Make Decisions</h1>
+        <div class="header-sub">TEACH ROBO TO THINK AND CHOOSE!</div>
         <div class="time-badge">⏱ About 45 minutes</div>
         <div class="nav-links">
           <a href="aiden_q2_lessons.html">📚 Parent Guide</a>
@@ -617,7 +632,7 @@ footer {
           <rect x="110" y="130" width="12" height="26" rx="3" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
           <ellipse cx="80" cy="200" rx="55" ry="5" fill="#000" opacity="0.25"/>
         </svg>
-        <div class="robo-bubble" id="robo-bubble">Cameras online!</div>
+        <div class="robo-bubble" id="robo-bubble">Making decisions!</div>
       </div>
       </div>
     </div>
@@ -666,13 +681,13 @@ footer {
         <div class="comic-robo">🤖</div>
         <div class="comic-text">
           <div class="comic-caption">⚡ ROBO's Transmission</div>
-          <div class="comic-story">SPIKE Valley's final sector has <strong>both a marked path AND a crater wall ahead</strong>! ROBO needs to follow the color trail AND stop before the wall — at the same time. Time to combine the distance and color sensors!</div>
+          <div class="comic-story">ROBO has been following simple instructions — but what if there's an obstacle? Real robots <strong>make decisions</strong> based on what they sense. <strong>Conditionals</strong> are the if/else thinking blocks that give ROBO a brain!</div>
         </div>
       </div>
 
       <!-- Your Mission! -->
       <div class="mission-brief">
-        <p>Today ROBO uses two sensors together! You'll combine the <strong>color sensor</strong> (follow the path) and the <strong>distance sensor</strong> (stop before walls) into one programme. This is how real robots make complex decisions!</p>
+        <p>Programme ROBO to drive forward in a Forever loop, but <strong>stop</strong> if the color sensor detects red — using an If/Else block. ROBO makes its own decision, no human input needed mid-mission!</p>
       </div>
 
       <!-- Learn section -->
@@ -680,16 +695,16 @@ footer {
         <div class="learn-title">🎓 Let's Learn!</div>
         <div class="learn-items">
           <div class="learn-item">
-            <div class="learn-icon">🧠</div>
-            <div class="learn-text"><strong>Multiple sensors</strong> — Real robots use many sensors at once — colour, distance, force, cameras. Each adds a new awareness!</div>
+            <div class="learn-icon">🤔</div>
+            <div class="learn-text"><strong>If / Else</strong> — <em>If</em> condition is true → do this. <em>Else</em> → do that. It's how computers make decisions — just like choosing what to eat for breakfast!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">♾️</div>
-            <div class="learn-text"><strong>Forever loop</strong> — <em>Forever</em> keeps running the blocks inside it until you stop the programme — perfect for patrol behaviour.</div>
+            <div class="learn-icon">🚦</div>
+            <div class="learn-text"><strong>Sensor conditions</strong> — <em>If color sensor detects red → stop. Else → keep moving.</em> The sensor provides the true/false condition!</div>
           </div>
           <div class="learn-item">
             <div class="learn-icon">🔀</div>
-            <div class="learn-text"><strong>If / Else</strong> — <em>If</em> colour is red → stop. <em>Else</em> → check distance. Branches let ROBO make decisions!</div>
+            <div class="learn-text"><strong>Branching</strong> — When code reaches an If block it takes one of two paths. Only one path runs, depending on whether the condition is true or false!</div>
           </div>
         </div>
       </div>
@@ -708,7 +723,7 @@ footer {
     </div>
     <div class="mc-body">
       <div class="mc-time">⏱ About 20 minutes</div>
-      <p style="margin-bottom:16px;">Time to combine! Programme ROBO to follow a path and also stop at a wall. <strong style="color:var(--accent)">ROBO's brain is working overtime with two sensors active! 🤩</strong></p>
+      <p style="margin-bottom:16px;">Build a decision-making programme! ROBO drives forward in a Forever loop. <strong style="color:var(--accent)">If it detects red → stop + sound. Else → keep moving. ROBO's first real decision! 🧠</strong></p>
 
       <div class="two-col">
         <div class="box">
@@ -716,30 +731,28 @@ footer {
           <div class="instructions">
             <p style="margin-bottom:12px;">Follow these steps:</p>
             <ol>
-              <li>Connect the <strong>distance sensor</strong> to port C and <strong>color sensor</strong> to port B (pointing down)</li>
-              <li>Add a <strong>Forever</strong> loop as your main structure</li>
-              <li>Inside: add <em>If distance sensor closer than 8 cm → Stop moving</em> (wall detection)</li>
-              <li>Add <em>Else if color is black → Start moving forward</em> (line following)</li>
-              <li>Add <em>Else → Turn right 10 degrees</em> (find the line again)</li>
+              <li>Add <em>When start clicked</em> → <em>Set movement motors to A and B</em> → <em>Forever</em> loop</li>
+              <li>Inside Forever, add an <em>If / Else</em> block</li>
+              <li>Set the condition: <em>color sensor detects red</em></li>
+              <li>In the <strong>If</strong> branch: <em>Stop moving</em> then <em>Play sound Tada</em></li>
+              <li>In the <strong>Else</strong> branch: <em>Move forward</em> — tap ▶️ and watch ROBO decide!</li>
             </ol>
           </div>
         </div>
 
         <div class="box">
           <div class="box-title">🎬 Block Sequence</div>
-          <div class="code-label">ROBO's Smart Navigation</div>
+          <div class="code-label">Stop on Red Decision</div>
           <div class="code-demo">
-            <div class="sb-line"><span class="spike-block spk-event">When program starts</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement motors to A and B</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">Forever</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">If distance sensor closer than 8 cm</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Stop moving</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">Else if color sensor detects black</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Start moving forward</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">Else</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Turn right 10 degrees</span></div>
+            <div class="sb-line"><span class="cc-block cc-event">When start clicked</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-motion">Set movement motors to A and B</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-control">Forever</span></div>
+                <div class="sb-line sb-indent sb-indent"><span class="cc-block cc-control">If color sensor detects red</span></div>
+                  <div class="sb-line sb-indent sb-indent sb-indent"><span class="cc-block cc-motion">Stop moving</span></div>
+                  <div class="sb-line sb-indent sb-indent sb-indent"><span class="cc-block cc-sound">Play sound Tada</span></div>
+                <div class="sb-line sb-indent sb-indent"><span class="cc-block cc-control">Else → Move forward</span></div>
           </div>
-          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Forever: if too close → stop! Else if on black line → forward. Else → nudge right.</p>
+          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Forever + If/Else — ROBO drives until it sees red, then stops automatically!</p>
         </div>
       </div>
 
@@ -747,16 +760,15 @@ footer {
       <div class="hint-zone">
         <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
         <div class="hint-text" id="htxt1">
-          🌟 <strong>Hint 1:</strong> You need <strong>two sensors plugged in</strong> — distance sensor in port C and color sensor in port B (pointing at the ground). Check both connections first!
+          🌟 <strong>Hint 1:</strong> The <em>If</em> block in Coding Canvas has a hexagonal hole at the top. That hole is where your condition (<em>color sensor detects red</em>) snaps in!
         </div>
         <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
         <div class="hint-text" id="htxt2">
-          🌟 <strong>Hint 2:</strong> The <strong>distance check comes first</strong> — safety always beats navigation. ROBO should check for walls before deciding where to drive!
+          🌟 <strong>Hint 2:</strong> The <em>Forever</em> loop keeps checking the condition over and over — ROBO asks 'Is it red?' many times per second!
         </div>
         <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
         <div class="hint-text" id="htxt3">
-          🌟 <strong>Full answer:</strong> No shame — ROBO needed help too!<br>
-          Forever loop: <em>If distance &lt;8 cm → Stop</em> / <em>Else if color=black → Move forward</em> / <em>Else → Turn right 10°</em>. ROBO follows and avoids!
+          🌟 <strong>Full answer:</strong> Stack: <em>When start clicked → Set movement motors → Forever: [If color detects red: Stop moving + Play sound Tada. Else: Move forward]</em>.
         </div>
       </div>
 
@@ -766,8 +778,8 @@ footer {
 
   <!-- Break prompt -->
   <div class="break-prompt" id="break-prompt">
-    🌟 ROBO says: <strong>"Dual sensors active, Aiden!"</strong><br>
-    Close one eye and walk around — now open both! Feel the difference? 🧠
+    🌟 ROBO says: <strong>"If… else… choosing!"</strong><br>
+    Play Simon Says — but only follow instructions that start with "If you're a robot"! 🤖
   </div>
 
   <!-- ══════════════════════════════════════
@@ -788,29 +800,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">Both sensors are connected and working</div>
-            <div class="cl-sub">Dual sensor array online — ROBO sees the world!</div>
+            <div class="cl-main">I built a programme with an If/Else conditional block</div>
+            <div class="cl-sub">Decision logic installed — ROBO thinks!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">ROBO follows a black line on the ground</div>
-            <div class="cl-sub">Line following achieved — trail navigation online!</div>
+            <div class="cl-main">ROBO stopped when the color sensor detected red (If path)</div>
+            <div class="cl-sub">Conditional trigger working — sensor-driven stop!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">ROBO stops before hitting a wall</div>
-            <div class="cl-sub">Safety system active — distance detection works!</div>
+            <div class="cl-main">ROBO kept moving when no red was detected (Else path)</div>
+            <div class="cl-sub">Both branches tested — If AND Else both work!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I can explain why combining sensors makes ROBO smarter</div>
-            <div class="cl-sub">Say: "More sensors = more information = smarter decisions!"</div>
+            <div class="cl-main">I can explain what if/else means in coding</div>
+            <div class="cl-sub">Say: "If the condition is true, do one thing. Else, do something different!"</div>
           </div>
         </div>
         </div>
@@ -826,11 +838,11 @@ footer {
           <span class="patch-corner">⭐</span>
           <span class="patch-corner">⭐</span>
           <div class="patch-header">MARS MISSION · CERTIFIED</div>
-          <div class="patch-title">Dual<br>Sensors</div>
+          <div class="patch-title">Decision<br>Maker</div>
           <span class="patch-robo">🤖</span>
-          <div class="patch-skill">SPIKE Essential · Week 7</div>
+          <div class="patch-skill">CS &amp; AI Kit · Week 7</div>
           <div class="patch-name">AIDEN</div>
-          <div class="patch-week">Q2 · SPIKE VALLEY · WEEK 7 OF 10</div>
+          <div class="patch-week">Q2 · CS &amp; AI MISSION · WEEK 7 OF 10</div>
           <div class="patch-stars">⭐⭐⭐</div>
           <button class="patch-print-btn" onclick="window.print()">🖨️ Print This Patch</button>
         </div>
@@ -844,13 +856,13 @@ footer {
   ══════════════════════════════════════ -->
   <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">🧠</span>
-  <div class="vr-title">ROBO found a special<br><strong>LEGO SPIKE Essential sensors combined</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=lego+spike+essential+two+sensors+color+distance+robot+kids+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">🤔</span>
+  <div class="vr-title">ROBO found a special<br><strong>if/else conditionals in coding</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=if+else+conditionals+coding+kids+tutorial+robot" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-    Perseverance has <strong>23 cameras, a microphone, a laser, and radar</strong> — all working together every second. Scientists call this sensor fusion. Your dual sensor programme today is your first taste of sensor fusion! 🧠
+    Mars rovers are programmed with thousands of if/else decisions. If there's a rock → go around it. If battery is low → stop and charge. <strong>Conditional code keeps them safe!</strong> 🚀
   </div>
 
   <!-- ══════════════════════════════════════
@@ -863,7 +875,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 7 · DUAL SENSORS · Q2 SPIKE VALLEY · MISSION 17 OF 40</footer>
+<footer>WEEK 7 · CONDITIONALS · Q2 CS &amp; AI MISSION · MISSION 17 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────

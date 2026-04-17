@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q2 Week 5: Color Tracking</title>
+<title>Q2 Week 5: Events</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -306,6 +306,21 @@ h1 em { color: var(--accent); font-style: normal; }
 .spk-sound   { border-color: #ff66cc; background: #2a0020; }
 .spk-light   { border-color: #00ff99; background: #002a15; }
 .spk-motor   { border-color: #ff4444; background: #2a0000; }
+/* Coding Canvas Block styling (CS & AI Kit) */
+.cc-block {
+  display: inline-block; background: #001a2a;
+  border-radius: 6px; padding: 4px 10px;
+  font-size: 14px; font-weight: 700; color: #fff;
+  margin: 3px; border-left: 4px solid #00aaff;
+}
+.cc-event    { border-color: #ffcc00; background: #2a2000; }
+.cc-motion   { border-color: #0088ff; background: #001a30; }
+.cc-control  { border-color: #ff8800; background: #2a1800; }
+.cc-sense    { border-color: #00ffcc; background: #002a20; }
+.cc-variable { border-color: #ff6600; background: #2a1000; }
+.cc-ai       { border-color: #00ff66; background: #002a10; }
+.cc-sound    { border-color: #dd44ff; background: #1a0030; }
+
 
 /* Unlock button */
 .unlock-btn {
@@ -528,10 +543,10 @@ footer {
       <div>
         <div class="quarter-pill">
           <div class="q-icon">🤖</div>
-          <div class="q-label">Q2 · SPIKE ESSENTIAL · WEEK 5 OF 10</div>
+          <div class="q-label">Q2 · CS &amp; AI KIT · WEEK 5 OF 10</div>
         </div>
-        <h1><em>Color</em> Tracking</h1>
-        <div class="header-sub">TEACH ROBO TO FOLLOW A LINE!</div>
+        <h1><em>Events</em> — Listen &amp; React</h1>
+        <div class="header-sub">TEACH ROBO TO RESPOND TO TRIGGERS!</div>
         <div class="time-badge">⏱ About 45 minutes</div>
         <div class="nav-links">
           <a href="aiden_q2_lessons.html">📚 Parent Guide</a>
@@ -617,7 +632,7 @@ footer {
           <rect x="110" y="130" width="12" height="26" rx="3" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
           <ellipse cx="80" cy="200" rx="55" ry="5" fill="#000" opacity="0.25"/>
         </svg>
-        <div class="robo-bubble" id="robo-bubble">Cameras online!</div>
+        <div class="robo-bubble" id="robo-bubble">Listening for events!</div>
       </div>
       </div>
     </div>
@@ -666,13 +681,13 @@ footer {
         <div class="comic-robo">🤖</div>
         <div class="comic-text">
           <div class="comic-caption">⚡ ROBO's Transmission</div>
-          <div class="comic-story">ROBO needs to follow the <strong>marked path</strong> through SPIKE Valley — but can't see it! The color sensor can detect the black line on the ground. Code ROBO to follow the trail all the way to the base camp!</div>
+          <div class="comic-story">ROBO is now powered by the <strong>CS &amp; AI kit</strong>! In coding, an <strong>event</strong> is anything that triggers your programme — a button click, a sensor reading, even a timer. Today ROBO learns to listen and respond!</div>
         </div>
       </div>
 
       <!-- Your Mission! -->
       <div class="mission-brief">
-        <p>Today ROBO follows a trail! You'll add the <strong>color sensor</strong> and programme ROBO to detect colors and follow a black line on the ground. This is exactly how warehouse robots and self-driving cars navigate!</p>
+        <p>Using Coding Canvas, write a programme where ROBO responds to <strong>two events at the same time</strong>: move forward on start, AND play a sound when the color sensor detects red. Two triggers, two behaviours!</p>
       </div>
 
       <!-- Learn section -->
@@ -680,16 +695,16 @@ footer {
         <div class="learn-title">🎓 Let's Learn!</div>
         <div class="learn-items">
           <div class="learn-item">
-            <div class="learn-icon">🎨</div>
-            <div class="learn-text"><strong>Color Sensor</strong> — Detects the color of a surface. Plug it into port C pointing downward and it reads black, white, red, blue, and more!</div>
+            <div class="learn-icon">⚡</div>
+            <div class="learn-text"><strong>Events</strong> — An event is a trigger that starts a block of code. <em>When start clicked</em> fires when you tap ▶️ — it's the most common event!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">🔴</div>
-            <div class="learn-text"><strong>Color conditions</strong> — <em>Wait until color sensor detects red</em> pauses the programme until ROBO rolls over a red card.</div>
+            <div class="learn-icon">🎮</div>
+            <div class="learn-text"><strong>Multiple event stacks</strong> — You can have TWO <em>When start clicked</em> blocks at the same time! Each starts a separate chain — they run in parallel!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">⏸️</div>
-            <div class="learn-text"><strong>Line triggers</strong> — Tape a coloured strip on the floor — ROBO uses it as a stop signal, no buttons needed!</div>
+            <div class="learn-icon">🎯</div>
+            <div class="learn-text"><strong>Event-driven coding</strong> — Most real programmes (apps, games, robots) are event-driven — they wait for something to happen, then react!</div>
           </div>
         </div>
       </div>
@@ -708,7 +723,7 @@ footer {
     </div>
     <div class="mc-body">
       <div class="mc-time">⏱ About 20 minutes</div>
-      <p style="margin-bottom:16px;">Time to follow the trail! Attach the color sensor and programme ROBO to stop on a red card. <strong style="color:var(--accent)">ROBO's eye lights up the color it detects! 🤩</strong></p>
+      <p style="margin-bottom:16px;">Write an event-driven programme! ROBO moves forward when ▶️ is clicked, AND plays a sound when the color sensor detects red. <strong style="color:var(--accent)">Two events, two actions — running at the same time! 🎉</strong></p>
 
       <div class="two-col">
         <div class="box">
@@ -716,28 +731,28 @@ footer {
           <div class="instructions">
             <p style="margin-bottom:12px;">Follow these steps:</p>
             <ol>
-              <li>Attach the <strong>color sensor</strong> to port C pointing <strong>downward</strong> at the ground</li>
-              <li>Place a piece of red card or paper on the floor ahead of ROBO</li>
-              <li>Add <em>Start moving forward</em> then <em>Wait until color sensor detects red</em></li>
-              <li>Add <em>Stop moving</em>, <em>Set hub light to red</em>, and <em>Play sound Tada</em></li>
-              <li>Tap ▶️ — does ROBO stop when it reaches the red card? Try other colors!</li>
+              <li>Open Coding Canvas and start a new project</li>
+              <li>Drag a <em>When start clicked</em> block onto the canvas</li>
+              <li>Under it, add <em>Move forward</em> from the Motion category</li>
+              <li>Drag a <strong>second</strong> <em>When start clicked</em> block to a different spot on the canvas</li>
+              <li>Under it: <em>Wait until color detects red</em> → <em>Play sound Tada</em> — tap ▶️!</li>
             </ol>
           </div>
         </div>
 
         <div class="box">
           <div class="box-title">🎬 Block Sequence</div>
-          <div class="code-label">ROBO's Color Stop</div>
+          <div class="code-label">Two Events Running</div>
           <div class="code-demo">
-            <div class="sb-line"><span class="spike-block spk-event">When program starts</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement motors to A and B</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Start moving forward</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">Wait until color sensor detects red</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Stop moving</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-light">Set hub light to red</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-sound">Play sound Tada</span></div>
+            <div class="sb-line" style="margin:8px 0 4px;color:var(--gold);font-size:11px;letter-spacing:1px;">— Stack 1 —</div>
+            <div class="sb-line"><span class="cc-block cc-event">When start clicked</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-motion">Move forward</span></div>
+            <div class="sb-line" style="margin:8px 0 4px;color:var(--gold);font-size:11px;letter-spacing:1px;">— Stack 2 (runs at the same time!) —</div>
+            <div class="sb-line"><span class="cc-block cc-event">When start clicked</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-sense">Wait until color detects red</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-sound">Play sound Tada</span></div>
           </div>
-          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Drive forward → wait until red detected → stop + light up + celebrate!</p>
+          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Two event stacks run simultaneously — ROBO drives AND listens for red at the same time!</p>
         </div>
       </div>
 
@@ -745,16 +760,15 @@ footer {
       <div class="hint-zone">
         <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
         <div class="hint-text" id="htxt1">
-          🌟 <strong>Hint 1:</strong> The color sensor must face <strong>downward</strong> and be about 1 cm above the surface to read colors accurately. Check its position if it misses the color!
+          🌟 <strong>Hint 1:</strong> To have two event stacks, drag a second <em>When start clicked</em> block to a different area of the canvas. They don't connect — they run in parallel!
         </div>
         <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
         <div class="hint-text" id="htxt2">
-          🌟 <strong>Hint 2:</strong> Color sensor blocks are in the <strong>Sensing</strong> category. Choose <em>color sensor detects</em> and click the color circle to select <strong>red</strong>.
+          🌟 <strong>Hint 2:</strong> If ROBO doesn't play the sound, check that your color sensor points at the floor and you've placed a red paper strip underneath it.
         </div>
         <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
         <div class="hint-text" id="htxt3">
-          🌟 <strong>Full answer:</strong> No shame — ROBO needed help too!<br>
-          Stack: <em>When program starts → Set motors A and B → Start moving forward → Wait until color = red → Stop → Light red → Sound Tada</em>.
+          🌟 <strong>Full answer:</strong> Stack 1: <em>When start clicked → Move forward</em>. Stack 2: <em>When start clicked → Wait until color detects red → Play sound Tada</em>. Run both with ▶️!
         </div>
       </div>
 
@@ -764,8 +778,8 @@ footer {
 
   <!-- Break prompt -->
   <div class="break-prompt" id="break-prompt">
-    🌟 ROBO says: <strong>"Color found, Aiden!"</strong><br>
-    Find 5 different colored objects in the room — quick! 🎨
+    🌟 ROBO says: <strong>"Event detected — stretch time!"</strong><br>
+    Jump up and clap 5 times whenever someone says "go"! 👏
   </div>
 
   <!-- ══════════════════════════════════════
@@ -786,29 +800,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I attached the color sensor pointing downward</div>
-            <div class="cl-sub">Sensor aimed at the ground — color vision online!</div>
+            <div class="cl-main">I built a programme with two separate event stacks</div>
+            <div class="cl-sub">Multi-event programme — ROBO multitasks!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">ROBO drove forward and stopped on the red card</div>
-            <div class="cl-sub">Color detected — mission trail found!</div>
+            <div class="cl-main">ROBO moved forward when I tapped the start button</div>
+            <div class="cl-sub">Motion event working — engines engaged!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I tried detecting at least 2 different colors</div>
-            <div class="cl-sub">Multi-color detection — advanced sensor skills!</div>
+            <div class="cl-main">ROBO played a sound when the color sensor detected red</div>
+            <div class="cl-sub">Sensor event working — ROBO has ears!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I can explain how a color sensor works</div>
-            <div class="cl-sub">Say: "It shines light on the surface and reads the color that bounces back!"</div>
+            <div class="cl-main">I can explain what an event is in coding</div>
+            <div class="cl-sub">Say: "An event is a trigger that makes code run!"</div>
           </div>
         </div>
         </div>
@@ -824,11 +838,11 @@ footer {
           <span class="patch-corner">⭐</span>
           <span class="patch-corner">⭐</span>
           <div class="patch-header">MARS MISSION · CERTIFIED</div>
-          <div class="patch-title">Color<br>Tracking</div>
+          <div class="patch-title">Event<br>Listener</div>
           <span class="patch-robo">🤖</span>
-          <div class="patch-skill">SPIKE Essential · Week 5</div>
+          <div class="patch-skill">CS &amp; AI Kit · Week 5</div>
           <div class="patch-name">AIDEN</div>
-          <div class="patch-week">Q2 · SPIKE VALLEY · WEEK 5 OF 10</div>
+          <div class="patch-week">Q2 · CS &amp; AI MISSION · WEEK 5 OF 10</div>
           <div class="patch-stars">⭐⭐⭐</div>
           <button class="patch-print-btn" onclick="window.print()">🖨️ Print This Patch</button>
         </div>
@@ -842,13 +856,13 @@ footer {
   ══════════════════════════════════════ -->
   <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">🎨</span>
-  <div class="vr-title">ROBO found a special<br><strong>LEGO SPIKE Essential color sensor</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=lego+spike+essential+color+sensor+line+following+robot+kids+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">⚡</span>
+  <div class="vr-title">ROBO found a special<br><strong>events and triggers in coding</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=coding+events+triggers+kids+tutorial+robot+programme" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-    The Perseverance rover has a <strong>SuperCam laser</strong> that shoots rocks and reads the color of the light that bounces back — identifying minerals from 7 metres away! Your color sensor uses the same light-reflection principle. 🎨
+    Every app on your iPad is event-driven! Tapping an icon is an event. Getting a notification is another event. The whole app waits quietly until something happens — just like ROBO does! 📱
   </div>
 
   <!-- ══════════════════════════════════════
@@ -861,7 +875,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 5 · COLOR TRACKING · Q2 SPIKE VALLEY · MISSION 15 OF 40</footer>
+<footer>WEEK 5 · EVENTS · Q2 CS &amp; AI MISSION · MISSION 15 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────

@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q2 Week 4: Obstacle Sensor</title>
+<title>Q2 Week 4: Hardware Bridge</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -306,6 +306,21 @@ h1 em { color: var(--accent); font-style: normal; }
 .spk-sound   { border-color: #ff66cc; background: #2a0020; }
 .spk-light   { border-color: #00ff99; background: #002a15; }
 .spk-motor   { border-color: #ff4444; background: #2a0000; }
+/* Coding Canvas Block styling (CS & AI Kit) */
+.cc-block {
+  display: inline-block; background: #001a2a;
+  border-radius: 6px; padding: 4px 10px;
+  font-size: 14px; font-weight: 700; color: #fff;
+  margin: 3px; border-left: 4px solid #00aaff;
+}
+.cc-event    { border-color: #ffcc00; background: #2a2000; }
+.cc-motion   { border-color: #0088ff; background: #001a30; }
+.cc-control  { border-color: #ff8800; background: #2a1800; }
+.cc-sense    { border-color: #00ffcc; background: #002a20; }
+.cc-variable { border-color: #ff6600; background: #2a1000; }
+.cc-ai       { border-color: #00ff66; background: #002a10; }
+.cc-sound    { border-color: #dd44ff; background: #1a0030; }
+
 
 /* Unlock button */
 .unlock-btn {
@@ -528,10 +543,10 @@ footer {
       <div>
         <div class="quarter-pill">
           <div class="q-icon">🤖</div>
-          <div class="q-label">Q2 · SPIKE ESSENTIAL · WEEK 4 OF 10</div>
+          <div class="q-label">Q2 · BRIDGE WEEK · WEEK 4 OF 10</div>
         </div>
-        <h1>Obstacle <em>Sensor</em></h1>
-        <div class="header-sub">TEACH ROBO TO STOP BEFORE CRASHING!</div>
+        <h1><em>Hardware</em> Bridge</h1>
+        <div class="header-sub">FROM SPIKE ESSENTIAL TO THE CS &amp; AI KIT!</div>
         <div class="time-badge">⏱ About 45 minutes</div>
         <div class="nav-links">
           <a href="aiden_q2_lessons.html">📚 Parent Guide</a>
@@ -617,7 +632,7 @@ footer {
           <rect x="110" y="130" width="12" height="26" rx="3" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
           <ellipse cx="80" cy="200" rx="55" ry="5" fill="#000" opacity="0.25"/>
         </svg>
-        <div class="robo-bubble" id="robo-bubble">Cameras online!</div>
+        <div class="robo-bubble" id="robo-bubble">Upgrade incoming!</div>
       </div>
       </div>
     </div>
@@ -666,13 +681,13 @@ footer {
         <div class="comic-robo">🤖</div>
         <div class="comic-text">
           <div class="comic-caption">⚡ ROBO's Transmission</div>
-          <div class="comic-story">ROBO is speeding through SPIKE Valley and there's a <strong>crater wall dead ahead</strong>! Without a distance sensor, ROBO will crash and the mission is over. I need obstacle detection — fast!</div>
+          <div class="comic-story">ROBO just got a transmission from Mission Control: a <strong>new, smarter kit</strong> has arrived! The LEGO CS &amp; AI kit has a double motor, a redesigned hub, and the Coding Canvas app. Let's compare old and new before we dive in!</div>
         </div>
       </div>
 
       <!-- Your Mission! -->
       <div class="mission-brief">
-        <p>Today ROBO gets eyes! You'll add the <strong>distance sensor</strong> and programme ROBO to automatically stop before hitting anything. No more crashes — just like the real rovers that use radar to avoid boulders on Mars!</p>
+        <p>Today is a special <strong>bridge week</strong> — no new coding! Compare your SPIKE Essential kit with the new LEGO CS &amp; AI 3–5 kit side by side. Spot the differences, spot the similarities, and get ready for Weeks 5–10!</p>
       </div>
 
       <!-- Learn section -->
@@ -680,16 +695,16 @@ footer {
         <div class="learn-title">🎓 Let's Learn!</div>
         <div class="learn-items">
           <div class="learn-item">
-            <div class="learn-icon">👁️</div>
-            <div class="learn-text"><strong>Distance Sensor</strong> — Measures how far away something is in centimetres. Plug it into port C and it watches for obstacles!</div>
+            <div class="learn-icon">🔄</div>
+            <div class="learn-text"><strong>Same idea, new hardware</strong> — Both kits use motors, sensors, and a hub. The CS &amp; AI kit has a <em>double motor</em> (two motors in one!) and runs on the Coding Canvas app.</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">⏸️</div>
-            <div class="learn-text"><strong>Wait until...</strong> — <em>Wait until distance sensor closer than 15 cm</em> pauses the programme until the condition is true.</div>
+            <div class="learn-icon">🧠</div>
+            <div class="learn-text"><strong>Coding Canvas app</strong> — A new block-based coding app, similar to SPIKE Essential but with extra AI and data blocks. You'll love it!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">🛑</div>
-            <div class="learn-text"><strong>Stop moving</strong> — <em>Stop moving</em> cuts power to both drive motors instantly — ROBO freezes in place.</div>
+            <div class="learn-icon">🔬</div>
+            <div class="learn-text"><strong>Why upgrade?</strong> — CS &amp; AI adds <em>artificial intelligence</em> concepts — ROBO can actually learn from data, just like a real AI robot!</div>
           </div>
         </div>
       </div>
@@ -708,7 +723,7 @@ footer {
     </div>
     <div class="mc-body">
       <div class="mc-time">⏱ About 20 minutes</div>
-      <p style="margin-bottom:16px;">Time to add sensors! Connect the distance sensor and programme ROBO to stop before hitting a wall. <strong style="color:var(--accent)">ROBO's sensor eye glows blue when it spots an obstacle! 🤩</strong></p>
+      <p style="margin-bottom:16px;">Time to unbox! Open the CS &amp; AI kit, lay out all the pieces, and compare them to your SPIKE Essential. <strong style="color:var(--accent)">What looks the same? What's different? ROBO is excited about the upgrade! 🤖</strong></p>
 
       <div class="two-col">
         <div class="box">
@@ -716,27 +731,27 @@ footer {
           <div class="instructions">
             <p style="margin-bottom:12px;">Follow these steps:</p>
             <ol>
-              <li>Attach the <strong>distance sensor</strong> to port C at the front of ROBO</li>
-              <li>Add <em>Start moving forward</em> (not 'Move forward X cm' — this one drives continuously!)</li>
-              <li>Add <em>Wait until distance sensor is closer than 10 cm</em></li>
-              <li>Add <em>Stop moving</em> and <em>Set hub light to red</em></li>
-              <li>Put a book 30 cm in front of ROBO and tap ▶️ — does ROBO stop before hitting it?</li>
+              <li>Set your SPIKE Essential hub and motors on the table</li>
+              <li>Open the CS &amp; AI kit and lay out the hub, double motor, and color sensor</li>
+              <li>Compare: How many ports does each hub have? Which motor looks bigger?</li>
+              <li>Download or open the <strong>Coding Canvas app</strong> on your iPad</li>
+              <li>Take a photo of both kits side by side — ROBO's before &amp; after! 📸</li>
             </ol>
           </div>
         </div>
 
         <div class="box">
           <div class="box-title">🎬 Block Sequence</div>
-          <div class="code-label">ROBO's Auto-Brake</div>
+          <div class="code-label">SPIKE vs CS&amp;AI Blocks</div>
           <div class="code-demo">
+            <div class="sb-line" style="margin:8px 0 4px;color:var(--gold);font-size:11px;letter-spacing:1px;">SPIKE ESSENTIAL:</div>
             <div class="sb-line"><span class="spike-block spk-event">When program starts</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement motors to A and B</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Start moving forward</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">Wait until distance sensor closer than 10 cm</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Stop moving</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-light">Set hub light to red</span></div>
+              <div class="sb-line sb-indent"><span class="spike-block spk-motion">Move forward 20 cm</span></div>
+            <div class="sb-line" style="margin:8px 0 4px;color:var(--gold);font-size:11px;letter-spacing:1px;">CS &amp; AI CODING CANVAS:</div>
+            <div class="sb-line"><span class="cc-block cc-event">When start clicked</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-motion">Move forward 20 cm</span></div>
           </div>
-          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Drive forward → wait until obstacle detected 10 cm away → stop + red warning light!</p>
+          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Same idea, different app — Coding Canvas blocks unlock AI superpowers in Weeks 5–10!</p>
         </div>
       </div>
 
@@ -744,16 +759,15 @@ footer {
       <div class="hint-zone">
         <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
         <div class="hint-text" id="htxt1">
-          🌟 <strong>Hint 1:</strong> Use <em>Start moving forward</em> (not <em>Move forward 20 cm</em>). The <em>Start moving</em> block drives continuously until told to stop — perfect for sensor detection!
+          🌟 <strong>Hint 1:</strong> The Coding Canvas app might look different from SPIKE Essential. Look for the <strong>Events category</strong> first — that's where 'When start clicked' lives!
         </div>
         <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
         <div class="hint-text" id="htxt2">
-          🌟 <strong>Hint 2:</strong> The distance sensor block is in the <strong>Sensing</strong> category. Look for <em>Distance sensor</em> and choose <em>closer than</em>, then set the value to <strong>10</strong>.
+          🌟 <strong>Hint 2:</strong> The double motor in the CS &amp; AI kit goes into a single port but controls two wheels at once. One cable, two wheels!
         </div>
         <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
         <div class="hint-text" id="htxt3">
-          🌟 <strong>Full answer:</strong> No shame — ROBO needed help too!<br>
-          Stack: <em>When program starts → Set motors A and B → Start moving forward → Wait until distance &lt;10 cm → Stop moving → Light red</em>.
+          🌟 <strong>Full answer:</strong> Don't worry if not everything looks familiar yet — we'll learn each new block step by step from Week 5. This week is just about exploring!
         </div>
       </div>
 
@@ -763,8 +777,8 @@ footer {
 
   <!-- Break prompt -->
   <div class="break-prompt" id="break-prompt">
-    🌟 ROBO says: <strong>"Obstacle avoided, Aiden!"</strong><br>
-    Play 'freeze!' — walk around then stop suddenly on 'freeze', 5 times! 🛑
+    🌟 ROBO says: <strong>"New hardware, same mission!"</strong><br>
+    Pretend you're a robot — walk forward 5 steps, turn right, walk 5 more steps. 🤖
   </div>
 
   <!-- ══════════════════════════════════════
@@ -785,29 +799,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I attached the distance sensor to port C</div>
-            <div class="cl-sub">Sensor connected — ROBO can now see obstacles!</div>
+            <div class="cl-main">I identified the hub, double motor, and color sensor in the CS &amp; AI kit</div>
+            <div class="cl-sub">Hardware inventory complete — ROBO knows the new tools!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">ROBO drives forward automatically</div>
-            <div class="cl-sub">Continuous drive mode activated!</div>
+            <div class="cl-main">I compared the SPIKE Essential and CS &amp; AI kits side by side</div>
+            <div class="cl-sub">Comparison logged — same mission, new hardware!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">ROBO stops before hitting the obstacle</div>
-            <div class="cl-sub">Auto-brake works — mission safety system online!</div>
+            <div class="cl-main">I opened the Coding Canvas app on my iPad</div>
+            <div class="cl-sub">App ready — Coding Canvas is online!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I can explain how the distance sensor works</div>
-            <div class="cl-sub">Say: "It measures distance and stops ROBO when something is too close!"</div>
+            <div class="cl-main">I can explain one difference between the two kits</div>
+            <div class="cl-sub">Say: "The CS &amp; AI kit has a double motor and the Coding Canvas app!"</div>
           </div>
         </div>
         </div>
@@ -823,9 +837,9 @@ footer {
           <span class="patch-corner">⭐</span>
           <span class="patch-corner">⭐</span>
           <div class="patch-header">MARS MISSION · CERTIFIED</div>
-          <div class="patch-title">Obstacle<br>Sensor</div>
+          <div class="patch-title">Tech<br>Bridger</div>
           <span class="patch-robo">🤖</span>
-          <div class="patch-skill">SPIKE Essential · Week 4</div>
+          <div class="patch-skill">Bridge Week · Week 4</div>
           <div class="patch-name">AIDEN</div>
           <div class="patch-week">Q2 · SPIKE VALLEY · WEEK 4 OF 10</div>
           <div class="patch-stars">⭐⭐⭐</div>
@@ -841,13 +855,13 @@ footer {
   ══════════════════════════════════════ -->
   <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">👁️</span>
-  <div class="vr-title">ROBO found a special<br><strong>LEGO SPIKE Essential distance sensor</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=lego+spike+essential+distance+sensor+obstacle+avoidance+kids+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">🔄</span>
+  <div class="vr-title">ROBO found a special<br><strong>LEGO CS &amp; AI kit intro</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=lego+education+cs+ai+kit+coding+canvas+intro+kids" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-    Perseverance has <strong>7 cameras and a radar system</strong> to detect obstacles — it can spot a rock the size of a tennis ball from 5 metres away. Your distance sensor today does the same job, just with sound waves! 👁️
+    The Mars <strong>Perseverance rover</strong> has 19 cameras and 7 scientific instruments. Scientists upgrade Mars rovers every mission — just like we're upgrading ROBO from SPIKE Essential to the CS &amp; AI kit! 🚀
   </div>
 
   <!-- ══════════════════════════════════════
@@ -860,7 +874,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 4 · OBSTACLE SENSOR · Q2 SPIKE VALLEY · MISSION 14 OF 40</footer>
+<footer>WEEK 4 · HARDWARE BRIDGE · Q2 SPIKE VALLEY · MISSION 14 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────

@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q2 Week 6: Speed Control</title>
+<title>Q2 Week 6: Loops</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -306,6 +306,21 @@ h1 em { color: var(--accent); font-style: normal; }
 .spk-sound   { border-color: #ff66cc; background: #2a0020; }
 .spk-light   { border-color: #00ff99; background: #002a15; }
 .spk-motor   { border-color: #ff4444; background: #2a0000; }
+/* Coding Canvas Block styling (CS & AI Kit) */
+.cc-block {
+  display: inline-block; background: #001a2a;
+  border-radius: 6px; padding: 4px 10px;
+  font-size: 14px; font-weight: 700; color: #fff;
+  margin: 3px; border-left: 4px solid #00aaff;
+}
+.cc-event    { border-color: #ffcc00; background: #2a2000; }
+.cc-motion   { border-color: #0088ff; background: #001a30; }
+.cc-control  { border-color: #ff8800; background: #2a1800; }
+.cc-sense    { border-color: #00ffcc; background: #002a20; }
+.cc-variable { border-color: #ff6600; background: #2a1000; }
+.cc-ai       { border-color: #00ff66; background: #002a10; }
+.cc-sound    { border-color: #dd44ff; background: #1a0030; }
+
 
 /* Unlock button */
 .unlock-btn {
@@ -528,10 +543,10 @@ footer {
       <div>
         <div class="quarter-pill">
           <div class="q-icon">🤖</div>
-          <div class="q-label">Q2 · SPIKE ESSENTIAL · WEEK 6 OF 10</div>
+          <div class="q-label">Q2 · CS &amp; AI KIT · WEEK 6 OF 10</div>
         </div>
-        <h1><em>Speed</em> Control</h1>
-        <div class="header-sub">FAST ROBO, SLOW ROBO, PERFECT ROBO!</div>
+        <h1><em>Loops</em> — Repeat &amp; Patrol</h1>
+        <div class="header-sub">MAKE ROBO PATROL OVER AND OVER!</div>
         <div class="time-badge">⏱ About 45 minutes</div>
         <div class="nav-links">
           <a href="aiden_q2_lessons.html">📚 Parent Guide</a>
@@ -617,7 +632,7 @@ footer {
           <rect x="110" y="130" width="12" height="26" rx="3" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
           <ellipse cx="80" cy="200" rx="55" ry="5" fill="#000" opacity="0.25"/>
         </svg>
-        <div class="robo-bubble" id="robo-bubble">Cameras online!</div>
+        <div class="robo-bubble" id="robo-bubble">Loop engaged!</div>
       </div>
       </div>
     </div>
@@ -666,13 +681,13 @@ footer {
         <div class="comic-robo">🤖</div>
         <div class="comic-text">
           <div class="comic-caption">⚡ ROBO's Transmission</div>
-          <div class="comic-story">ROBO is racing through SPIKE Valley at full speed — but the path is getting narrow and twisty! Going too fast means spinning out. I need you to code <strong>variable speed control</strong> so ROBO slows down for tight corners!</div>
+          <div class="comic-story">ROBO has been following the same path manually — but Mars is <strong>HUGE</strong>! ROBO needs to patrol automatically. <strong>Loops</strong> make code repeat so ROBO can drive a shape perfectly, again and again!</div>
         </div>
       </div>
 
       <!-- Your Mission! -->
       <div class="mission-brief">
-        <p>Today ROBO learns to control its speed! You'll use the <strong>Set movement speed</strong> block to programme slow careful navigation and fast dashes. Understanding speed is how real engineers make robots precise and safe!</p>
+        <p>Using Coding Canvas loops, programme ROBO to drive a <strong>square patrol route</strong> — forward 25 cm, turn right 90°, repeated 4 times. If it works perfectly, ROBO ends up exactly where it started!</p>
       </div>
 
       <!-- Learn section -->
@@ -680,16 +695,16 @@ footer {
         <div class="learn-title">🎓 Let's Learn!</div>
         <div class="learn-items">
           <div class="learn-item">
-            <div class="learn-icon">🐢</div>
-            <div class="learn-text"><strong>Set movement speed to []%</strong> — Changes how fast ROBO drives. 30% = careful crawl, 100% = full speed. Lower speed = more precision!</div>
+            <div class="learn-icon">🔁</div>
+            <div class="learn-text"><strong>Repeat</strong> — <em>Repeat 4 times</em> runs the blocks inside it exactly 4 times. Perfect for shapes like squares (4 sides, 4 turns)!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">⚡</div>
-            <div class="learn-text"><strong>Speed vs accuracy</strong> — Faster isn't always better — slow speeds let ROBO stop exactly on a line.</div>
+            <div class="learn-icon">♾️</div>
+            <div class="learn-text"><strong>Forever</strong> — Runs the blocks inside non-stop until the programme is stopped. Great for patrol behaviour that never ends!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">📊</div>
-            <div class="learn-text"><strong>Percentage</strong> — Speed is a percentage of maximum power. 50% = half speed. You can mix speeds in one programme!</div>
+            <div class="learn-icon">📐</div>
+            <div class="learn-text"><strong>Angles</strong> — 90° = a right-angle corner. Four 90° turns = a complete square. Try Repeat 3 + 120° for a triangle!</div>
           </div>
         </div>
       </div>
@@ -708,7 +723,7 @@ footer {
     </div>
     <div class="mc-body">
       <div class="mc-time">⏱ About 20 minutes</div>
-      <p style="margin-bottom:16px;">Time to find the right speed! Programme ROBO to crawl slowly then dash fast. <strong style="color:var(--accent)">ROBO revs up like a rocket at full speed! 🤩</strong></p>
+      <p style="margin-bottom:16px;">Drive a square! Use <em>Repeat 4</em> to make ROBO drive forward 25 cm then turn right 90°, four times. <strong style="color:var(--accent)">If it works perfectly, ROBO ends up exactly where it started! 🟦</strong></p>
 
       <div class="two-col">
         <div class="box">
@@ -716,29 +731,26 @@ footer {
           <div class="instructions">
             <p style="margin-bottom:12px;">Follow these steps:</p>
             <ol>
-              <li>Add <em>Set movement speed to 30%</em> before your first move</li>
-              <li>Add <em>Move forward 20 cm</em> — ROBO should creep slowly</li>
-              <li>Add <em>Set movement speed to 100%</em> then <em>Move forward 30 cm</em> — full dash!</li>
-              <li>Add <em>Set movement speed to 30%</em> then <em>Turn right 90 degrees</em></li>
-              <li>Tap ▶️ — can you hear and see the speed difference?</li>
+              <li>Open Coding Canvas and start a new project</li>
+              <li>Add <em>When start clicked</em> then <em>Set movement motors to A and B</em></li>
+              <li>Add a <em>Repeat 4</em> loop block</li>
+              <li>Inside the loop: <em>Move forward 25 cm</em>, then <em>Turn right 90 degrees</em></li>
+              <li>Tap ▶️ — ROBO should drive a perfect square! Count the corners — did it make 4?</li>
             </ol>
           </div>
         </div>
 
         <div class="box">
           <div class="box-title">🎬 Block Sequence</div>
-          <div class="code-label">ROBO's Speed Run</div>
+          <div class="code-label">Square Patrol Loop</div>
           <div class="code-demo">
-            <div class="sb-line"><span class="spike-block spk-event">When program starts</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement motors to A and B</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement speed to 30%</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Move forward 20 cm</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement speed to 100%</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Move forward 30 cm</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement speed to 30%</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Turn right 90 degrees</span></div>
+            <div class="sb-line"><span class="cc-block cc-event">When start clicked</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-motion">Set movement motors to A and B</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-control">Repeat 4</span></div>
+                <div class="sb-line sb-indent sb-indent"><span class="cc-block cc-motion">Move forward 25 cm</span></div>
+                <div class="sb-line sb-indent sb-indent"><span class="cc-block cc-motion">Turn right 90 degrees</span></div>
           </div>
-          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Slow crawl 20 cm → full speed dash 30 cm → slow careful turn!</p>
+          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Repeat 4 → forward + turn = perfect square patrol route!</p>
         </div>
       </div>
 
@@ -746,16 +758,15 @@ footer {
       <div class="hint-zone">
         <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
         <div class="hint-text" id="htxt1">
-          🌟 <strong>Hint 1:</strong> Speed blocks are in the <strong>Movement</strong> category. Look for <em>Set movement speed to</em> and type in a percentage. Try 20% for very slow, 100% for maximum speed!
+          🌟 <strong>Hint 1:</strong> The <em>Move forward</em> and <em>Turn right</em> blocks must go <strong>inside</strong> the Repeat block. Look for the slot at the bottom of Repeat — drag them in!
         </div>
         <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
         <div class="hint-text" id="htxt2">
-          🌟 <strong>Hint 2:</strong> You need to set the speed <strong>before</strong> the move command — the speed setting stays until you change it again. Think of it like setting cruise control!
+          🌟 <strong>Hint 2:</strong> If ROBO doesn't end up back at the start, adjust the turn degrees. 90° is the target, but your robot's wheel spacing might need 85° or 95°!
         </div>
         <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
         <div class="hint-text" id="htxt3">
-          🌟 <strong>Full answer:</strong> No shame — ROBO needed help too!<br>
-          Stack: <em>Set speed 30% → Move forward 20 cm → Set speed 100% → Move forward 30 cm → Set speed 30% → Turn right 90°</em>.
+          🌟 <strong>Full answer:</strong> Stack: <em>When start clicked → Set movement motors A and B → Repeat 4: [Move forward 25 cm, Turn right 90 degrees]</em>. Tweak degrees until it's a perfect square!
         </div>
       </div>
 
@@ -765,8 +776,8 @@ footer {
 
   <!-- Break prompt -->
   <div class="break-prompt" id="break-prompt">
-    🌟 ROBO says: <strong>"Speed calibrated, Aiden!"</strong><br>
-    Walk in slow motion for 10 steps then sprint — feel the difference! ⚡
+    🌟 ROBO says: <strong>"Square patrol activated!"</strong><br>
+    Walk in a square around the room — 5 steps forward, turn right, 4 times! 🟦
   </div>
 
   <!-- ══════════════════════════════════════
@@ -787,29 +798,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I used Set movement speed to change ROBO's speed</div>
-            <div class="cl-sub">Speed control mastered — ROBO drives at your command!</div>
+            <div class="cl-main">I used a Repeat loop in my programme</div>
+            <div class="cl-sub">Loop mastered — code is running on a cycle!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">ROBO drove noticeably slower at 30% vs 100%</div>
-            <div class="cl-sub">Speed difference detected — mission engineer!</div>
+            <div class="cl-main">ROBO drove a square patrol route (4 sides, 4 turns)</div>
+            <div class="cl-sub">Square patrol complete — ROBO is a navigator!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I used at least 2 different speeds in one programme</div>
-            <div class="cl-sub">Multi-speed programme written — advanced driver!</div>
+            <div class="cl-main">I tried changing the number of sides (e.g. Repeat 3 for a triangle)</div>
+            <div class="cl-sub">Shape experiment logged — loops can make any polygon!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I can explain why speed control matters</div>
-            <div class="cl-sub">Say: "Slower is more precise, faster covers more ground!"</div>
+            <div class="cl-main">I can explain the difference between Repeat and Forever</div>
+            <div class="cl-sub">Say: "Repeat runs a set number of times; Forever runs until I stop it!"</div>
           </div>
         </div>
         </div>
@@ -825,11 +836,11 @@ footer {
           <span class="patch-corner">⭐</span>
           <span class="patch-corner">⭐</span>
           <div class="patch-header">MARS MISSION · CERTIFIED</div>
-          <div class="patch-title">Speed<br>Control</div>
+          <div class="patch-title">Loop<br>Engineer</div>
           <span class="patch-robo">🤖</span>
-          <div class="patch-skill">SPIKE Essential · Week 6</div>
+          <div class="patch-skill">CS &amp; AI Kit · Week 6</div>
           <div class="patch-name">AIDEN</div>
-          <div class="patch-week">Q2 · SPIKE VALLEY · WEEK 6 OF 10</div>
+          <div class="patch-week">Q2 · CS &amp; AI MISSION · WEEK 6 OF 10</div>
           <div class="patch-stars">⭐⭐⭐</div>
           <button class="patch-print-btn" onclick="window.print()">🖨️ Print This Patch</button>
         </div>
@@ -843,13 +854,13 @@ footer {
   ══════════════════════════════════════ -->
   <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">⚡</span>
-  <div class="vr-title">ROBO found a special<br><strong>LEGO SPIKE Essential speed control</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=lego+spike+essential+speed+motor+control+kids+tutorial+robot" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">🔁</span>
+  <div class="vr-title">ROBO found a special<br><strong>loops in coding</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=coding+loops+repeat+kids+tutorial+robot+programme" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-    Mars rovers drive at a maximum speed of just <strong>4.2 cm per second</strong> — slower than a tortoise! They go slowly to avoid tipping on rocks. Your 30% slow mode is actually faster than Perseverance at full speed! 🐢
+    NASA's Curiosity rover uses repeating patrol routines every single day. Drive a bit, stop, analyse rocks, drive more — repeating the same <strong>drive + science loop</strong> for over 10 years! ♾️
   </div>
 
   <!-- ══════════════════════════════════════
@@ -862,7 +873,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 6 · SPEED CONTROL · Q2 SPIKE VALLEY · MISSION 16 OF 40</footer>
+<footer>WEEK 6 · LOOPS · Q2 CS &amp; AI MISSION · MISSION 16 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────

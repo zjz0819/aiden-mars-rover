@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q2 Week 9: Capstone Design</title>
+<title>Q2 Week 9: AI &amp; Data</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -306,6 +306,21 @@ h1 em { color: var(--accent); font-style: normal; }
 .spk-sound   { border-color: #ff66cc; background: #2a0020; }
 .spk-light   { border-color: #00ff99; background: #002a15; }
 .spk-motor   { border-color: #ff4444; background: #2a0000; }
+/* Coding Canvas Block styling (CS & AI Kit) */
+.cc-block {
+  display: inline-block; background: #001a2a;
+  border-radius: 6px; padding: 4px 10px;
+  font-size: 14px; font-weight: 700; color: #fff;
+  margin: 3px; border-left: 4px solid #00aaff;
+}
+.cc-event    { border-color: #ffcc00; background: #2a2000; }
+.cc-motion   { border-color: #0088ff; background: #001a30; }
+.cc-control  { border-color: #ff8800; background: #2a1800; }
+.cc-sense    { border-color: #00ffcc; background: #002a20; }
+.cc-variable { border-color: #ff6600; background: #2a1000; }
+.cc-ai       { border-color: #00ff66; background: #002a10; }
+.cc-sound    { border-color: #dd44ff; background: #1a0030; }
+
 
 /* Unlock button */
 .unlock-btn {
@@ -528,10 +543,10 @@ footer {
       <div>
         <div class="quarter-pill">
           <div class="q-icon">🤖</div>
-          <div class="q-label">Q2 · SPIKE ESSENTIAL · WEEK 9 OF 10</div>
+          <div class="q-label">Q2 · CS &amp; AI KIT · WEEK 9 OF 10</div>
         </div>
-        <h1><em>Capstone</em> Design</h1>
-        <div class="header-sub">DESIGN YOUR OWN ROBOT CHALLENGE!</div>
+        <h1>AI &amp; <em>Data</em> — Teach ROBO to Learn</h1>
+        <div class="header-sub">TRAIN ROBO'S BRAIN WITH REAL DATA!</div>
         <div class="time-badge">⏱ About 45 minutes</div>
         <div class="nav-links">
           <a href="aiden_q2_lessons.html">📚 Parent Guide</a>
@@ -617,7 +632,7 @@ footer {
           <rect x="110" y="130" width="12" height="26" rx="3" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
           <ellipse cx="80" cy="200" rx="55" ry="5" fill="#000" opacity="0.25"/>
         </svg>
-        <div class="robo-bubble" id="robo-bubble">Cameras online!</div>
+        <div class="robo-bubble" id="robo-bubble">Learning from data!</div>
       </div>
       </div>
     </div>
@@ -666,13 +681,13 @@ footer {
         <div class="comic-robo">🤖</div>
         <div class="comic-text">
           <div class="comic-caption">⚡ ROBO's Transmission</div>
-          <div class="comic-story">ROBO has mastered SPIKE Valley — but one final <strong>custom challenge</strong> stands between ROBO and the finish flag. Today YOU design the mission: pick a challenge, plan the programme, and start building. This one is all yours!</div>
+          <div class="comic-story">We're on the edge of the future! <strong>Artificial Intelligence</strong> is how computers learn from examples instead of written rules. The CS &amp; AI kit lets you <strong>train ROBO</strong> with real color data — then it makes predictions, just like a real AI model!</div>
         </div>
       </div>
 
       <!-- Your Mission! -->
       <div class="mission-brief">
-        <p>Capstone time! You're the chief engineer — design your own robot challenge using everything you've learned. Today: <strong>choose your challenge, plan it on paper, and start coding</strong>. Tomorrow you'll finish and demo it!</p>
+        <p>Using Coding Canvas AI tools, <strong>train ROBO to recognise 3 colors</strong> as data classes (Red, Green, Blue). Then test your trained model — ROBO classifies new color readings automatically, without any if/else rules!</p>
       </div>
 
       <!-- Learn section -->
@@ -680,16 +695,16 @@ footer {
         <div class="learn-title">🎓 Let's Learn!</div>
         <div class="learn-items">
           <div class="learn-item">
-            <div class="learn-icon">✏️</div>
-            <div class="learn-text"><strong>Design brief</strong> — A clear statement of what your robot must do. Write it in one sentence: 'ROBO must drive a triangle and stop at a red card.'</div>
+            <div class="learn-icon">🧠</div>
+            <div class="learn-text"><strong>Machine Learning</strong> — Instead of writing exact rules, you show the AI many examples and it learns the pattern. More data = smarter AI!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">🗂️</div>
-            <div class="learn-text"><strong>Algorithm</strong> — A step-by-step plan for what your programme will do — written in plain words before you code anything.</div>
+            <div class="learn-icon">🏷️</div>
+            <div class="learn-text"><strong>Training data</strong> — The examples you show the AI. 'This reading = Red' repeated 10 times is training data — the AI learns from repetition!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">🔧</div>
-            <div class="learn-text"><strong>Iterative build</strong> — Build one feature at a time, test it, then add the next. Don't try to code everything at once!</div>
+            <div class="learn-icon">🔮</div>
+            <div class="learn-text"><strong>Prediction</strong> — After training, the AI predicts what class a new reading belongs to. It might be wrong sometimes — that's fixable!</div>
           </div>
         </div>
       </div>
@@ -708,7 +723,7 @@ footer {
     </div>
     <div class="mc-body">
       <div class="mc-time">⏱ About 20 minutes</div>
-      <p style="margin-bottom:16px;">Time to design! Write your challenge brief, plan your algorithm, and start coding your capstone. <strong style="color:var(--accent)">ROBO waits eagerly for its custom mission brief! 🤩</strong></p>
+      <p style="margin-bottom:16px;">Train a color classifier! Collect 10+ readings per class, then test your model. <strong style="color:var(--accent)">Does ROBO correctly predict the color when you hold different cards under the sensor? 🎨🧠</strong></p>
 
       <div class="two-col">
         <div class="box">
@@ -716,27 +731,27 @@ footer {
           <div class="instructions">
             <p style="margin-bottom:12px;">Follow these steps:</p>
             <ol>
-              <li>Write your challenge brief in one sentence — what must ROBO do?</li>
-              <li>List your algorithm: step 1, step 2, step 3… in plain words</li>
-              <li>Identify which sensors you'll use and where they'll be placed</li>
-              <li>Start coding your programme block by block — start simple!</li>
-              <li>Test what you have so far — does ROBO do what step 1 says?</li>
+              <li>Open Coding Canvas and find the <strong>AI / Machine Learning</strong> section</li>
+              <li>Create 3 classes: <em>Red</em>, <em>Green</em>, <em>Blue</em></li>
+              <li>Hold a red card under the sensor and click <strong>Add Data</strong> at least 10 times for Red</li>
+              <li>Repeat for Green and Blue cards (10+ readings each)</li>
+              <li>Click <strong>Train Model</strong>, then test: hold each card — does ROBO predict correctly?</li>
             </ol>
           </div>
         </div>
 
         <div class="box">
           <div class="box-title">🎬 Block Sequence</div>
-          <div class="code-label">Capstone Programme — Start</div>
+          <div class="code-label">Color Classifier AI</div>
           <div class="code-demo">
-            <div class="sb-line"><span class="spike-block spk-event">When program starts</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement motors to A and B</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement speed to 50%</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">[Your custom sequence here]</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-sensor">[Your sensor condition here]</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-sound">Play sound [Your choice]</span></div>
+            <div class="sb-line"><span class="cc-block cc-event">When start clicked</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-control">Repeat until AI predicts Red</span></div>
+                <div class="sb-line sb-indent sb-indent"><span class="cc-block cc-motion">Move forward</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-motion">Stop moving</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-sound">Play sound Tada</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-ai">Show AI prediction on hub</span></div>
           </div>
-          <p style="font-size:13px;color:var(--muted);margin-top:8px;">This is YOUR design — fill in the blocks that match your challenge plan!</p>
+          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Train the model → use AI predictions to control ROBO — real machine learning!</p>
         </div>
       </div>
 
@@ -744,16 +759,15 @@ footer {
       <div class="hint-zone">
         <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
         <div class="hint-text" id="htxt1">
-          🌟 <strong>Hint 1:</strong> Stuck on ideas? Try one of these: drive a triangle and stop on blue, speed race across the room, or follow a black line and stop at red!
+          🌟 <strong>Hint 1:</strong> The more training data you collect, the more accurate your model. Try <strong>15–20 readings per class</strong> for best results!
         </div>
         <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
         <div class="hint-text" id="htxt2">
-          🌟 <strong>Hint 2:</strong> Start with just <strong>movement</strong> — get ROBO driving your planned path first. Add sensors afterward. Build one layer at a time!
+          🌟 <strong>Hint 2:</strong> When collecting data, vary the position slightly — a bit closer, a bit further. Real AI training data is always varied to cover different cases!
         </div>
         <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
         <div class="hint-text" id="htxt3">
-          🌟 <strong>Full answer:</strong> No shame — ROBO needed help too!<br>
-          Your programme structure: <em>When program starts → Set motors A and B → Set speed → [Your movements] → [Your sensor check] → [Your ending]</em>.
+          🌟 <strong>Full answer:</strong> If the model makes mistakes, add more data to the confused class. Re-train and test again. This is <strong>exactly</strong> what real AI engineers do!
         </div>
       </div>
 
@@ -763,8 +777,8 @@ footer {
 
   <!-- Break prompt -->
   <div class="break-prompt" id="break-prompt">
-    🌟 ROBO says: <strong>"Challenge accepted, Aiden!"</strong><br>
-    Sketch your challenge course on paper — be a real engineer! ✏️
+    🌟 ROBO says: <strong>"Training data collected!"</strong><br>
+    Explain how AI learns from examples to a parent in 30 seconds! 🧠
   </div>
 
   <!-- ══════════════════════════════════════
@@ -785,29 +799,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I wrote a one-sentence challenge brief</div>
-            <div class="cl-sub">Design brief filed — mission objective clear!</div>
+            <div class="cl-main">I collected training data for at least 3 color classes (Red, Green, Blue)</div>
+            <div class="cl-sub">Dataset created — AI model has training data!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I planned my algorithm in steps on paper</div>
-            <div class="cl-sub">Algorithm designed — engineering process started!</div>
+            <div class="cl-main">I trained a machine learning model in Coding Canvas</div>
+            <div class="cl-sub">Model trained — ROBO has AI powers!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I started coding and ROBO does at least one step</div>
-            <div class="cl-sub">Code is running — capstone build has begun!</div>
+            <div class="cl-main">My trained model correctly predicted at least 2 out of 3 colors</div>
+            <div class="cl-sub">Prediction accuracy ≥ 66% — AI is working!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I know what I still need to add for Demo Day</div>
-            <div class="cl-sub">Backlog defined — ready for tomorrow's sprint!</div>
+            <div class="cl-main">I can explain what training data means</div>
+            <div class="cl-sub">Say: "Training data is the examples you show an AI so it can learn the pattern!"</div>
           </div>
         </div>
         </div>
@@ -823,11 +837,11 @@ footer {
           <span class="patch-corner">⭐</span>
           <span class="patch-corner">⭐</span>
           <div class="patch-header">MARS MISSION · CERTIFIED</div>
-          <div class="patch-title">Capstone<br>Design</div>
+          <div class="patch-title">AI<br>Pioneer</div>
           <span class="patch-robo">🤖</span>
-          <div class="patch-skill">SPIKE Essential · Week 9</div>
+          <div class="patch-skill">CS &amp; AI Kit · Week 9</div>
           <div class="patch-name">AIDEN</div>
-          <div class="patch-week">Q2 · SPIKE VALLEY · WEEK 9 OF 10</div>
+          <div class="patch-week">Q2 · CS &amp; AI MISSION · WEEK 9 OF 10</div>
           <div class="patch-stars">⭐⭐⭐</div>
           <button class="patch-print-btn" onclick="window.print()">🖨️ Print This Patch</button>
         </div>
@@ -841,13 +855,13 @@ footer {
   ══════════════════════════════════════ -->
   <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">✏️</span>
-  <div class="vr-title">ROBO found a special<br><strong>LEGO SPIKE Essential design challenge</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=lego+spike+essential+robot+challenge+design+kids+capstone+project" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">🧠</span>
+  <div class="vr-title">ROBO found a special<br><strong>machine learning for kids</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=machine+learning+AI+kids+tutorial+lego+coding+canvas" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-    NASA's Mars missions start with a <strong>science brief</strong> — a clear statement of what questions the mission must answer. Engineers then design every system to serve that brief. Your one-sentence challenge today is your science brief! ✏️
+    NASA is developing AI models to help Mars rovers decide <strong>which rocks are worth studying</strong>. The AI was trained on thousands of rock images labeled by geologists — just like how you labeled color data for ROBO! 🤖🔬
   </div>
 
   <!-- ══════════════════════════════════════
@@ -860,7 +874,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 9 · CAPSTONE DESIGN · Q2 SPIKE VALLEY · MISSION 19 OF 40</footer>
+<footer>WEEK 9 · AI &amp; DATA · Q2 CS &amp; AI MISSION · MISSION 19 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────

@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q2 Week 8: Integration Challenge</title>
+<title>Q2 Week 8: Variables</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -306,6 +306,21 @@ h1 em { color: var(--accent); font-style: normal; }
 .spk-sound   { border-color: #ff66cc; background: #2a0020; }
 .spk-light   { border-color: #00ff99; background: #002a15; }
 .spk-motor   { border-color: #ff4444; background: #2a0000; }
+/* Coding Canvas Block styling (CS & AI Kit) */
+.cc-block {
+  display: inline-block; background: #001a2a;
+  border-radius: 6px; padding: 4px 10px;
+  font-size: 14px; font-weight: 700; color: #fff;
+  margin: 3px; border-left: 4px solid #00aaff;
+}
+.cc-event    { border-color: #ffcc00; background: #2a2000; }
+.cc-motion   { border-color: #0088ff; background: #001a30; }
+.cc-control  { border-color: #ff8800; background: #2a1800; }
+.cc-sense    { border-color: #00ffcc; background: #002a20; }
+.cc-variable { border-color: #ff6600; background: #2a1000; }
+.cc-ai       { border-color: #00ff66; background: #002a10; }
+.cc-sound    { border-color: #dd44ff; background: #1a0030; }
+
 
 /* Unlock button */
 .unlock-btn {
@@ -528,10 +543,10 @@ footer {
       <div>
         <div class="quarter-pill">
           <div class="q-icon">🤖</div>
-          <div class="q-label">Q2 · SPIKE ESSENTIAL · WEEK 8 OF 10</div>
+          <div class="q-label">Q2 · CS &amp; AI KIT · WEEK 8 OF 10</div>
         </div>
-        <h1><em>Integration</em> Challenge</h1>
-        <div class="header-sub">COMBINE EVERYTHING — ONE FULL MISSION!</div>
+        <h1><em>Variables</em> — Store &amp; Track</h1>
+        <div class="header-sub">GIVE ROBO A MEMORY!</div>
         <div class="time-badge">⏱ About 45 minutes</div>
         <div class="nav-links">
           <a href="aiden_q2_lessons.html">📚 Parent Guide</a>
@@ -617,7 +632,7 @@ footer {
           <rect x="110" y="130" width="12" height="26" rx="3" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
           <ellipse cx="80" cy="200" rx="55" ry="5" fill="#000" opacity="0.25"/>
         </svg>
-        <div class="robo-bubble" id="robo-bubble">Cameras online!</div>
+        <div class="robo-bubble" id="robo-bubble">Memory banks online!</div>
       </div>
       </div>
     </div>
@@ -666,13 +681,13 @@ footer {
         <div class="comic-robo">🤖</div>
         <div class="comic-text">
           <div class="comic-caption">⚡ ROBO's Transmission</div>
-          <div class="comic-story">The ultimate test has arrived! ROBO must navigate the entire SPIKE Valley challenge course: <strong>drive a path, detect obstacles, follow a color trail, and control speed</strong> — all in one programme. This is the real mission!</div>
+          <div class="comic-story">ROBO has been acting on sensors but forgetting everything! What if ROBO needs to remember how many laps it drove? <strong>Variables</strong> are ROBO's memory banks — named boxes that store numbers the programme can use!</div>
         </div>
       </div>
 
       <!-- Your Mission! -->
       <div class="mission-brief">
-        <p>Today it all comes together! You'll design and code a <strong>full obstacle course programme</strong> using everything from Weeks 1–7 — movement, sensors, speed control, loops, and conditionals. Real engineering means making everything work together!</p>
+        <p>Create a <strong>'laps' variable</strong> and programme ROBO to drive a small loop, adding 1 to the variable each time. After 3 laps ROBO stops — and it counted the whole thing itself!</p>
       </div>
 
       <!-- Learn section -->
@@ -680,16 +695,16 @@ footer {
         <div class="learn-title">🎓 Let's Learn!</div>
         <div class="learn-items">
           <div class="learn-item">
-            <div class="learn-icon">🗺️</div>
-            <div class="learn-text"><strong>Programme design</strong> — Plan your course on paper first: what sequence of movements? Where are the sensors? What triggers what?</div>
+            <div class="learn-icon">📦</div>
+            <div class="learn-text"><strong>Variable</strong> — A named box that stores a number. <em>laps = 0</em> means ROBO's counter starts at zero. You can change it, read it, and display it!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">🔗</div>
-            <div class="learn-text"><strong>Combining skills</strong> — Chain movement, loops, conditionals, and sensors into one programme — that's full robot integration!</div>
+            <div class="learn-icon">➕</div>
+            <div class="learn-text"><strong>Change by 1</strong> — <em>Change laps by 1</em> adds 1 to whatever number is already in laps. After 3 loops, laps = 3!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">🐛</div>
-            <div class="learn-text"><strong>Debugging</strong> — When something goes wrong, test one block at a time. Isolate the problem, then fix it.</div>
+            <div class="learn-icon">🔄</div>
+            <div class="learn-text"><strong>Set vs Change</strong> — <em>Set laps to 0</em> resets the counter. <em>Change laps by 1</em> adds to it. You need BOTH — reset first, then count!</div>
           </div>
         </div>
       </div>
@@ -708,7 +723,7 @@ footer {
     </div>
     <div class="mc-body">
       <div class="mc-time">⏱ About 20 minutes</div>
-      <p style="margin-bottom:16px;">Time for the big challenge! Design your course, then code and run the full programme. <strong style="color:var(--accent)">ROBO is in full mission mode — sensors blazing! 🤩</strong></p>
+      <p style="margin-bottom:16px;">Code a lap counter! Make a variable called "laps", set it to 0, then inside a Repeat 3 loop: drive one lap then <em>Change laps by 1</em>. <strong style="color:var(--accent)">ROBO is a self-counting racer! 🏎️</strong></p>
 
       <div class="two-col">
         <div class="box">
@@ -716,30 +731,29 @@ footer {
           <div class="instructions">
             <p style="margin-bottom:12px;">Follow these steps:</p>
             <ol>
-              <li>On paper, draw your challenge course — mark where ROBO starts, turns, and stops</li>
-              <li>Set speed to 50% and add your square patrol (Repeat 4 with move + turn)</li>
-              <li>After the patrol: add obstacle detection to stop ROBO at the final wall</li>
-              <li>Add a sound and light effect for mission complete</li>
-              <li>Test it 3 times, tweak values each time to make it more accurate!</li>
+              <li>In Coding Canvas, go to Variables and click <strong>Make a variable</strong> — name it <em>laps</em></li>
+              <li>Add <em>When start clicked</em> → <em>Set laps to 0</em></li>
+              <li>Add a <em>Repeat 3</em> loop</li>
+              <li>Inside: <em>Move forward 25 cm</em> → <em>Turn 180 degrees</em> → <em>Move forward 25 cm</em> (one lap!)</li>
+              <li>Then: <em>Change laps by 1</em> — run and watch the laps count up to 3!</li>
             </ol>
           </div>
         </div>
 
         <div class="box">
           <div class="box-title">🎬 Block Sequence</div>
-          <div class="code-label">ROBO's Full Mission</div>
+          <div class="code-label">Lap Counter Programme</div>
           <div class="code-demo">
-            <div class="sb-line"><span class="spike-block spk-event">When program starts</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement motors to A and B</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement speed to 50%</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">Repeat 4</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Move forward 20 cm</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Turn right 90 degrees</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">Wait until distance sensor closer than 10 cm</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Stop moving</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-sound">Play sound Tada</span></div>
+            <div class="sb-line"><span class="cc-block cc-event">When start clicked</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-variable">Set laps to 0</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-control">Repeat 3</span></div>
+                <div class="sb-line sb-indent sb-indent"><span class="cc-block cc-motion">Move forward 25 cm</span></div>
+                <div class="sb-line sb-indent sb-indent"><span class="cc-block cc-motion">Turn 180 degrees</span></div>
+                <div class="sb-line sb-indent sb-indent"><span class="cc-block cc-motion">Move forward 25 cm</span></div>
+                <div class="sb-line sb-indent sb-indent"><span class="cc-block cc-variable">Change laps by 1</span></div>
+              <div class="sb-line sb-indent"><span class="cc-block cc-motion">Stop moving</span></div>
           </div>
-          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Square patrol at 50% speed → auto-stop at obstacle → celebrate!</p>
+          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Variable 'laps' counts up each iteration — ROBO tracks its own progress!</p>
         </div>
       </div>
 
@@ -747,16 +761,15 @@ footer {
       <div class="hint-zone">
         <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
         <div class="hint-text" id="htxt1">
-          🌟 <strong>Hint 1:</strong> Start simple! Get the movement working first, then add sensor detection, then add sound/lights. Build up layer by layer.
+          🌟 <strong>Hint 1:</strong> <em>Make a variable</em> is in the Variables (orange) category. Give it a short clear name like <strong>laps</strong> — no spaces!
         </div>
         <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
         <div class="hint-text" id="htxt2">
-          🌟 <strong>Hint 2:</strong> If ROBO isn't stopping at the right distance, adjust the cm value in the distance sensor block — try 12 cm or 15 cm if 10 cm isn't triggering correctly.
+          🌟 <strong>Hint 2:</strong> <em>Set laps to 0</em> BEFORE the loop so it always starts from zero, even if you run the programme multiple times!
         </div>
         <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
         <div class="hint-text" id="htxt3">
-          🌟 <strong>Full answer:</strong> No shame — ROBO needed help too!<br>
-          Full stack: <em>Set speed 50% → Repeat 4 (Move forward 20 cm + Turn right 90°) → Wait until distance &lt;10 cm → Stop → Sound Tada</em>.
+          🌟 <strong>Full answer:</strong> Stack: <em>When start clicked → Set laps to 0 → Repeat 3: [Move forward 25 cm, Turn 180°, Move forward 25 cm, Change laps by 1] → Stop moving</em>.
         </div>
       </div>
 
@@ -766,8 +779,8 @@ footer {
 
   <!-- Break prompt -->
   <div class="break-prompt" id="break-prompt">
-    🌟 ROBO says: <strong>"Integration successful, Aiden!"</strong><br>
-    Do 5 star jumps — you just built a fully integrated robot system! 🔗
+    🌟 ROBO says: <strong>"Counting laps!"</strong><br>
+    Run to a wall and back 3 times, counting out loud each time! ⏱️
   </div>
 
   <!-- ══════════════════════════════════════
@@ -788,29 +801,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I planned my course on paper before coding</div>
-            <div class="cl-sub">Engineering design process — plan before you build!</div>
+            <div class="cl-main">I created a variable called 'laps' in Coding Canvas</div>
+            <div class="cl-sub">Variable created — ROBO has a memory bank!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">My programme uses movement AND at least one sensor</div>
-            <div class="cl-sub">Integration achieved — systems working together!</div>
+            <div class="cl-main">ROBO drove and counted laps using the variable</div>
+            <div class="cl-sub">Variable tracking working — ROBO self-reports!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I ran the programme at least 3 times and improved it</div>
-            <div class="cl-sub">Iteration complete — that's real engineering!</div>
+            <div class="cl-main">I set the variable to 0 at the start before the loop</div>
+            <div class="cl-sub">Reset logic correct — counter starts fresh every run!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">ROBO completed the full course without crashing</div>
-            <div class="cl-sub">Mission accomplished — SPIKE Valley conquered!</div>
+            <div class="cl-main">I can explain what a variable is</div>
+            <div class="cl-sub">Say: "A variable is a named box that stores a number my programme can change!"</div>
           </div>
         </div>
         </div>
@@ -826,11 +839,11 @@ footer {
           <span class="patch-corner">⭐</span>
           <span class="patch-corner">⭐</span>
           <div class="patch-header">MARS MISSION · CERTIFIED</div>
-          <div class="patch-title">Integration<br>Challenge</div>
+          <div class="patch-title">Data<br>Tracker</div>
           <span class="patch-robo">🤖</span>
-          <div class="patch-skill">SPIKE Essential · Week 8</div>
+          <div class="patch-skill">CS &amp; AI Kit · Week 8</div>
           <div class="patch-name">AIDEN</div>
-          <div class="patch-week">Q2 · SPIKE VALLEY · WEEK 8 OF 10</div>
+          <div class="patch-week">Q2 · CS &amp; AI MISSION · WEEK 8 OF 10</div>
           <div class="patch-stars">⭐⭐⭐</div>
           <button class="patch-print-btn" onclick="window.print()">🖨️ Print This Patch</button>
         </div>
@@ -844,13 +857,13 @@ footer {
   ══════════════════════════════════════ -->
   <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">🔗</span>
-  <div class="vr-title">ROBO found a special<br><strong>LEGO SPIKE Essential challenge course</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=lego+spike+essential+obstacle+course+challenge+kids+robot+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">📦</span>
+  <div class="vr-title">ROBO found a special<br><strong>variables in coding</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=variables+coding+kids+tutorial+scratch+robot+programme" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-    NASA engineers run Mars rover simulations <strong>thousands of times</strong> in software before sending a single command to the real rover. Each run finds bugs to fix. Your 3 test runs today is the exact same engineering process! 🧪
+    Curiosity rover tracks over <strong>120 different variables</strong> during each drive — temperature, wheel torque, battery level, tilt angle, and more. Every variable is a memory cell keeping the mission safe! 📊
   </div>
 
   <!-- ══════════════════════════════════════
@@ -863,7 +876,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 8 · INTEGRATION CHALLENGE · Q2 SPIKE VALLEY · MISSION 18 OF 40</footer>
+<footer>WEEK 8 · VARIABLES · Q2 CS &amp; AI MISSION · MISSION 18 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────

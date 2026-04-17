@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" href="./icon-192.png">
   <meta name="theme-color" content="#0a0e1a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aiden's Mission — Q2 Week 3: Drive Missions</title>
+<title>Q2 Week 3: Color Sensor</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Space+Mono:wght@400;700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────── */
@@ -530,8 +530,8 @@ footer {
           <div class="q-icon">🤖</div>
           <div class="q-label">Q2 · SPIKE ESSENTIAL · WEEK 3 OF 10</div>
         </div>
-        <h1><em>Drive</em> Missions</h1>
-        <div class="header-sub">PROGRAMME ROBO TO NAVIGATE SPIKE VALLEY!</div>
+        <h1><em>Color</em> Sensor</h1>
+        <div class="header-sub">TEACH ROBO TO SEE COLORS!</div>
         <div class="time-badge">⏱ About 45 minutes</div>
         <div class="nav-links">
           <a href="aiden_q2_lessons.html">📚 Parent Guide</a>
@@ -617,7 +617,7 @@ footer {
           <rect x="110" y="130" width="12" height="26" rx="3" fill="#0e1a30" stroke="#2a3a5a" stroke-width="1"/>
           <ellipse cx="80" cy="200" rx="55" ry="5" fill="#000" opacity="0.25"/>
         </svg>
-        <div class="robo-bubble" id="robo-bubble">Cameras online!</div>
+        <div class="robo-bubble" id="robo-bubble">Scanning colors!</div>
       </div>
       </div>
     </div>
@@ -666,13 +666,13 @@ footer {
         <div class="comic-robo">🤖</div>
         <div class="comic-text">
           <div class="comic-caption">⚡ ROBO's Transmission</div>
-          <div class="comic-story">SPIKE Valley has twisty paths! ROBO needs to drive <strong>exact distances</strong> and make <strong>precise turns</strong> to navigate the terrain. One wrong turn and ROBO falls into a crater. Let's get those navigation skills sharp!</div>
+          <div class="comic-story">ROBO can drive — but it's blind! Without a sensor it crashes into everything. A <strong>color sensor</strong> plugged into port C will give ROBO eyes to see the ground and react to colored lines. Time to wire it up!</div>
         </div>
       </div>
 
       <!-- Your Mission! -->
       <div class="mission-brief">
-        <p>Today ROBO becomes a navigator! You'll programme precise distances and turns to steer ROBO through a course. Combine forward, backward, and turn blocks to make ROBO trace a <strong>square patrol route</strong> — just like a real Mars mission path!</p>
+        <p>Add a color sensor to ROBO's chassis (port C, pointing down), then programme ROBO to drive forward and <strong>stop automatically</strong> when it reaches a red line — no button needed!</p>
       </div>
 
       <!-- Learn section -->
@@ -680,16 +680,16 @@ footer {
         <div class="learn-title">🎓 Let's Learn!</div>
         <div class="learn-items">
           <div class="learn-item">
-            <div class="learn-icon">↩️</div>
-            <div class="learn-text"><strong>Turn left/right</strong> — <em>Turn right 90 degrees</em> rotates ROBO on the spot. 90° = a corner, 180° = face the opposite way!</div>
+            <div class="learn-icon">🎨</div>
+            <div class="learn-text"><strong>Color Sensor</strong> — Plugs into port C, points down at the floor. It reads the surface color many times per second!</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">🔁</div>
-            <div class="learn-text"><strong>Repeat block</strong> — <em>Repeat 4 times</em> loops the same steps — drive forward + turn right — four times to draw a square.</div>
+            <div class="learn-icon">🔴</div>
+            <div class="learn-text"><strong>Wait until color detects</strong> — <em>Wait until color sensor detects red</em> pauses the programme until a specific color is seen under the sensor.</div>
           </div>
           <div class="learn-item">
-            <div class="learn-icon">📐</div>
-            <div class="learn-text"><strong>Angles</strong> — 90° makes a right-angle corner. Chain four of them and ROBO traces a perfect square!</div>
+            <div class="learn-icon">⬇️</div>
+            <div class="learn-text"><strong>Sensor orientation</strong> — The sensor must point DOWN at the floor (not forward) to read floor colors properly. Tilt it!</div>
           </div>
         </div>
       </div>
@@ -708,7 +708,7 @@ footer {
     </div>
     <div class="mc-body">
       <div class="mc-time">⏱ About 20 minutes</div>
-      <p style="margin-bottom:16px;">Time to navigate! Programme ROBO to drive a square route using repeat, forward, and turn. <strong style="color:var(--accent)">ROBO beeps proudly each time it completes a corner! 🤩</strong></p>
+      <p style="margin-bottom:16px;">Time to wire up! Attach the color sensor to port C, angle it downward, and programme ROBO to drive forward until it sees red. <strong style="color:var(--accent)">ROBO's light changes when it stops — spooky! 🔴</strong></p>
 
       <div class="two-col">
         <div class="box">
@@ -716,26 +716,26 @@ footer {
           <div class="instructions">
             <p style="margin-bottom:12px;">Follow these steps:</p>
             <ol>
-              <li>Make sure your drive base is built and movement motors are set to A and B</li>
-              <li>Add a <strong>Repeat 4</strong> block</li>
-              <li>Inside the repeat: add <em>Move forward 25 cm</em></li>
-              <li>Inside the repeat: add <em>Turn right 90 degrees</em></li>
-              <li>Tap ▶️ — does ROBO trace a square? Try changing 90 to 120 for a triangle!</li>
+              <li>Attach the color sensor to port C, angle it toward the floor</li>
+              <li>Tape a strip of red paper on the floor about 50 cm away</li>
+              <li>In the app: <em>When program starts</em> → <em>Set movement motors A and B</em> → <em>Start moving forward</em></li>
+              <li>Below that, add: <em>Wait until color sensor detects red</em></li>
+              <li>Then: <em>Stop moving</em>. Tap ▶️ — ROBO should stop right on the red line!</li>
             </ol>
           </div>
         </div>
 
         <div class="box">
           <div class="box-title">🎬 Block Sequence</div>
-          <div class="code-label">ROBO's Square Patrol</div>
+          <div class="code-label">Stop on Red</div>
           <div class="code-demo">
             <div class="sb-line"><span class="spike-block spk-event">When program starts</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement motors to A and B</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-control">Repeat 4</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Move forward 25 cm</span></div>
-            <div class="sb-line sb-indent"><span class="spike-block spk-motion">Turn right 90 degrees</span></div>
+              <div class="sb-line sb-indent"><span class="spike-block spk-motion">Set movement motors to A and B</span></div>
+              <div class="sb-line sb-indent"><span class="spike-block spk-motion">Start moving forward</span></div>
+              <div class="sb-line sb-indent"><span class="spike-block spk-sensor">Wait until color sensor detects red</span></div>
+              <div class="sb-line sb-indent"><span class="spike-block spk-motion">Stop moving</span></div>
           </div>
-          <p style="font-size:13px;color:var(--muted);margin-top:8px;">Repeat 4 × (forward 25 cm + turn right 90°) = a perfect square patrol!</p>
+          <p style="font-size:13px;color:var(--muted);margin-top:8px;">ROBO drives forward until the color sensor sees red — stops automatically!</p>
         </div>
       </div>
 
@@ -743,16 +743,15 @@ footer {
       <div class="hint-zone">
         <button class="hint-btn" id="hbtn1" onclick="showHint(1)">💡 I'm Stuck — Show Hint 1</button>
         <div class="hint-text" id="htxt1">
-          🌟 <strong>Hint 1:</strong> The <strong>Repeat</strong> block is in the Control category (orange). Drag it onto the canvas, then drag your movement blocks <strong>inside</strong> its slot.
+          🌟 <strong>Hint 1:</strong> Make sure the color sensor is facing <strong>DOWN at the floor</strong>. If it faces forward, it reads the wall, not the floor!
         </div>
         <button class="hint-btn" id="hbtn2" style="display:none" onclick="showHint(2)">💡 Still Stuck — Show Hint 2</button>
         <div class="hint-text" id="htxt2">
-          🌟 <strong>Hint 2:</strong> If ROBO's corners aren't quite 90°, try adjusting the turn value slightly (85 or 95) — every robot is a little different depending on how it's built!
+          🌟 <strong>Hint 2:</strong> The color sensor block is in the Sensing category (cyan). Look for <em>Wait until color sensor detects</em> and choose red from the dropdown.
         </div>
         <button class="hint-btn" id="hbtn3" style="display:none" onclick="showHint(3)">💡 One More Hint</button>
         <div class="hint-text" id="htxt3">
-          🌟 <strong>Full answer:</strong> No shame — ROBO needed help too!<br>
-          Stack: <em>When program starts → Set motors A and B → Repeat 4 → (Move forward 25 cm, Turn right 90°)</em>. Tap ▶️ for a square!
+          🌟 <strong>Full answer:</strong> Stack: <em>When program starts → Set movement motors A and B → Start moving forward → Wait until color sensor detects red → Stop moving</em>.
         </div>
       </div>
 
@@ -762,8 +761,8 @@ footer {
 
   <!-- Break prompt -->
   <div class="break-prompt" id="break-prompt">
-    🌟 ROBO says: <strong>"Square patrol complete, Aiden!"</strong><br>
-    Walk in a square around the room once, then come back! 📐
+    🌟 ROBO says: <strong>"Eyes online, Aiden!"</strong><br>
+    Find 5 different colored objects in the room and name them! 🎨
   </div>
 
   <!-- ══════════════════════════════════════
@@ -784,29 +783,29 @@ footer {
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">ROBO drove forward a specific distance</div>
-            <div class="cl-sub">Precision navigation — mission kilometre logged!</div>
+            <div class="cl-main">I attached the color sensor to port C pointing downward</div>
+            <div class="cl-sub">Sensor mounted and scanning!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">ROBO turned using a turn block</div>
-            <div class="cl-sub">Cornering achieved — ROBO stays on course!</div>
+            <div class="cl-main">I taped a colored line on the floor for ROBO to detect</div>
+            <div class="cl-sub">Target line ready — ROBO has something to aim for!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">ROBO completed a repeat loop to trace a shape</div>
-            <div class="cl-sub">Loop navigation — ROBO patrols automatically!</div>
+            <div class="cl-main">ROBO drove forward and stopped on the colored line</div>
+            <div class="cl-sub">Color detection working — line stop complete!</div>
           </div>
         </div>
         <div class="cl-item" onclick="tickCl(this)">
           <div class="cl-box"></div>
           <div class="cl-text">
-            <div class="cl-main">I can explain what 90 degrees means for turning</div>
-            <div class="cl-sub">Say: "90 degrees is one corner of a square!"</div>
+            <div class="cl-main">I can explain what a color sensor does</div>
+            <div class="cl-sub">Say: "It reads the color of the surface under the robot!"</div>
           </div>
         </div>
         </div>
@@ -822,7 +821,7 @@ footer {
           <span class="patch-corner">⭐</span>
           <span class="patch-corner">⭐</span>
           <div class="patch-header">MARS MISSION · CERTIFIED</div>
-          <div class="patch-title">Drive<br>Missions</div>
+          <div class="patch-title">Color<br>Scout</div>
           <span class="patch-robo">🤖</span>
           <div class="patch-skill">SPIKE Essential · Week 3</div>
           <div class="patch-name">AIDEN</div>
@@ -840,13 +839,13 @@ footer {
   ══════════════════════════════════════ -->
   <div class="video-reward" id="video-reward">
   <div class="vr-label">🎬 Secret Mission Reward Unlocked!</div>
-  <span class="vr-icon">↩️</span>
-  <div class="vr-title">ROBO found a special<br><strong>LEGO SPIKE Essential driving turns</strong> video for you, Aiden! 🎉</div>
-  <a href="https://www.youtube.com/results?search_query=lego+spike+essential+move+forward+turn+robot+kids+tutorial" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
+  <span class="vr-icon">🎨</span>
+  <div class="vr-title">ROBO found a special<br><strong>LEGO SPIKE Essential color sensor</strong> video for you, Aiden! 🎉</div>
+  <a href="https://www.youtube.com/results?search_query=lego+spike+essential+color+sensor+stop+line+kids" target="_blank" rel="noopener" class="vr-btn">🚀 Watch Now on YouTube →</a>
   <div class="vr-note">Opens on YouTube · Watch with a grown-up! 🛸</div>
 </div>
 <div class="fun-fact">
-    NASA programmes Mars rover drives using <strong>waypoints</strong> — exact coordinates the rover must reach. Engineers upload the route each morning and Perseverance navigates it autonomously. Your square patrol today is the same idea! 📐
+    NASA's Curiosity rover has a <strong>ChemCam laser</strong> that shoots rocks and reads the colors of the vapor to identify minerals — a high-tech color sensor! Your ROBO's color sensor is the same basic idea. 🔬
   </div>
 
   <!-- ══════════════════════════════════════
@@ -859,7 +858,7 @@ footer {
 
 </div><!-- /wrap -->
 
-<footer>WEEK 3 · DRIVE MISSIONS · Q2 SPIKE VALLEY · MISSION 13 OF 40</footer>
+<footer>WEEK 3 · COLOR SENSOR · Q2 SPIKE VALLEY · MISSION 13 OF 40</footer>
 
 <script>
 // ── Audio Context ──────────────────────────────
