@@ -671,7 +671,7 @@ main {
       <div class="panel-section-title">📚 Parent Guides</div>
       <div style="display:flex;flex-direction:column;gap:8px;">
         <a href="aiden_q1_lessons.html" style="color:var(--q1);font-size:14px;font-weight:700;">🛸 Q1 — Scratch Guide</a>
-        <a href="aiden_q2_lessons.html" style="color:var(--q2);font-size:14px;font-weight:700;">🤖 Q2 — SPIKE Guide</a>
+        <a href="aiden_q2_lessons.html" style="color:var(--q2);font-size:14px;font-weight:700;">🤖 Q2 — Robotics Guide</a>
         <a href="aiden_q3_lessons.html" style="color:var(--q3);font-size:14px;font-weight:700;">🐍 Q3 — Python Guide</a>
         <a href="aiden_q4_lessons.html" style="color:var(--q4);font-size:14px;font-weight:700;">⚡ Q4 — Arduino Guide</a>
       </div>
@@ -744,7 +744,7 @@ main {
 
         <!-- Zone labels -->
         <text x="18" y="22" font-family="Orbitron,sans-serif" font-size="10" fill="rgba(0,207,255,0.5)" letter-spacing="2" font-weight="700">Q1 · SCRATCH CRATER</text>
-        <text x="18" y="168" font-family="Orbitron,sans-serif" font-size="10" fill="rgba(176,96,255,0.5)" letter-spacing="2" font-weight="700">Q2 · SPIKE VALLEY</text>
+        <text x="18" y="168" font-family="Orbitron,sans-serif" font-size="10" fill="rgba(176,96,255,0.5)" letter-spacing="2" font-weight="700">Q2 · ROBO VALLEY</text>
         <text x="18" y="255" font-family="Orbitron,sans-serif" font-size="10" fill="rgba(0,255,153,0.5)" letter-spacing="2" font-weight="700">Q3 · PYTHON PLAINS</text>
         <text x="18" y="342" font-family="Orbitron,sans-serif" font-size="10" fill="rgba(255,136,68,0.5)" letter-spacing="2" font-weight="700">Q4 · ARDUINO PEAKS</text>
 
@@ -861,11 +861,11 @@ const Q_META = {
                 "Can you show me your Scratch project?",
                 "What does a sprite do? Can you explain it to me?"],
        prep: "Open Scratch (scratch.mit.edu) on your computer. Have the lesson page open for reference." },
-  2: { name:'SPIKE Valley',    color:'#b060ff', icon:'🤖', guide:'aiden_q2_lessons.html',
+  2: { name:'Robo Valley',     color:'#b060ff', icon:'🤖', guide:'aiden_q2_lessons.html',
        convos: ["What LEGO piece was the hardest to figure out?",
                 "Can you show me how the sensor works?",
-                "What would happen if ROBO's motor ran backwards?"],
-       prep: "Charge the LEGO SPIKE Prime hub overnight. Have the SPIKE app open and ready." },
+                "What would ROBO do differently if it had more sensors?"],
+       prep: "Weeks 1–3: charge the SPIKE Essential hub, have the SPIKE Essential app ready. Weeks 5–10: charge the CS &amp; AI kit hub, open the Coding Canvas app on the iPad." },
   3: { name:'Python Plains',   color:'#00ff99', icon:'🐍', guide:'aiden_q3_lessons.html',
        convos: ["What does print() actually do? Show me!",
                 "If you made a mistake in the code, what happened?",
@@ -893,17 +893,17 @@ const WEEKS = [
   {id:'q1w9',  q:1, wn:9,  gw:9,  x:722, y:115, short:'Capstone I',         title:'Capstone Part 1',            link:'aiden_q1_w9.html',  blurb:'Started building the big capstone Scratch game. ROBO needs to reach the base!'},
   {id:'q1w10', q:1, wn:10, gw:10, x:802, y:90,  short:'Capstone + Demo',    title:'Capstone Part 2 + Demo Day', link:'aiden_q1_w10.html', blurb:'Completed and showed off the capstone Scratch game. Q1 complete — ROBO crossed Scratch Crater!'},
 
-  // Q2 — SPIKE Valley (RTL, y≈155-180)
-  {id:'q2w1',  q:2, wn:1,  gw:11, x:835, y:155, short:'Unbox & Power On',   title:'Unbox & Power On',           link:'aiden_q2_w1.html',  blurb:'Unboxed the LEGO SPIKE Prime and powered it on for the first time. ROBO got a real body!'},
+  // Q2 — Robo Valley (RTL, y≈155-180)
+  {id:'q2w1',  q:2, wn:1,  gw:11, x:835, y:155, short:'Unbox & Power On',   title:'Unbox & Power On',           link:'aiden_q2_w1.html',  blurb:'Unboxed the LEGO SPIKE Essential and powered it on for the first time. ROBO got a real body!'},
   {id:'q2w2',  q:2, wn:2,  gw:12, x:757, y:178, short:'Build Chassis',      title:'Build Chassis',              link:'aiden_q2_w2.html',  blurb:'Built ROBO\'s drive chassis with two motors and wheels. He can move!'},
-  {id:'q2w3',  q:2, wn:3,  gw:13, x:678, y:155, short:'Drive Missions',     title:'Drive Missions',             link:'aiden_q2_w3.html',  blurb:'Programmed ROBO to drive a specific distance and turn. Navigating SPIKE Valley!'},
-  {id:'q2w4',  q:2, wn:4,  gw:14, x:600, y:178, short:'Obstacle Sensor',    title:'Obstacle Sensor',            link:'aiden_q2_w4.html',  blurb:'Added the distance sensor. ROBO stops automatically before hitting anything!'},
-  {id:'q2w5',  q:2, wn:5,  gw:15, x:522, y:155, short:'Color Tracking',     title:'Color Tracking',             link:'aiden_q2_w5.html',  blurb:'Used the color sensor to follow a line. ROBO found the path through the valley!'},
-  {id:'q2w6',  q:2, wn:6,  gw:16, x:444, y:178, short:'Speed Control',      title:'Speed Control',              link:'aiden_q2_w6.html',  blurb:'Learned to control motor speed. Fast ROBO, slow ROBO, perfect ROBO!'},
-  {id:'q2w7',  q:2, wn:7,  gw:17, x:366, y:155, short:'Dual Sensors',       title:'Dual Sensors',               link:'aiden_q2_w7.html',  blurb:'Combined two sensors together. ROBO can see AND follow lines simultaneously!'},
-  {id:'q2w8',  q:2, wn:8,  gw:18, x:288, y:178, short:'Integration',        title:'Integration Challenge',      link:'aiden_q2_w8.html',  blurb:'Combined everything learned into one programme. ROBO navigated a full obstacle course!'},
-  {id:'q2w9',  q:2, wn:9,  gw:19, x:210, y:155, short:'Capstone Design',    title:'Capstone Design',            link:'aiden_q2_w9.html',  blurb:'Designed ROBO\'s most complex mission yet — a timed challenge course.'},
-  {id:'q2w10', q:2, wn:10, gw:20, x:148, y:178, short:'Demo Day',           title:'Demo Day',                   link:'aiden_q2_w10.html', blurb:'Showed the SPIKE rover to the family. Q2 complete — ROBO crossed SPIKE Valley!'},
+  {id:'q2w3',  q:2, wn:3,  gw:13, x:678, y:155, short:'Color Sensor',      title:'Color Sensor',               link:'aiden_q2_w3.html',  blurb:'Added a color sensor to ROBO (port C, pointing down). ROBO stops automatically on a red line!'},
+  {id:'q2w4',  q:2, wn:4,  gw:14, x:600, y:178, short:'Hardware Bridge',   title:'Hardware Bridge',            link:'aiden_q2_w4.html',  blurb:'Compared the SPIKE Essential and CS & AI kits side by side. New tools, same mission — ROBO upgrades!'},
+  {id:'q2w5',  q:2, wn:5,  gw:15, x:522, y:155, short:'Events',            title:'Events — Listen & React',    link:'aiden_q2_w5.html',  blurb:'Wrote the first Coding Canvas programme with two event stacks running at the same time!'},
+  {id:'q2w6',  q:2, wn:6,  gw:16, x:444, y:178, short:'Loops',             title:'Loops — Repeat & Patrol',    link:'aiden_q2_w6.html',  blurb:'Used a Repeat 4 loop to drive ROBO in a perfect square patrol route. Loop mastered!'},
+  {id:'q2w7',  q:2, wn:7,  gw:17, x:366, y:155, short:'Conditionals',      title:'Conditionals — Decisions',   link:'aiden_q2_w7.html',  blurb:'Built an If/Else programme so ROBO stops on red and keeps going otherwise. ROBO thinks!'},
+  {id:'q2w8',  q:2, wn:8,  gw:18, x:288, y:178, short:'Variables',         title:'Variables — Store & Track',  link:'aiden_q2_w8.html',  blurb:'Created a lap counter variable. ROBO drove 3 laps and counted every single one itself!'},
+  {id:'q2w9',  q:2, wn:9,  gw:19, x:210, y:155, short:'AI & Data',         title:'AI & Data — ROBO Learns',    link:'aiden_q2_w9.html',  blurb:'Trained a machine learning model with color data. ROBO predicts colors like a real AI!'},
+  {id:'q2w10', q:2, wn:10, gw:20, x:148, y:178, short:'Capstone! 🏆',      title:'Capstone Design Challenge',  link:'aiden_q2_w10.html', blurb:'Built and demoed a capstone project combining events, loops, conditionals, variables, and AI. Q2 complete!'},
 
   // Q3 — Python Plains (LTR, y≈255-280)
   {id:'q3w1',  q:3, wn:1,  gw:21, x:110, y:255, short:'print() Logs',       title:'print() — Mission Logs',     link:'aiden_q3_w1.html',  blurb:'First Python code! Used print() to send messages from ROBO to mission control.'},
